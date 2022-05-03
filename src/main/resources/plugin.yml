@@ -1,0 +1,22 @@
+name: EzMiner
+version: '${project.version}'
+main: me.ezplugin.EzMiner
+api-version: 1.18
+authors: [ EzCoins ]
+description: Made by EzCoins
+commands:
+  Forge:
+    description: Opens the forge
+    usage: /<command>
+  Pickaxe:
+    description: Gives Pickaxe
+    usage: /<command>
+  CheckXP:
+    description: EEee
+    usage: /<command>
+  ResetXP:
+    description: EEeee
+    usage: /<command>
+  Date:
+    description: EEeeee
+    usage: /<command>
