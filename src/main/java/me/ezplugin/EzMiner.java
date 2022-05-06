@@ -5,7 +5,7 @@ import me.ezplugin.Events.BreakListener;
 import me.ezplugin.Events.OnJoin;
 import me.ezplugin.GUI.GUIListener;
 import me.ezplugin.GUI.PickaxeGUIListener;
-import me.ezplugin.GUI.StatsGUIListener;
+import me.ezplugin.GUI.SelectorGUIListener;
 import me.ezplugin.Items.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -31,7 +31,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new BreakListener(), this);
         Bukkit.getPluginManager().registerEvents(new PickaxeGUIListener(), this);
         Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
-        Bukkit.getPluginManager().registerEvents(new StatsGUIListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SelectorGUIListener(), this);
         this.getServer().getPluginManager().registerEvents(this, this);
 
         // Command Handler
@@ -40,6 +40,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         getCommand("CheckXP").setExecutor(new Commands());
         getCommand("ResetXP").setExecutor(new Commands());
         getCommand("Date").setExecutor(new Commands());
+        getCommand("BreakBlock").setExecutor(new Commands());
 
         // Item int
         ItemManager.init();

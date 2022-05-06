@@ -20,3 +20,6 @@ commands:
   Date:
     description: EEeeee
     usage: /<command>
+  BreakBlock:
+    description: eeeee
+    usage: /<command>

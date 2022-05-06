@@ -3,6 +3,7 @@ package me.ezplugin.GUI;
 import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.GUIS.GUI;
 import me.ezplugin.GUI.GUIS.PickaxeGUI;
+import me.ezplugin.GUI.GUIS.SelectorGUI;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
@@ -56,10 +57,12 @@ public class PickaxeGUIListener implements Listener {
                         60,
                         "ObsidianTime");
             } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
-                player.openInventory(GUI.FORGEGUI());
+                player.openInventory(SelectorGUI.SelectorGUI());
 
-            } else if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
+            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cClose")) {
                 player.closeInventory();
+            } else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§7Locked!")) {
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
             }
         }
     }

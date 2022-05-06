@@ -22,12 +22,9 @@ public class PickaxeGUI {
     private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
 
     private static final int[] black_border = {
-            0,  1,  2,  3,  4,  5,  6,  7,  8,
-            9,  /*i*/                       17,
-            18, /*i*/                       26,
-            27, /*i*/                       35,
-            36, /*i*/                       44,
-            /*Stats*/ 46, 47 /*Back*/ /*Close*/, 50, 51, 52, 53};
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+            17, 18, 26, 27, 35, 36, 44, 46, 47, 50,
+            51, 52, 53};
 
     public static Inventory PickaxeGUI(Player player) {
 
@@ -37,7 +34,6 @@ public class PickaxeGUI {
         Integer xp = (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER));
         Integer Level = (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER));
         int xpLeft = (Level * 500 - xp);
-        int TotalXP = (Level * 500);
 
         if(Level >= 1) {
             PickaxeGUI.setItem(
@@ -50,21 +46,6 @@ public class PickaxeGUI {
                             "§9Orichalchite §7x16",
                             "",
                             "§8Duration: §b30s"));
-
-            PickaxeGUI.setItem(
-                    49,
-                    customItemName(
-                            Material.BARRIER,
-                            "§cClose",
-                            "§8Closes the menu."));
-
-
-            PickaxeGUI.setItem(
-                    48,
-                    customItemName(
-                            Material.ARROW,
-                            "§bGo Back!",
-                            "§8Goes back to the forge!."));
 
             PickaxeGUI.setItem(
                     45,
@@ -83,6 +64,21 @@ public class PickaxeGUI {
                             Material.BARRIER,
                             "§7Locked!",
                             "", "§8Unlocks at Level 5"));
+
+            PickaxeGUI.setItem(
+                    49,
+                    customItemName(
+                            Material.BARRIER,
+                            "§cClose",
+                            "§8Closes the menu."));
+
+
+            PickaxeGUI.setItem(
+                    48,
+                    customItemName(
+                            Material.ARROW,
+                            "§bGo Back!",
+                            "§8Goes back to the selection menu!."));
         }
 
 

@@ -14,8 +14,6 @@ import java.util.Objects;
 
 public class ItemManager {
 
-    public static int FuelAmount = 1000;
-
     public static ItemStack Orichalchite;
     public static ItemStack OrichalchitePickaxe;
     public static ItemStack ObsidianPickaxe;
@@ -43,6 +41,8 @@ public class ItemManager {
     private static void OrichalchitePickaxe() {
         ItemStack orichPickaxeItem = new ItemStack(Material.DIAMOND_PICKAXE, 1);
         ItemMeta orichPickaxe = orichPickaxeItem.getItemMeta();
+        PersistentDataContainer data = orichPickaxe.getPersistentDataContainer();
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER, 1);
         orichPickaxe.setDisplayName("§9Orichalchite Pickaxe");
         orichPickaxe.setUnbreakable(true);
         orichPickaxeItem.setItemMeta(orichPickaxe);
@@ -53,11 +53,8 @@ public class ItemManager {
         ItemStack Obsidianpickaxe = new ItemStack(Material.GOLDEN_PICKAXE, 1);
         ItemMeta obsidianpickaxe = Obsidianpickaxe.getItemMeta();
         PersistentDataContainer data = obsidianpickaxe.getPersistentDataContainer();
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, 0);
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER, 2);
         obsidianpickaxe.setDisplayName("§8Obsidian Pickaxe");
-        List<String> ObiLore = new ArrayList<>();
-        ObiLore.add(Objects.requireNonNull(data.get(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER)).toString());
-        obsidianpickaxe.setLore(ObiLore);
         obsidianpickaxe.setUnbreakable(true);
         Obsidianpickaxe.setItemMeta(obsidianpickaxe);
         ObsidianPickaxe = Obsidianpickaxe;

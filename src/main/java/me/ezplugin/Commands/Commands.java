@@ -3,7 +3,9 @@ package me.ezplugin.Commands;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.GUI.GUIS.GUI;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,6 +51,13 @@ public class Commands implements CommandExecutor {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = new Date();
             player.sendMessage(format.format(date));
+        }
+
+        if (cmd.getName().equalsIgnoreCase("BreakBlock")) {
+            Block getTargetBlock = player.getTargetBlockExact(5);
+            assert getTargetBlock != null;
+            getTargetBlock.setType(Material.AIR);
+            player.sendMessage("Removed block.");
         }
 
             return true;
