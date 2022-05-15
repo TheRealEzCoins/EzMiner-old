@@ -15,11 +15,14 @@ import java.util.Objects;
 public class ItemManager {
 
     public static ItemStack Orichalchite;
+
+    public static ItemStack Gemstone;
     public static ItemStack OrichalchitePickaxe;
     public static ItemStack ObsidianPickaxe;
 
     public static void init() {
         Orichalchite();
+        Gemstone();
         OrichalchitePickaxe();
         ObsidianPickaxe();
 
@@ -34,6 +37,15 @@ public class ItemManager {
         orich.setDisplayName("§9Orichalchite");
         orichItem.setItemMeta(orich);
         Orichalchite = orichItem;
+    }
+
+    private static void Gemstone() {
+        ItemStack GemstoneItem = new ItemStack(Material.REDSTONE);
+        ItemMeta GemstoneMeta = GemstoneItem.getItemMeta();
+        GemstoneMeta.setDisplayName("§bGemstone");
+        GemstoneItem.setItemMeta(GemstoneMeta);
+        Gemstone = GemstoneItem;
+
     }
 
 
@@ -54,6 +66,10 @@ public class ItemManager {
         ItemMeta obsidianpickaxe = Obsidianpickaxe.getItemMeta();
         PersistentDataContainer data = obsidianpickaxe.getPersistentDataContainer();
         data.set(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER, 2);
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, 1000);
+        List<String> Fuel = new ArrayList<String>();
+        Fuel.set(3, "Fuel: " + 1000);
+        obsidianpickaxe.setLore(Fuel);
         obsidianpickaxe.setDisplayName("§8Obsidian Pickaxe");
         obsidianpickaxe.setUnbreakable(true);
         Obsidianpickaxe.setItemMeta(obsidianpickaxe);
