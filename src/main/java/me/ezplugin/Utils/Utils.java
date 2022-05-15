@@ -5,9 +5,11 @@ import me.ezplugin.GUI.GUIS.PickaxeGUI;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -75,9 +77,25 @@ public class Utils {
         return date;
     }
 
+    public static void PlayerDataReload(Player player) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        int CurrentXP = data.get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER);
+        int CurrentLVL = data.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
+        Utils.setscore(player, CurrentLVL, CurrentXP);
+
+    }
+
     public static boolean isEmpty(Player player) {
         ItemStack getMainHand = player.getItemInHand();
         return (getMainHand != null && getMainHand.getType() != Material.AIR);
+    }
+
+    public static void SoundSetup(Player player, Sound sound, float volume, float pitch) {
+        player.playSound(player.getLocation(), sound, volume, pitch);
+    }
+
+    public static void FailedSound(Player player) {
+        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, -10);
     }
 
     public static void BlockSetup(BlockBreakEvent block, Integer LevelReq, Material ore,Integer Hardness ,ItemStack drop ,Player player, Integer ExpAmount, Long RespawnTimer) {
@@ -94,17 +112,26 @@ public class Utils {
                         int CurrentXP = data.get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER);
                         int totalXP = CurrentXP + ExpAmount;
                         if (CurrentLVL >= LevelReq) {
-
+                            ItemStack MainHand = player.getInventory().getItemInMainHand();
                             Location BlockLocation = block.getBlock().getLocation();
+                            if(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                                int min = 1;
+                                int max = 3;
+                                int Rnd = (int)(Math.random()*(max-min+1)+min);
+                                int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+                                for (int output = Rnd; output < getFortune + 3; output++  ) {
+                                    player.getInventory().addItem(drop);
+                                }
+                            } if(!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
+                                player.getInventory().addItem(drop);
+                            }
+                                block.setDropItems(false);
+                                BlockLocation.getWorld().spawnParticle(Particle.CRIT, BlockLocation.add(0, 1, 0 ), 10);
+                                player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+                                block.setCancelled(true);
+                                block.getBlock().setType(Material.BEDROCK);
+                                Utils.setscore(player, CurrentLVL, CurrentXP + ExpAmount);
 
-                            block.setDropItems(false);
-                            player.getInventory().addItem(drop);
-                            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                            block.setCancelled(true);
-                            block.getBlock().setType(Material.BEDROCK);
-                            Utils.setscore(player, CurrentLVL, CurrentXP + ExpAmount);
-
-                            BlockLocation.getWorld().spawnParticle(Particle.CRIT, BlockLocation, 5);
 
                             new BukkitRunnable() {
                                 @Override
@@ -183,11 +210,11 @@ public class Utils {
 
 
             } else {
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+                FailedSound(player);
                 player.sendMessage("You are missing the ingredients to make this item!");
             }
         } else {
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+            FailedSound(player);
             player.sendMessage("You need to be level " + Level + " to forge this item.");
         }
     }
@@ -218,7 +245,8 @@ public class Utils {
 
                                 stack.setAmount(newStack);
                                 player.sendMessage("§7Crafting: \n§8- " + Objects.requireNonNull(Craftable.getItemMeta()).getDisplayName() + " §b30s");
-                                player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, 1f, 1f);
+                                SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
+                                SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
 
                                 new BukkitRunnable() {
                                     @Override
@@ -246,7 +274,7 @@ public class Utils {
 
     public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ItemStack Craftable, String key) throws ParseException {
 
-            if (!openEvent.getView().getTitle().equalsIgnoreCase("Pickaxe Forge"))
+            if (!openEvent.getView().getTitle().equalsIgnoreCase("Forge"))
                 return;
 
             Player player = (Player) openEvent.getPlayer();
@@ -257,7 +285,8 @@ public class Utils {
 
             if (Utils.getTime().after(forgedate)) {
                 player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
-                player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
+                SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
+                SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
                 dataContainer.remove(new NamespacedKey(EzMiner.getPlugin(), key));
                 player.getInventory().addItem(Craftable);
             }
