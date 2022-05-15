@@ -37,7 +37,7 @@ public class BreakListener implements Listener {
                 int Calculations = FuelAmount - 1;
                 data.set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, Calculations);
                 List<String> Fuel = new ArrayList<String>();
-                Fuel.set(3, "Fuel: " + FuelAmount);
+                Fuel.set(3, "§fFuel: " + FuelAmount);
                 mainHandLore.setLore(Fuel);
                 MainHand.setItemMeta(mainHandLore);
                 player.sendMessage(String.valueOf(FuelAmount));

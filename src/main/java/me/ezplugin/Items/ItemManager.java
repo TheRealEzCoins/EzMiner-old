@@ -68,7 +68,7 @@ public class ItemManager {
         data.set(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER, 2);
         data.set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, 1000);
         List<String> Fuel = new ArrayList<String>();
-        Fuel.set(3, "Fuel: " + 1000);
+        Fuel.set(3, "§fFuel: " + 1000);
         obsidianpickaxe.setLore(Fuel);
         obsidianpickaxe.setDisplayName("§8Obsidian Pickaxe");
         obsidianpickaxe.setUnbreakable(true);
