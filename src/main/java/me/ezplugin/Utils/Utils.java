@@ -23,10 +23,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 public class Utils {
 
@@ -39,7 +36,7 @@ public class Utils {
 
 
 
-    public static String altcolor(String str) {
+    public static String color(String str) {
         return ChatColor.translateAlternateColorCodes('&', str);
     }
 
@@ -114,6 +111,8 @@ public class Utils {
                         if (CurrentLVL >= LevelReq) {
                             ItemStack MainHand = player.getInventory().getItemInMainHand();
                             Location BlockLocation = block.getBlock().getLocation();
+
+                            // Handles Fortune
                             if(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
                                 int min = 1;
                                 int max = 3;
@@ -125,8 +124,11 @@ public class Utils {
                             } if(!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
                                 player.getInventory().addItem(drop);
                             }
+
+                                // Handles basic block breaking events
                                 block.setDropItems(false);
                                 BlockLocation.getWorld().spawnParticle(Particle.CRIT, BlockLocation.add(0, 1, 0 ), 10);
+                                FuelHandler.onFuelUsage(player);
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
                                 block.setCancelled(true);
                                 block.getBlock().setType(Material.BEDROCK);
@@ -158,7 +160,7 @@ public class Utils {
                             block.setCancelled(true);
                         }
                     } else {
-                        player.sendMessage("Your pickaxe must be Tier " + Tier + " mine this.");
+                        player.sendMessage("Your pickaxe must be Tier " + Hardness + " mine this.");
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
                         block.setCancelled(true);
                 }
@@ -318,4 +320,6 @@ public class Utils {
         PersistentDataContainer data = player.getPersistentDataContainer();
         return data.get(new NamespacedKey(EzMiner.getPlugin(), stat), PersistentDataType.INTEGER);
     }
+
+
 }

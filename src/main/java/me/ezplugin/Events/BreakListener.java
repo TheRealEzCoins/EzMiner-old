@@ -18,6 +18,7 @@ import org.bukkit.plugin.RegisteredListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class BreakListener implements Listener {
     @EventHandler
@@ -30,17 +31,9 @@ public class BreakListener implements Listener {
             Utils.BlockSetup(block, 15, Material.GREEN_STAINED_GLASS, 2, ItemManager.Gemstone, player, 250, 500L);
 
             if(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER)) {
-                ItemStack MainHand = player.getInventory().getItemInMainHand();
-                ItemMeta mainHandLore = MainHand.getItemMeta();
-                PersistentDataContainer data = mainHandLore.getPersistentDataContainer();
-                int FuelAmount = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
-                int Calculations = FuelAmount - 1;
-                data.set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, Calculations);
-                List<String> Fuel = new ArrayList<String>();
-                Fuel.set(3, "§fFuel: " + FuelAmount);
-                mainHandLore.setLore(Fuel);
-                MainHand.setItemMeta(mainHandLore);
-                player.sendMessage(String.valueOf(FuelAmount));
+
+            } else {
+                return;
             }
         }
     }

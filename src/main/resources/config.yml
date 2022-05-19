@@ -1,2 +1,4 @@
-Level-Scaling:
-  Exp: 500
+pickaxe:
+  enabled: true
+  lore:
+    - "&Fuel: &b%bFuel%"

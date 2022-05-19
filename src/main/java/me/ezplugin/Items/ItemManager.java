@@ -1,5 +1,6 @@
 package me.ezplugin.Items;
 
+import lombok.Getter;
 import me.ezplugin.EzMiner;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -8,9 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ItemManager {
 
@@ -19,12 +18,16 @@ public class ItemManager {
     public static ItemStack Gemstone;
     public static ItemStack OrichalchitePickaxe;
     public static ItemStack ObsidianPickaxe;
+    public static ItemCreator CustomItem;
+
+
 
     public static void init() {
         Orichalchite();
         Gemstone();
         OrichalchitePickaxe();
         ObsidianPickaxe();
+        TestPickaxe();
 
     }
 
@@ -63,18 +66,39 @@ public class ItemManager {
 
     private static void ObsidianPickaxe() {
         ItemStack Obsidianpickaxe = new ItemStack(Material.GOLDEN_PICKAXE, 1);
-        ItemMeta obsidianpickaxe = Obsidianpickaxe.getItemMeta();
-        PersistentDataContainer data = obsidianpickaxe.getPersistentDataContainer();
+        ItemMeta itemMeta = Obsidianpickaxe.getItemMeta();
+        PersistentDataContainer data = itemMeta.getPersistentDataContainer();
         data.set(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER, 2);
         data.set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, 1000);
-        List<String> Fuel = new ArrayList<String>();
-        Fuel.set(3, "§fFuel: " + 1000);
-        obsidianpickaxe.setLore(Fuel);
-        obsidianpickaxe.setDisplayName("§8Obsidian Pickaxe");
-        obsidianpickaxe.setUnbreakable(true);
-        Obsidianpickaxe.setItemMeta(obsidianpickaxe);
+        int CurrentFuel = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
+        int CurrentTier = data.get(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
+
+        List<String> lore = new ArrayList<>();
+        lore.add("");
+        lore.add("§fFuel: " + "§b" + CurrentFuel);
+        lore.add("");
+        lore.add("§8Tier: " + "§b" + CurrentTier);
+        itemMeta.setLore(lore);
+        itemMeta.setDisplayName("§8Obsidian Pickaxe");
+        itemMeta.setUnbreakable(true);
+        Obsidianpickaxe.setItemMeta(itemMeta);
         ObsidianPickaxe = Obsidianpickaxe;
     }
+
+
+    private static void TestPickaxe() {
+        ItemCreator TestPickaxe = new ItemCreator(Material.DAMAGED_ANVIL);
+
+        TestPickaxe.setName("Test Pickaxe");
+
+        TestPickaxe.setFuel(1000);
+        TestPickaxe.setTier(3);
+        TestPickaxe.RegisterLore();
+
+        TestPickaxe.setUnbreakable(true);
+        CustomItem = TestPickaxe;
+    }
+
 
 
 

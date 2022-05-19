@@ -36,6 +36,7 @@ public class Commands implements CommandExecutor {
             if(player.hasPermission("EzMiner.Pickaxe")) {
                 player.getInventory().addItem(ItemManager.OrichalchitePickaxe);
                 player.getInventory().addItem(ItemManager.ObsidianPickaxe);
+                player.getInventory().addItem(ItemManager.CustomItem.getItemStack());
             }
         }
 
