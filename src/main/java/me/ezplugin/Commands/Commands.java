@@ -11,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -29,14 +30,13 @@ public class Commands implements CommandExecutor {
             return true;
         }
         if (cmd.getName().equalsIgnoreCase("Forge") && sender instanceof Player) {
-            player.openInventory(GUI.FORGEGUI());
+            player.openInventory(GUI.FORGEGUI(player));
         }
 
         if (cmd.getName().equalsIgnoreCase("Pickaxe")) {
             if(player.hasPermission("EzMiner.Pickaxe")) {
-                player.getInventory().addItem(ItemManager.OrichalchitePickaxe);
-                player.getInventory().addItem(ItemManager.ObsidianPickaxe);
-                player.getInventory().addItem(ItemManager.CustomItem.getItemStack());
+                player.getInventory().addItem(ItemManager.Orichalchite_Pickaxe.getItemStack());
+                player.getInventory().addItem(ItemManager.Obsidian_Pickaxe.getItemStack());
             }
         }
 

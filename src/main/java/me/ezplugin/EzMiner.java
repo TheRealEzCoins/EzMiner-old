@@ -1,20 +1,29 @@
 package me.ezplugin;
 
 import me.ezplugin.Commands.Commands;
-import me.ezplugin.Events.BreakListener;
-import me.ezplugin.Events.OnJoin;
-import me.ezplugin.GUI.GUIListener;
-import me.ezplugin.GUI.PickaxeGUIListener;
-import me.ezplugin.GUI.SelectorGUIListener;
+import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
-import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
 public final class EzMiner extends JavaPlugin implements Listener {
 
     public static EzMiner plugin;
+    private ListenerManager listenerManager;
+
+    public static ListenerManager getListenerManager() {
+        return plugin.listenerManager;
+    }
+
+    public static PluginManager getPluginManager() {
+        return plugin.getServer().getPluginManager();
+    }
+
+    public static EzMiner getInstance() {
+        return plugin;
+    }
 
     @Override
     public void onEnable() {
@@ -25,13 +34,8 @@ public final class EzMiner extends JavaPlugin implements Listener {
         saveDefaultConfig();
 
         plugin = this;
+        this.listenerManager = new ListenerManager();
 
-        // Event Handler
-        Bukkit.getPluginManager().registerEvents(new OnJoin(), this);
-        Bukkit.getPluginManager().registerEvents(new BreakListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PickaxeGUIListener(), this);
-        Bukkit.getPluginManager().registerEvents(new GUIListener(), this);
-        Bukkit.getPluginManager().registerEvents(new SelectorGUIListener(), this);
         this.getServer().getPluginManager().registerEvents(this, this);
 
         // Command Handler

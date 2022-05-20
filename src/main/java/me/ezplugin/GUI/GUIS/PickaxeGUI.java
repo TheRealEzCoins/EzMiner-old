@@ -70,6 +70,7 @@ public class PickaxeGUI {
                     customItemName(
                             Material.BARRIER,
                             "§cClose",
+                            "",
                             "§8Closes the menu."));
 
 
@@ -78,6 +79,7 @@ public class PickaxeGUI {
                     customItemName(
                             Material.ARROW,
                             "§bGo Back!",
+                            "",
                             "§8Goes back to the selection menu!."));
         }
 

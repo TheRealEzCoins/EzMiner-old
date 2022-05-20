@@ -27,8 +27,8 @@ public class PickaxeGUIListener implements Listener {
         @EventHandler
         public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
 
-            Utils.ForgeTimeSetup(openEvent, ItemManager.OrichalchitePickaxe, "OrichTime");
-            Utils.ForgeTimeSetup(openEvent, ItemManager.ObsidianPickaxe, "ObsidianTime");
+            Utils.ForgeTimeSetup(openEvent, ItemManager.Orichalchite_Pickaxe, "OrichTime");
+            Utils.ForgeTimeSetup(openEvent, ItemManager.Obsidian_Pickaxe, "ObsidianTime");
         }
 
     @EventHandler
@@ -37,21 +37,21 @@ public class PickaxeGUIListener implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("Pickaxe Forge")) {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
-            } else if (e.getCurrentItem().getType().equals(ItemManager.OrichalchitePickaxe.getType())) {
+            } else if (e.getCurrentItem().getType().equals(ItemManager.Orichalchite_Pickaxe.getType())) {
                 Utils.CustomForgeSetup(
                         player,
                         1,
-                        ItemManager.OrichalchitePickaxe,
+                        ItemManager.Orichalchite_Pickaxe,
                         ItemManager.Orichalchite,
                         16,
                         60,
                         "OrichTime");
 
-            } else if (e.getCurrentItem().getType().equals(ItemManager.ObsidianPickaxe.getType())) {
+            } else if (e.getCurrentItem().getType().equals(ItemManager.Obsidian_Pickaxe.getType())) {
                 Utils.ForgeSetup(
                         player,
                         5,
-                        ItemManager.ObsidianPickaxe,
+                        ItemManager.Obsidian_Pickaxe,
                         Material.OBSIDIAN,
                         16,
                         60,

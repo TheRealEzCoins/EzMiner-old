@@ -4,17 +4,17 @@ import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ItemCreator {
+public class ItemCreator implements Listener {
     private ItemStack itemStack;
 
     public ItemCreator(Material material) {
@@ -136,6 +136,8 @@ public class ItemCreator {
         if(meta != null) {
                 meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, FuelAmount);
                 itemStack.setItemMeta(meta);
+                addLore(" ");
+                addLore("§fFuel: " + "§b" + getFuel());
         }
         return this;
     }
@@ -167,6 +169,8 @@ public class ItemCreator {
             if (meta != null) {
                 meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER, Tier);
                 itemStack.setItemMeta(meta);
+                addLore(" ");
+                addLore("§8Tier: " + "§b" + getTier());
             }
             return this;
         }
@@ -191,16 +195,13 @@ public class ItemCreator {
         return 0;
     }
 
-    public void RegisterLore() {
-
-        if(HasFuel()) {
-        addLore(" ");
-        addLore("§fFuel: " + "§b" + getFuel());
-
-        } if(HasTier()) {
-        addLore(" ");
-        addLore("§8Tier: " + "§b" + getTier());
+    public ItemCreator setOre() {
+        ItemMeta meta = itemStack.getItemMeta();
+        if (meta != null) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING, "True");
+            itemStack.setItemMeta(meta);
         }
+        return this;
     }
 
     public ItemStack getItemStack() {
@@ -215,5 +216,49 @@ public class ItemCreator {
     public String getName() {
         return getItemStack().getItemMeta().getDisplayName();
     }
+
+    public ItemCreator setRarity(int Rarity) {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+        if (Rarity == 1) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "1");
+            itemStack.setItemMeta(meta);
+            addLore("&f&lCOMMON");
+        }
+        if (Rarity == 2) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "2");
+            itemStack.setItemMeta(meta);
+            addLore("&a&lUNCOMMON");
+        }
+        if (Rarity == 3) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "3");
+            itemStack.setItemMeta(meta);
+            addLore("&b&lRARE");
+        }
+        if (Rarity == 4) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "4");
+            itemStack.setItemMeta(meta);
+            addLore("&9&lEPIC");
+        }
+        if (Rarity == 5) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "5");
+            itemStack.setItemMeta(meta);
+            addLore("&6&lLEGENDARY");
+        }
+        return this;
+    }
+
+    public ItemCreator setUnplacable(boolean state) {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+        if(state) {
+            if(meta != null) {
+                meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Unplacable"), PersistentDataType.STRING, "True");
+                itemStack.setItemMeta(meta);
+            }
+        }
+        return this;
+    }
+
 
 }

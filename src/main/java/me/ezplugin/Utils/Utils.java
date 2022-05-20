@@ -1,7 +1,7 @@
 package me.ezplugin.Utils;
 
 import me.ezplugin.EzMiner;
-import me.ezplugin.GUI.GUIS.PickaxeGUI;
+import me.ezplugin.Items.ItemCreator;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -9,7 +9,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -95,7 +94,7 @@ public class Utils {
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, -10);
     }
 
-    public static void BlockSetup(BlockBreakEvent block, Integer LevelReq, Material ore,Integer Hardness ,ItemStack drop ,Player player, Integer ExpAmount, Long RespawnTimer) {
+    public static void BlockSetup(BlockBreakEvent block, Integer LevelReq, Material ore, Integer Hardness , ItemCreator drop , Player player, Integer ExpAmount, Long RespawnTimer) {
         if (isEmpty(player)) {
             PersistentDataContainer data = player.getPersistentDataContainer();
             PersistentDataContainer pick = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
@@ -109,62 +108,75 @@ public class Utils {
                         int CurrentXP = data.get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER);
                         int totalXP = CurrentXP + ExpAmount;
                         if (CurrentLVL >= LevelReq) {
+                            Boolean HasFuel = pick.has(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
+                            int CurrentFuel = pick.get(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
                             ItemStack MainHand = player.getInventory().getItemInMainHand();
                             Location BlockLocation = block.getBlock().getLocation();
 
-                            // Handles Fortune
-                            if(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
-                                int min = 1;
-                                int max = 3;
-                                int Rnd = (int)(Math.random()*(max-min+1)+min);
-                                int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
-                                for (int output = Rnd; output < getFortune + 3; output++  ) {
-                                    player.getInventory().addItem(drop);
-                                }
-                            } if(!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
-                                player.getInventory().addItem(drop);
+                            if (CurrentFuel > 0) {
+                                FuelHandler.onFuelUsage(player);
+                            } else if (CurrentFuel <= 0) {
+                                block.setCancelled(true);
+                                Utils.FailedSound(player);
+                                player.sendMessage("Empty fuel!");
+                                return;
                             }
+
+
+                                // Handles Fortune
+                                if (MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+                                    int min = 1;
+                                    int max = 3;
+                                    int Rnd = (int) (Math.random() * (max - min + 1) + min);
+                                    int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+                                    for (int output = Rnd; output < getFortune + 3; output++) {
+                                        player.getInventory().addItem(drop.getItemStack());
+                                    }
+                                }
+                                if (!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
+                                    player.getInventory().addItem(drop.getItemStack());
+                                }
 
                                 // Handles basic block breaking events
                                 block.setDropItems(false);
-                                BlockLocation.getWorld().spawnParticle(Particle.CRIT, BlockLocation.add(0, 1, 0 ), 10);
-                                FuelHandler.onFuelUsage(player);
+                                BlockLocation.getWorld().spawnParticle(Particle.CRIT, BlockLocation.add(0, 1, 0), 10);
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
                                 block.setCancelled(true);
                                 block.getBlock().setType(Material.BEDROCK);
                                 Utils.setscore(player, CurrentLVL, CurrentXP + ExpAmount);
 
 
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    block.getBlock().setType(ore);
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        block.getBlock().setType(ore);
+                                    }
+                                }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
+
+                                if (CurrentXP >= 500 * CurrentLVL) {
+
+                                    data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, 0);
+                                    data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, CurrentLVL + 1);
+                                    player.sendMessage("§bLeveling...");
+                                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                                    player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
+                                    Utils.setscore(player, CurrentLVL + 1, 0);
+                                } else {
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * 500 + ""));
+                                    data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, CurrentXP + ExpAmount);
                                 }
-                            }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
-
-                            if (CurrentXP >= 500 * CurrentLVL) {
-
-                                data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, 0);
-                                data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, CurrentLVL + 1);
-                                player.sendMessage("§bLeveling...");
-                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                                player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
-                                Utils.setscore(player, CurrentLVL + 1, 0);
-                            } else {
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * 500 + ""));
-                                data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, CurrentXP + ExpAmount);
+                            } else{
+                                player.sendMessage("You need to be level " + LevelReq + " to mine this.");
+                                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+                                block.setCancelled(true);
                             }
                         } else {
-                            player.sendMessage("You need to be level " + LevelReq + " to mine this.");
-                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+                            player.sendMessage("Your pickaxe must be Tier " + Hardness + " mine this.");
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
                             block.setCancelled(true);
                         }
-                    } else {
-                        player.sendMessage("Your pickaxe must be Tier " + Hardness + " mine this.");
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
-                        block.setCancelled(true);
-                }
-                }
+                    }
+
             }
         } else {
             return;
@@ -172,7 +184,7 @@ public class Utils {
     }
 
 
-    public static void ForgeSetup(Player player, int LevelReq , ItemStack Craftable, Material Item1, Integer Amount1, Integer CraftingTime, String key) {
+    public static void ForgeSetup(Player player, int LevelReq , ItemCreator Craftable, Material Item1, Integer Amount1, Integer CraftingTime, String key) {
 
         PersistentDataContainer dataContainer = player.getPersistentDataContainer();
         int Level = dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
@@ -195,8 +207,9 @@ public class Utils {
                                 dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING, time);
 
                                 stack.setAmount(newStack);
-                                player.sendMessage("§7Crafting: \n§8- " + Objects.requireNonNull(Craftable.getItemMeta()).getDisplayName() + " §b30s");
-                                player.playSound(player.getLocation(), Sound.BLOCK_LAVA_POP, 1f, 1f);
+                                player.sendMessage("§7Crafting: \n§8- " + Craftable.getName() + " §b30s");
+                                SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
+                                SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
 
                                 new BukkitRunnable() {
                                     @Override
@@ -221,10 +234,10 @@ public class Utils {
         }
     }
 
-    public static void CustomForgeSetup(Player player, int LevelReq ,ItemStack Craftable, ItemStack ore, Integer OreAmount, Integer CraftingTime, String key) throws ParseException {
+    public static void CustomForgeSetup(Player player, int LevelReq , ItemCreator Craftable, ItemCreator ore, Integer OreAmount, Integer CraftingTime, String key) throws ParseException {
 
         PersistentDataContainer dataContainer = player.getPersistentDataContainer();
-        PersistentDataContainer ItemContainer = ore.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer ItemContainer = ore.getItemStack().getItemMeta().getPersistentDataContainer();
         int Level = dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
 
         if(dataContainer.has(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING)) {
@@ -237,7 +250,7 @@ public class Utils {
                 if (ItemContainer.has(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING)) {
                     for (ItemStack stack : player.getInventory().getContents()) {
                         if (stack != null) {
-                            if (stack.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING) == ore.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING) && stack.getAmount() >= OreAmount) {
+                            if (stack.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING) == ore.getItemStack().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING) && stack.getAmount() >= OreAmount) {
                                 int newStack = stack.getAmount() - OreAmount;
                                 Calendar cal = Calendar.getInstance();
                                 cal.setTime(Utils.getTime());
@@ -246,7 +259,7 @@ public class Utils {
                                 dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING, time);
 
                                 stack.setAmount(newStack);
-                                player.sendMessage("§7Crafting: \n§8- " + Objects.requireNonNull(Craftable.getItemMeta()).getDisplayName() + " §b30s");
+                                player.sendMessage("§7Crafting: \n§8- " + Craftable.getName() + " §b30s");
                                 SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
                                 SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
 
@@ -264,17 +277,17 @@ public class Utils {
                 }
 
                 } else {
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+                FailedSound(player);
                 player.sendMessage("You are missing the ingredients to make this item!");
             }
         } else {
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+            FailedSound(player);
             player.sendMessage("You need to be level " + Level + " to forge this item.");
         }
     }
 
 
-    public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ItemStack Craftable, String key) throws ParseException {
+    public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ItemCreator Craftable, String key) throws ParseException {
 
             if (!openEvent.getView().getTitle().equalsIgnoreCase("Forge"))
                 return;
@@ -290,13 +303,13 @@ public class Utils {
                 SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
                 SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
                 dataContainer.remove(new NamespacedKey(EzMiner.getPlugin(), key));
-                player.getInventory().addItem(Craftable);
+                player.getInventory().addItem(Craftable.getItemStack());
             }
         }
 
     public static void setscore(Player player, int level, int xp) {
         Scoreboard scoreboard = EzMiner.plugin.getServer().getScoreboardManager().getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("test", "dummy");
+        Objective objective = scoreboard.registerNewObjective("EzMiner", "Mining");
 
         objective.setDisplayName("§cPlayer Level");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);

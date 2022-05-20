@@ -18,7 +18,7 @@ public class SelectorGUIListener implements Listener {
                 if (e.getCurrentItem().getType().equals(Material.DIAMOND_PICKAXE)) {
                     player.openInventory(PickaxeGUI.PickaxeGUI(player));
                 } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
-                    player.openInventory(GUI.FORGEGUI());
+                    player.openInventory(GUI.FORGEGUI(player));
                 } else if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                     player.closeInventory();
                 }
