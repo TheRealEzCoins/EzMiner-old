@@ -2,6 +2,7 @@ package me.ezplugin.GUI.GUIS;
 
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,63 +39,31 @@ public class PickaxeGUI {
         if(Level >= 1) {
             PickaxeGUI.setItem(
                     10,
-                    customItemName(
-                            Material.DIAMOND_PICKAXE,
-                            "§9Orichalchite Pickaxe",
-                            "",
-                            "§eItems required",
-                            "§9Orichalchite §7x16",
-                            "",
-                            "§8Duration: §b30s"));
+                    GuiUtils.createCustomItem(ItemManager.Orichalchite_Pickaxe, ItemManager.Orichalchite, 16, "30s"));
 
             PickaxeGUI.setItem(
                     45,
-                    customItemName(
-                            Material.PAPER,
-                            ChatColor.GOLD +
-                                    player.getName() + "'s stats",
-                            "",
-                            "§eCurrent Level: " + (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER)),
-                            "§eCurrent xp: " + xp + " §e/ " + (Level * 500),
-                            "§exp to next level: " + xpLeft));
+                    GuiUtils.getStatsAsSkull(player));
 
             PickaxeGUI.setItem(
                     11,
-                    customItemName(
-                            Material.BARRIER,
-                            "§7Locked!",
-                            "", "§8Unlocks at Level 5"));
+                    GuiUtils.unlockable(5));
 
             PickaxeGUI.setItem(
                     49,
-                    customItemName(
-                            Material.BARRIER,
-                            "§cClose",
-                            "",
-                            "§8Closes the menu."));
+                    GuiUtils.menuClose());
 
 
             PickaxeGUI.setItem(
                     48,
-                    customItemName(
-                            Material.ARROW,
-                            "§bGo Back!",
-                            "",
-                            "§8Goes back to the selection menu!."));
+                    GuiUtils.menuReturn());
         }
 
 
         if(Level >= 5) {
             PickaxeGUI.setItem(
                     11,
-                    customItemName(
-                            Material.GOLDEN_PICKAXE,
-                            "§8Obsidian Pickaxe",
-                            "",
-                            "§eItems required",
-                            "§8Obsidian §7x16",
-                            "",
-                            "§8Duration: §b30s"));
+                    GuiUtils.createItem(ItemManager.Obsidian_Pickaxe, Material.OBSIDIAN, 16, "30s"));
 
         }
 

@@ -1,23 +1,15 @@
 package me.ezplugin.GUI;
 
-import me.ezplugin.EzMiner;
-import me.ezplugin.GUI.GUIS.GUI;
-import me.ezplugin.GUI.GUIS.PickaxeGUI;
-import me.ezplugin.GUI.GUIS.SelectorGUI;
+import me.ezplugin.GUI.GUIS.CastingGUI;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.text.ParseException;
 
@@ -57,7 +49,7 @@ public class PickaxeGUIListener implements Listener {
                         60,
                         "ObsidianTime");
             } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
-                player.openInventory(SelectorGUI.SelectorGUI());
+                player.openInventory(CastingGUI.SelectorGUI());
 
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cClose")) {
                 player.closeInventory();

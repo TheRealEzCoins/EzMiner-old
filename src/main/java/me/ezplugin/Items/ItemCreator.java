@@ -4,7 +4,9 @@ import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
@@ -12,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ItemCreator implements Listener {
@@ -171,6 +174,7 @@ public class ItemCreator implements Listener {
                 itemStack.setItemMeta(meta);
                 addLore(" ");
                 addLore("§8Tier: " + "§b" + getTier());
+                addLore(" ");
             }
             return this;
         }
@@ -217,33 +221,33 @@ public class ItemCreator implements Listener {
         return getItemStack().getItemMeta().getDisplayName();
     }
 
-    public ItemCreator setRarity(int Rarity) {
+    public ItemCreator setRarity(int Rarity, String type) {
         ItemStack item = itemStack;
         ItemMeta meta = item.getItemMeta();
         if (Rarity == 1) {
             meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "1");
             itemStack.setItemMeta(meta);
-            addLore("&f&lCOMMON");
+            addLore("&f&lCOMMON " + type.toUpperCase(Locale.ROOT));
         }
         if (Rarity == 2) {
             meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "2");
             itemStack.setItemMeta(meta);
-            addLore("&a&lUNCOMMON");
+            addLore("&a&lUNCOMMON " + type.toUpperCase(Locale.ROOT));
         }
         if (Rarity == 3) {
             meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "3");
             itemStack.setItemMeta(meta);
-            addLore("&b&lRARE");
+            addLore("&b&lRARE " + type.toUpperCase(Locale.ROOT));
         }
         if (Rarity == 4) {
             meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "4");
             itemStack.setItemMeta(meta);
-            addLore("&9&lEPIC");
+            addLore("&9&lEPIC " + type.toUpperCase(Locale.ROOT));
         }
         if (Rarity == 5) {
             meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "5");
             itemStack.setItemMeta(meta);
-            addLore("&6&lLEGENDARY");
+            addLore("&6&lLEGENDARY " + type.toUpperCase(Locale.ROOT));
         }
         return this;
     }
@@ -257,6 +261,65 @@ public class ItemCreator implements Listener {
                 itemStack.setItemMeta(meta);
             }
         }
+        return this;
+    }
+
+    public ItemCreator HideItemFlags() {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+        if(meta != null) {
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            item.setItemMeta(meta);
+        }
+        return this;
+    }
+
+    public ItemCreator addEnchantment(Enchantment enchantment) {
+        return addEnchantment(enchantment, 1);
+    }
+
+    public ItemCreator addEnchantment(Enchantment enchantment, int level) {
+        getItemStack().addUnsafeEnchantment(enchantment, level);
+        return this;
+    }
+
+    public ItemCreator getFortune() {
+        ItemStack item = itemStack;
+        int EnchantLevel = item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+        addLore("&e☘ Fortune " + EnchantLevel);
+
+        return this;
+    }
+
+    public ItemCreator getDigSpeed() {
+        ItemStack item = itemStack;
+        int EnchantLevel = item.getEnchantmentLevel(Enchantment.DIG_SPEED);
+        Double DefaultDigSpeed = 2.5;
+        int DefaultValue = (int)(DefaultDigSpeed + EnchantLevel);
+        if (item.getType().equals(Material.WOODEN_PICKAXE)) {
+            addLore("&e☘ Dig speed " + DefaultValue);
+        }
+
+        if (item.getType().equals(Material.STONE_PICKAXE)) {
+            addLore("&e☘ Dig speed " + DefaultValue * 2);
+        }
+
+        if (item.getType().equals(Material.IRON_PICKAXE)) {
+            addLore("&e☘ Dig speed " + DefaultValue * 3);
+        }
+
+        if (item.getType().equals(Material.DIAMOND_PICKAXE)) {
+            addLore("&e☘ Dig speed " + DefaultValue * 13);
+        }
+
+        if (item.getType().equals(Material.NETHERITE_PICKAXE)) {
+            addLore("&e☘ Dig speed " + DefaultValue * 15);
+        }
+
+        if (item.getType().equals(Material.GOLDEN_PICKAXE)) {
+            addLore("&e☘ Dig speed " + DefaultValue * 6);
+        }
+
         return this;
     }
 

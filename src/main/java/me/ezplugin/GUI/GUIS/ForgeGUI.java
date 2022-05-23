@@ -1,8 +1,8 @@
 package me.ezplugin.GUI.GUIS;
 
+import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import static me.ezplugin.Utils.Utils.*;
 
-public class GUI {
+public class ForgeGUI {
 
     private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
     private static final ItemStack red_glass = customItemName(Material.RED_STAINED_GLASS_PANE, " ");
@@ -37,7 +37,6 @@ public class GUI {
 
         int Level = Utils.getCurrentStats(player, "LEVEL");
         int exp = Utils.getCurrentStats(player, "XP");
-        int xpLeft = (Level * 500 - exp);
         Inventory FORGEGUI = Bukkit.createInventory(null, 54, "Forge");
 
         FORGEGUI.setItem(20,
@@ -52,14 +51,7 @@ public class GUI {
 
         FORGEGUI.setItem(
                 40,
-                Utils.customItemName(
-                        Material.PLAYER_HEAD,
-                        ChatColor.GOLD +
-                                player.getName() + "'s stats",
-                        "",
-                        "§eCurrent Level: " + Level,
-                        "§eCurrent xp: " + exp + " §e/ " + (Level * 500),
-                        "§exp to next level: " + xpLeft));
+                GuiUtils.getStatsAsSkull(player));
 
         for(int slot : black_border){
             FORGEGUI.setItem(slot, blackglass);

@@ -2,7 +2,7 @@ package me.ezplugin.Commands;
 
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemManager;
-import me.ezplugin.GUI.GUIS.GUI;
+import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -10,8 +10,8 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -20,6 +20,8 @@ import java.util.Date;
 
 
 public class Commands implements CommandExecutor {
+
+    static FileConfiguration config = EzMiner.plugin.getConfig();
 
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -30,7 +32,9 @@ public class Commands implements CommandExecutor {
             return true;
         }
         if (cmd.getName().equalsIgnoreCase("Forge") && sender instanceof Player) {
-            player.openInventory(GUI.FORGEGUI(player));
+            player.openInventory(ForgeGUI.FORGEGUI(player));
+            int Amount = (int) config.get("Level-Scaling.Exp");
+            player.sendMessage(String.valueOf(Amount));
         }
 
         if (cmd.getName().equalsIgnoreCase("Pickaxe")) {

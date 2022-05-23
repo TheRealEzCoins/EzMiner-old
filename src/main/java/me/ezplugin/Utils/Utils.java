@@ -5,12 +5,14 @@ import me.ezplugin.Items.ItemCreator;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,18 +29,15 @@ import java.util.*;
 public class Utils {
 
 
-    private static final DecimalFormat df = new DecimalFormat("0.00");
-
     public static SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-
-
+    static FileConfiguration config = EzMiner.plugin.getConfig();
+    public static int getRatio = (int) config.get("Level-Scaling.Exp");
 
 
     public static String color(String str) {
         return ChatColor.translateAlternateColorCodes('&', str);
     }
-
 
 
     public static ItemStack customItemName(Material mat, String name, String... lore){
@@ -108,18 +107,18 @@ public class Utils {
                         int CurrentXP = data.get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER);
                         int totalXP = CurrentXP + ExpAmount;
                         if (CurrentLVL >= LevelReq) {
-                            Boolean HasFuel = pick.has(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
-                            int CurrentFuel = pick.get(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
                             ItemStack MainHand = player.getInventory().getItemInMainHand();
                             Location BlockLocation = block.getBlock().getLocation();
-
-                            if (CurrentFuel > 0) {
-                                FuelHandler.onFuelUsage(player);
-                            } else if (CurrentFuel <= 0) {
-                                block.setCancelled(true);
-                                Utils.FailedSound(player);
-                                player.sendMessage("Empty fuel!");
-                                return;
+                            if(pick.has(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER)) {
+                                int CurrentFuel = pick.get(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
+                                if (CurrentFuel > 0) {
+                                    FuelHandler.onFuelUsage(player);
+                                } else if (CurrentFuel <= 0) {
+                                    block.setCancelled(true);
+                                    Utils.FailedSound(player);
+                                    player.sendMessage("&cYour " + MainHand.getItemMeta().getDisplayName() + "has ran out of fuel.");
+                                    return;
+                                }
                             }
 
 
@@ -153,25 +152,25 @@ public class Utils {
                                     }
                                 }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
 
-                                if (CurrentXP >= 500 * CurrentLVL) {
+                                if (CurrentXP >= getRatio * CurrentLVL) {
 
-                                    data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, 0);
+                                    data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, CurrentXP - (CurrentLVL * getRatio));
                                     data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, CurrentLVL + 1);
                                     player.sendMessage("§bLeveling...");
                                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
                                     player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
-                                    Utils.setscore(player, CurrentLVL + 1, 0);
+                                    Utils.setscore(player, CurrentLVL + 1, CurrentXP - (CurrentLVL * getRatio));
                                 } else {
-                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * 500 + ""));
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * getRatio + ""));
                                     data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, CurrentXP + ExpAmount);
                                 }
                             } else{
-                                player.sendMessage("You need to be level " + LevelReq + " to mine this.");
+                                player.sendMessage("§cYou need to be §eLevel " + LevelReq + " §cto mine this.");
                                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
                                 block.setCancelled(true);
                             }
                         } else {
-                            player.sendMessage("Your pickaxe must be Tier " + Hardness + " mine this.");
+                            player.sendMessage("§cYour pickaxe must be §eTier " + Hardness + " §cto mine this.");
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
                             block.setCancelled(true);
                         }
@@ -190,7 +189,7 @@ public class Utils {
         int Level = dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
 
         if(dataContainer.has(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING)) {
-            player.sendMessage("You're already crafting an item!");
+            player.sendMessage("§cYou're already crafting an item!");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
             return;
         }
@@ -226,11 +225,11 @@ public class Utils {
 
             } else {
                 FailedSound(player);
-                player.sendMessage("You are missing the ingredients to make this item!");
+                player.sendMessage("§cYou are missing the ingredients to make this item!");
             }
         } else {
             FailedSound(player);
-            player.sendMessage("You need to be level " + Level + " to forge this item.");
+            player.sendMessage("§cYou need to be level " + LevelReq + " to forge this item.");
         }
     }
 
@@ -278,11 +277,11 @@ public class Utils {
 
                 } else {
                 FailedSound(player);
-                player.sendMessage("You are missing the ingredients to make this item!");
+                player.sendMessage("§cYou are missing the ingredients to make this item!");
             }
         } else {
             FailedSound(player);
-            player.sendMessage("You need to be level " + Level + " to forge this item.");
+            player.sendMessage("§cYou need to be level " + LevelReq + " to forge this item.");
         }
     }
 
@@ -332,6 +331,16 @@ public class Utils {
     public static Integer getCurrentStats(Player player, String stat) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         return data.get(new NamespacedKey(EzMiner.getPlugin(), stat), PersistentDataType.INTEGER);
+    }
+
+    public static ItemStack getPlayerSkull(Player paramPlayer) {
+        ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1, (short) SkullType.PLAYER.ordinal());
+
+        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+        meta.setOwner(paramPlayer.getName());
+        meta.setDisplayName("§6" + paramPlayer.getName() + "'s stats");
+        skull.setItemMeta(meta);
+        return skull;
     }
 
 

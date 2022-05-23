@@ -1,12 +1,13 @@
 package me.ezplugin.GUI.GUIS;
 
+import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class SelectorGUI {
+public class CastingGUI {
     private static final ItemStack blackglass = Utils.customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
 
     private static final int[] black_border = new int[] {
@@ -21,8 +22,8 @@ public class SelectorGUI {
 
         inventory.setItem(20, Utils.customItemName(Material.DIAMOND, "§aRefining", "", "§eU can refine ore here"));
         inventory.setItem(24, Utils.customItemName(Material.DIAMOND_PICKAXE, "§aPickaxes", "" ,"§eU can make pickaxes here."));
-        inventory.setItem(49, Utils.customItemName(Material.BARRIER, "§cClose", "", "§8Closes the menu."));
-        inventory.setItem(48, Utils.customItemName(Material.ARROW, "§bGo back!"));
+        inventory.setItem(49, GuiUtils.menuClose());
+        inventory.setItem(48, GuiUtils.menuReturn());
 
         for (int slot : black_border)
             inventory.setItem(slot, blackglass);

@@ -1,6 +1,7 @@
 package me.ezplugin.Items;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public class ItemManager {
@@ -17,26 +18,34 @@ public class ItemManager {
 
 
     private static void ItemSetup() {
-        Orichalchite_Pickaxe = new ItemCreator(Material.DIAMOND_PICKAXE)
+        Orichalchite_Pickaxe = new ItemCreator(Material.WOODEN_PICKAXE)
                 .setName("§9Orichalchite Pickaxe")
                 .setTier(1)
+                .addEnchantment(Enchantment.DIG_SPEED, 1)
+                .getDigSpeed()
+                .getFortune()
+                .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //
-        Obsidian_Pickaxe = new ItemCreator(Material.GOLDEN_PICKAXE)
+        Obsidian_Pickaxe = new ItemCreator(Material.DIAMOND_PICKAXE)
                 .setName("§8Obsidian Pickaxe")
                 .setFuel(1000)
                 .setTier(2)
+                .getDigSpeed()
+                .getFortune()
+                .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //
         Orichalchite = new ItemCreator(Material.CYAN_DYE)
                 .setName("§9Orichalchite Ore")
+                .setRarity(1, "ORE")
                 .setOre();
         // -------------------------------------------- //
         Gemstone = new ItemCreator(Material.AMETHYST_CLUSTER)
                 .setName("§bGemstone")
                 .setOre()
                 .setUnplacable(true)
-                .setRarity(1);
+                .setRarity(2, "GEMSTONE");
         // -------------------------------------------- //
         // -------------------------------------------- //
 
