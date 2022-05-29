@@ -20,8 +20,6 @@ public class ForgeGUIListener implements Listener {
             if (e.getCurrentItem() != null && e.getCurrentItem().getType().equals(Material.LAVA_BUCKET)) {
                 player.openInventory(CastingGUI.SelectorGUI());
                 player.playSound(player.getLocation(), Sound.BLOCK_IRON_TRAPDOOR_OPEN, 1f, -5f);
-            } if (e.getCurrentItem() != null && e.getCurrentItem().getType().equals(Material.COOKIE)) {
-                ItemStack item = ForgeGUI.FORGEGUI(player).getItem(1);
             }
         }
     }

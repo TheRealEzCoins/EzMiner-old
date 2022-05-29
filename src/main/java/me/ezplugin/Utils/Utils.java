@@ -21,7 +21,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -65,6 +64,21 @@ public class Utils {
         meta.setLore(Arrays.asList(lore));
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static String TimeSetup(int time) {
+        int s = time / 2;
+        int sec = s % 60;
+        int min = (s / 60)%60;
+        int hours = (s/60)/60;
+
+        String strSec=(sec<10)?"0"+ sec :Integer.toString(sec);
+        String strmin=(min<10)?"0"+ min :Integer.toString(min);
+        String strHours=(hours<10)?"0"+ hours :Integer.toString(hours);
+
+        String Translated = String.valueOf(strHours + ":" + strmin + ":" + strSec);
+
+        return Translated;
     }
 
     public static Date getTime() {
@@ -206,7 +220,7 @@ public class Utils {
                                 dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING, time);
 
                                 stack.setAmount(newStack);
-                                player.sendMessage("§7Crafting: \n§8- " + Craftable.getName() + " §b30s");
+                                player.sendMessage("§7Crafting: \n§8- " + Craftable.getName() + "§b " + TimeSetup(CraftingTime));
                                 SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
                                 SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
 
@@ -214,7 +228,7 @@ public class Utils {
                                     @Override
                                     public void run() {
                                         player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
-                                        player.sendMessage("§b§lYour item finished crafting!");
+                                        player.sendMessage("§aYour item finished crafting!");
                                     }
                                 }.runTaskLater(EzMiner.getPlugin(), CraftingTime * 20);
                                 break;
@@ -240,7 +254,7 @@ public class Utils {
         int Level = dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
 
         if(dataContainer.has(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING)) {
-            player.sendMessage("You're already crafting an item!");
+            player.sendMessage("§cYou're already crafting an item!");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
             return;
         }
@@ -258,7 +272,7 @@ public class Utils {
                                 dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING, time);
 
                                 stack.setAmount(newStack);
-                                player.sendMessage("§7Crafting: \n§8- " + Craftable.getName() + " §b30s");
+                                player.sendMessage("§7Crafting: \n§8- " + Craftable.getName() + "§b " + TimeSetup(CraftingTime));
                                 SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
                                 SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
 
@@ -266,7 +280,7 @@ public class Utils {
                                     @Override
                                     public void run() {
                                         player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
-                                        player.sendMessage("§b§lYour item finished crafting!");
+                                        player.sendMessage("§aYour item finished crafting!");
                                     }
                                 }.runTaskLater(EzMiner.getPlugin(), CraftingTime * 20);
                                 break;
@@ -321,7 +335,7 @@ public class Utils {
         lvl.setScore(3);
         Score emptyspot2 = objective.getScore("");
         emptyspot2.setScore(4);
-        Score score = objective.getScore("Player: " + ChatColor.GOLD + player.getDisplayName());
+        Score score = objective.getScore("Player: " + ChatColor.GOLD + player.getName());
         score.setScore(5);
 
         player.setScoreboard(scoreboard);

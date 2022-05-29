@@ -13,6 +13,7 @@ public class ItemManager {
 
     public static ItemCreator Orichalchite;
     public static ItemCreator Gemstone;
+    public static ItemCreator Refined_Gemstone_1;
     public static ItemCreator Orichalchite_Pickaxe;
     public static ItemCreator Obsidian_Pickaxe;
 
@@ -41,12 +42,17 @@ public class ItemManager {
                 .setRarity(1, "ORE")
                 .setOre();
         // -------------------------------------------- //
-        Gemstone = new ItemCreator(Material.AMETHYST_CLUSTER)
+        Gemstone = new ItemCreator(Material.SMALL_AMETHYST_BUD)
                 .setName("§bGemstone")
                 .setOre()
                 .setUnplacable(true)
                 .setRarity(2, "GEMSTONE");
         // -------------------------------------------- //
+        Refined_Gemstone_1 = new ItemCreator(Material.MEDIUM_AMETHYST_BUD)
+                .setName("§bRefined Gemstone")
+                .setOre()
+                .setUnplacable(true)
+                .setRarity(3, "GEMSTONE");
         // -------------------------------------------- //
 
     }

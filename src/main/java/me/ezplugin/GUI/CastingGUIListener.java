@@ -2,6 +2,7 @@ package me.ezplugin.GUI;
 
 import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.GUI.GUIS.PickaxeGUI;
+import me.ezplugin.GUI.GUIS.RefiningGUI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,8 @@ public class CastingGUIListener implements Listener {
                     player.openInventory(ForgeGUI.FORGEGUI(player));
                 } else if (e.getCurrentItem().getType().equals(Material.BARRIER)) {
                     player.closeInventory();
+                } else if (e.getCurrentItem().getType().equals(Material.DIAMOND)) {
+                    player.openInventory(RefiningGUI.RefiningGUI(player));
                 }
         }
     }
