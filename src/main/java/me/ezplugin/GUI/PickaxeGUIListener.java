@@ -2,6 +2,7 @@ package me.ezplugin.GUI;
 
 import me.ezplugin.GUI.GUIS.CastingGUI;
 import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Utils.ForgeUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -19,8 +20,8 @@ public class PickaxeGUIListener implements Listener {
         @EventHandler
         public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
 
-            Utils.ForgeTimeSetup(openEvent, ItemManager.Orichalchite_Pickaxe, "OrichTime");
-            Utils.ForgeTimeSetup(openEvent, ItemManager.Obsidian_Pickaxe, "ObsidianTime");
+            ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Orichalchite_Pickaxe, "OrichTime");
+            ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Obsidian_Pickaxe, "ObsidianTime");
         }
 
     @EventHandler
@@ -30,7 +31,7 @@ public class PickaxeGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             } else if (e.getCurrentItem().getType().equals(ItemManager.Orichalchite_Pickaxe.getType())) {
-                Utils.CustomForgeSetup(
+                ForgeUtils.CustomForgeSetup(
                         player,
                         1,
                         ItemManager.Orichalchite_Pickaxe,
@@ -40,7 +41,7 @@ public class PickaxeGUIListener implements Listener {
                         "OrichTime");
 
             } else if (e.getCurrentItem().getType().equals(ItemManager.Obsidian_Pickaxe.getType())) {
-                Utils.ForgeSetup(
+                ForgeUtils.ForgeSetup(
                         player,
                         5,
                         ItemManager.Obsidian_Pickaxe,
@@ -55,6 +56,7 @@ public class PickaxeGUIListener implements Listener {
                 player.closeInventory();
             } else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§7Locked!")) {
                 player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, -10f);
+                player.sendMessage("§cYou need to be a higher level to forge this!");
             }
         }
     }

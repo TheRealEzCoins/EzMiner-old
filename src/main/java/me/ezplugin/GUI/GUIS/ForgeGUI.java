@@ -1,6 +1,7 @@
 package me.ezplugin.GUI.GUIS;
 
 import me.ezplugin.Utils.GuiUtils;
+import me.ezplugin.Utils.ItemUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import static me.ezplugin.Utils.Utils.*;
 
-public class ForgeGUI {
+public class ForgeGUI extends GuiUtils {
 
     private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
     private static final ItemStack red_glass = customItemName(Material.RED_STAINED_GLASS_PANE, " ");
@@ -35,17 +36,15 @@ public class ForgeGUI {
 
     public static Inventory FORGEGUI(Player player) {
 
-        int Level = Utils.getCurrentStats(player, "LEVEL");
-        int exp = Utils.getCurrentStats(player, "XP");
         Inventory FORGEGUI = Bukkit.createInventory(null, 54, "Forge");
 
         FORGEGUI.setItem(20,
-                Utils.customItemName(
+                customItemName(
                         Material.LAVA_BUCKET,
                         "§bForge items here."));
 
         FORGEGUI.setItem(40,
-                Utils.customItemName(
+                customItemName(
                         Material.LAVA_BUCKET,
                         "§bForge items here."));
 

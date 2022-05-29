@@ -3,6 +3,7 @@ package me.ezplugin.Utils;
 import me.ezplugin.EzMiner;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -29,5 +30,18 @@ public class FuelHandler {
         mainHandItemMeta.setLore(lore);
         MainHand.setItemMeta(mainHandItemMeta);
         player.updateInventory();
+    }
+
+    public static void FuelConsume(Player player, BlockBreakEvent block) {
+        PersistentDataContainer pick = player.getPersistentDataContainer();
+        ItemStack MainHand = player.getInventory().getItemInMainHand();
+        int CurrentFuel = pick.get(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
+        if (CurrentFuel > 0) {
+            FuelHandler.onFuelUsage(player);
+        } else if (CurrentFuel <= 0) {
+            block.setCancelled(true);
+            Utils.FailedSound(player);
+            player.sendMessage("&cYour " + MainHand.getItemMeta().getDisplayName() + "has ran out of fuel.");
+        }
     }
 }

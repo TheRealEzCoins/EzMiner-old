@@ -11,9 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import static me.ezplugin.Utils.Utils.customItemName;
-
-public class RefiningGUI {
+public class RefiningGUI extends GuiUtils {
 
     private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
 
@@ -27,10 +25,7 @@ public class RefiningGUI {
         Inventory RefiningGUI = Bukkit.createInventory(null, 54, "Refining");
 
 
-        Integer xp = (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER));
-        Integer Level = (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER));
-
-        if(Level >= 1) {
+        if(getLevel(player) >= 1) {
             RefiningGUI.setItem(
                     10,
                     GuiUtils.createCustomItem(ItemManager.Refined_Gemstone_1, ItemManager.Gemstone, 16, "5m"));

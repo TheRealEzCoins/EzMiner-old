@@ -9,15 +9,16 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Locale;
 
-import static me.ezplugin.Utils.Utils.customItemName;
+import static me.ezplugin.Utils.ItemUtils.customItemName;
+import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
 
-public class GuiUtils {
+public class GuiUtils extends ItemUtils {
 
     public static ItemStack getStatsAsSkull(Player player ) {
-        int getLevel = Utils.getCurrentStats(player, "LEVEL");
-        int getXP = Utils.getCurrentStats(player, "XP");
+        int getLevel = Utils.getLevel(player);
+        int getXP = Utils.getLevel(player);
         int xpLeft = (getLevel * 500 - getXP);
-        return Utils.customItemUsingStack(
+        return customItemUsingStack(
                 Utils.getPlayerSkull(player),
                 "",
                 "§7Current Level: §9" + getLevel,

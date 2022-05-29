@@ -1,24 +1,15 @@
 package me.ezplugin.GUI.GUIS;
 
-import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
-import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 
-import java.util.logging.Level;
 
-import static me.ezplugin.Utils.Utils.*;
-import static me.ezplugin.Utils.Utils.customItemName;
-
-public class PickaxeGUI {
+public class PickaxeGUI extends GuiUtils {
 
     private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
 
@@ -32,9 +23,7 @@ public class PickaxeGUI {
         Inventory PickaxeGUI = Bukkit.createInventory(null, 54, "Pickaxe Forge");
 
 
-        Integer xp = (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER));
-        Integer Level = (player.getPersistentDataContainer().get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER));
-        int xpLeft = (Level * 500 - xp);
+        Integer Level = getLevel(player);
 
         if(Level >= 1) {
             PickaxeGUI.setItem(

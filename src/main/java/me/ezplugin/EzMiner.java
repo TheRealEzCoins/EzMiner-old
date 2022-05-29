@@ -3,6 +3,7 @@ package me.ezplugin;
 import me.ezplugin.Commands.Commands;
 import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +16,11 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     public static ListenerManager getListenerManager() {
         return plugin.listenerManager;
+    }
+
+    private static boolean EzForagingInstalled;
+    public static boolean isEzForagingInstalled() {
+        return EzForagingInstalled;
     }
 
     public static PluginManager getPluginManager() {
@@ -33,6 +39,8 @@ public final class EzMiner extends JavaPlugin implements Listener {
         getConfig().addDefault("Level-Scaling." + "Exp", 500);
         saveDefaultConfig();
 
+        EzForagingInstalled = Bukkit.getServer().getPluginManager().isPluginEnabled("Vault");
+
         plugin = this;
         this.listenerManager = new ListenerManager();
 
@@ -46,7 +54,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         getCommand("Date").setExecutor(new Commands());
         getCommand("BreakBlock").setExecutor(new Commands());
         getCommand("SetXP").setExecutor(new Commands());
-        getCommand("SetBlock").setExecutor(new Commands());
+        getCommand("Stats").setExecutor(new Commands());
 
         // Item int
         ItemManager.init();

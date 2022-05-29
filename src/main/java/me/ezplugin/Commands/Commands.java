@@ -1,6 +1,7 @@
 package me.ezplugin.Commands;
 
 import me.ezplugin.EzMiner;
+import me.ezplugin.GUI.GUIS.StatsGUI;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.Utils.Utils;
@@ -47,13 +48,13 @@ public class Commands implements CommandExecutor {
 
         if (cmd.getName().equalsIgnoreCase("CheckXP")) {
             if(args.length < 1) {
-                player.sendMessage("§b" + player.getName() + "'s stats:" + "\n§cLevel: " + Utils.getCurrentStats(player, "LEVEL") + "\n§cXP: " + Utils.getCurrentStats(player, "LEVEL"));
+                player.sendMessage("§b" + player.getName() + "'s stats:" + "\n§cLevel: " + Utils.getLevel(player) + "\n§cXP: " + Utils.getXP(player));
             } else {
             Player Target = Bukkit.getPlayer(args[0]);
                 if(Target != null) {
                     PersistentDataContainer TargetData = Target.getPersistentDataContainer();
-                    int XP = Utils.getCurrentStats(Target, "XP");
-                    int LEVEL = Utils.getCurrentStats(Target, "LEVEL");
+                    int XP = Utils.getXP(player);
+                    int LEVEL = Utils.getLevel(player);
                     player.sendMessage("§b" + Target.getName() + "'s stats:" + "\n§cLevel: " + LEVEL + "\n§cXP: " + XP);
                 } else {
                     player.sendMessage("§cThat is not a valid player.");
@@ -106,9 +107,8 @@ public class Commands implements CommandExecutor {
                 }
             }
 
-        } if (cmd.getName().equalsIgnoreCase("SetBlock")) {
-            Block block = player.getTargetBlockExact(1);
-            block.getLocation();
+        } if (cmd.getName().equalsIgnoreCase("Stats")) {
+            player.openInventory(StatsGUI.StatsGUI(player));
         }
 
             return true;

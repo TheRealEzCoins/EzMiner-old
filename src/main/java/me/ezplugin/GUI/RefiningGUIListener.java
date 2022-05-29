@@ -2,6 +2,7 @@ package me.ezplugin.GUI;
 
 import me.ezplugin.GUI.GUIS.CastingGUI;
 import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Utils.ForgeUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -19,7 +20,7 @@ public class RefiningGUIListener implements Listener {
     @EventHandler
     public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
 
-        Utils.ForgeTimeSetup(openEvent, ItemManager.Refined_Gemstone_1, "GemstoneTime1");
+        ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Refined_Gemstone_1, "GemstoneTime1");
     }
 
     @EventHandler
@@ -29,7 +30,7 @@ public class RefiningGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             } else if (e.getCurrentItem().getType().equals(ItemManager.Refined_Gemstone_1.getType())) {
-                Utils.CustomForgeSetup(
+                ForgeUtils.CustomForgeSetup(
                         player,
                         1,
                         ItemManager.Refined_Gemstone_1,

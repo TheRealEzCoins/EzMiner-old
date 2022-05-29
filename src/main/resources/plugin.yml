@@ -26,6 +26,6 @@ commands:
   SetXP:
     description: Aeea
     usage: /<command>
-  SetBlock:
+  Stats:
     description: Aeea
     usage: /<command>
