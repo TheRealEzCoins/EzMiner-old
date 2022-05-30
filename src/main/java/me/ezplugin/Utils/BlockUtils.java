@@ -19,8 +19,8 @@ public class BlockUtils extends Utils {
         if (Utils.isEmpty(player)) {
             PersistentDataContainer pick = Utils.getMainHandData(player);
             Boolean CheckTier = pick.has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
-            if (block.getBlock().getType() == ore && player.getWorld().getName().equals("world")) return;
-            if (CheckTier) return;
+            if (block.getBlock().getType() == ore && player.getWorld().getName().equals("world")) {
+                if (CheckTier) {
                     int Tier = pick.get(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
                     if (Tier >= Hardness) {
                         int CurrentLVL = getLevel(player);
@@ -28,7 +28,7 @@ public class BlockUtils extends Utils {
                             int CurrentXP = getXP(player);
                             ItemStack MainHand = player.getInventory().getItemInMainHand();
                             Location BlockLocation = block.getBlock().getLocation();
-                            if(pick.has(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER)) {
+                            if (pick.has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER)) {
                                 FuelHandler.FuelConsume(player, block);
                             }
 
@@ -76,7 +76,7 @@ public class BlockUtils extends Utils {
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
                                 setXP(player, CurrentXP + ExpAmount);
                             }
-                        } else{
+                        } else {
                             player.sendMessage("§cYou need to be §eLevel " + LevelReq + " §cto mine this.");
                             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
                             block.setCancelled(true);
@@ -86,6 +86,8 @@ public class BlockUtils extends Utils {
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
                         block.setCancelled(true);
                     }
+                }
+            }
 
         } else {
             return;

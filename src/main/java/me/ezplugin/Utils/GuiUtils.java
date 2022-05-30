@@ -16,7 +16,7 @@ public class GuiUtils extends ItemUtils {
 
     public static ItemStack getStatsAsSkull(Player player ) {
         int getLevel = Utils.getLevel(player);
-        int getXP = Utils.getLevel(player);
+        int getXP = Utils.getXP(player);
         int xpLeft = (getLevel * 500 - getXP);
         return customItemUsingStack(
                 Utils.getPlayerSkull(player),

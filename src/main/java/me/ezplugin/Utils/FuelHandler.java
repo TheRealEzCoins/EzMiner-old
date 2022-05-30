@@ -33,9 +33,9 @@ public class FuelHandler {
     }
 
     public static void FuelConsume(Player player, BlockBreakEvent block) {
-        PersistentDataContainer pick = player.getPersistentDataContainer();
+        PersistentDataContainer pick = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
         ItemStack MainHand = player.getInventory().getItemInMainHand();
-        int CurrentFuel = pick.get(new NamespacedKey(EzMiner.getPlugin(), "FUEL"), PersistentDataType.INTEGER);
+        int CurrentFuel = pick.get(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
         if (CurrentFuel > 0) {
             FuelHandler.onFuelUsage(player);
         } else if (CurrentFuel <= 0) {

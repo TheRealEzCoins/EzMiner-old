@@ -12,20 +12,20 @@ commands:
     description: Gives Pickaxe
     usage: /<command>
   CheckXP:
-    description: EEee
+    description: Checks xp
     usage: /<command>
   ResetXP:
-    description: EEeee
+    description: Reset xp
     usage: /<command>
   Date:
-    description: EEeeee
+    description: Get the current Date
     usage: /<command>
   BreakBlock:
-    description: eeeee
+    description: Break the block you're looking at
     usage: /<command>
   SetXP:
-    description: Aeea
+    description: Sets the xp of a user
     usage: /<command>
   Stats:
-    description: Aeea
+    description: Check your stats
     usage: /<command>
