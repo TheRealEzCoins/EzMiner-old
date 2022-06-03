@@ -1,5 +1,6 @@
 package me.ezplugin;
 
+import me.ezcoins.ezpets.EzPets;
 import me.ezplugin.Commands.Commands;
 import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class EzMiner extends JavaPlugin implements Listener {
 
     public static EzMiner plugin;
+    public static EzPets EzPetsPlugin;
     private ListenerManager listenerManager;
 
     public static ListenerManager getListenerManager() {
@@ -53,8 +55,10 @@ public final class EzMiner extends JavaPlugin implements Listener {
         getCommand("ResetXP").setExecutor(new Commands());
         getCommand("Date").setExecutor(new Commands());
         getCommand("BreakBlock").setExecutor(new Commands());
+        getCommand("CreateBlock").setExecutor(new Commands());
         getCommand("SetXP").setExecutor(new Commands());
         getCommand("Stats").setExecutor(new Commands());
+
 
         // Item int
         ItemManager.init();
@@ -69,6 +73,9 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     public static EzMiner getPlugin(){
         return plugin;
+    }
+    public static EzPets getEzPetsPlugin(){
+        return EzPetsPlugin;
     }
 
 

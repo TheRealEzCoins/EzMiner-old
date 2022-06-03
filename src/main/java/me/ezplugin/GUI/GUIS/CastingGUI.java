@@ -1,7 +1,6 @@
 package me.ezplugin.GUI.GUIS;
 
 import me.ezplugin.Utils.GuiUtils;
-import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;

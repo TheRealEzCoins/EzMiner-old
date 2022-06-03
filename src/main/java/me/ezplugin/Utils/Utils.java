@@ -1,17 +1,18 @@
 package me.ezplugin.Utils;
 
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
+import me.ezplugin.Items.ItemCreator;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -50,13 +51,6 @@ public class Utils {
         return date;
     }
 
-    public static void PlayerDataReload(Player player) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        int CurrentXP = data.get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER);
-        int CurrentLVL = data.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
-        Utils.setscore(player, CurrentLVL, CurrentXP);
-
-    }
 
     public static boolean isEmpty(Player player) {
         ItemStack getMainHand = player.getItemInHand();
@@ -76,26 +70,6 @@ public class Utils {
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, -10);
     }
 
-    public static void setscore(Player player, int level, int xp) {
-        Scoreboard scoreboard = EzMiner.plugin.getServer().getScoreboardManager().getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("EzMiner", "Mining");
-
-        objective.setDisplayName("§cPlayer Level");
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        Score emptyspot1 = objective.getScore("");
-        emptyspot1.setScore(1);
-        Score exp = objective.getScore("XP: §a" + xp);
-        exp.setScore(2);
-        Score lvl = objective.getScore("Level: §a" + level);
-        lvl.setScore(3);
-        Score emptyspot2 = objective.getScore("");
-        emptyspot2.setScore(4);
-        Score score = objective.getScore("Player: " + ChatColor.GOLD + player.getName());
-        score.setScore(5);
-
-        player.setScoreboard(scoreboard);
-    }
 
 
     public static Integer getXP(Player player) {
@@ -108,10 +82,16 @@ public class Utils {
         return data.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
     }
 
+    public static Integer getTier(Player player) {
+        PersistentDataContainer data = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+        return data.get(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
+    }
+
     public static void setXP(Player player, int xp) {
         PersistentDataContainer data = player.getPersistentDataContainer();
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, xp);
-    }
+            data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, xp);
+        }
+
 
     public static void setLevel(Player player, int Level) {
         PersistentDataContainer data = player.getPersistentDataContainer();
@@ -126,6 +106,39 @@ public class Utils {
         meta.setDisplayName("§6" + paramPlayer.getName() + "'s stats");
         skull.setItemMeta(meta);
         return skull;
+    }
+
+    public static void doFortune(Player player, ItemCreator itemCreator) {
+        ItemStack MainHand = player.getInventory().getItemInMainHand();
+        if (MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+            int min = 1;
+            int max = 3;
+            int Rnd = (int) (Math.random() * (max - min + 1) + min);
+            int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+            for (int output = Rnd; output < getFortune + 3; output++) {
+                player.getInventory().addItem(itemCreator.getItemStack());
+            }
+        }
+        if (!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
+            player.getInventory().addItem(itemCreator.getItemStack());
+        }
+    }
+
+    public static void HandleXP(Player player, int ExpAmount) {
+        int CurrentLVL = getLevel(player);
+        int CurrentXP = getXP(player);
+        if (CurrentXP >= Utils.getRatio * CurrentLVL) {
+            int totalLevel = CurrentLVL + 1;
+            setLevel(player, CurrentLVL + 1);
+            setXP(player, CurrentXP - (CurrentLVL * getRatio));
+            player.sendMessage("§bLeveling...");
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+            player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
+        } else {
+            int totalXP = CurrentXP + ExpAmount;
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
+            setXP(player, CurrentXP + ExpAmount);
+        }
     }
 
 

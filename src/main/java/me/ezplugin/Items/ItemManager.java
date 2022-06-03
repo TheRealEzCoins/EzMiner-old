@@ -1,8 +1,8 @@
 package me.ezplugin.Items;
 
+import me.ezplugin.Enums.Rarity;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.block.BlockPlaceEvent;
 
 public class ItemManager {
 
@@ -39,20 +39,20 @@ public class ItemManager {
         // -------------------------------------------- //
         Orichalchite = new ItemCreator(Material.CYAN_DYE)
                 .setName("§9Orichalchite Ore")
-                .setRarity(1, "ORE")
+                .setRarity(Rarity.COMMON, "ORE")
                 .setOre();
         // -------------------------------------------- //
         Gemstone = new ItemCreator(Material.SMALL_AMETHYST_BUD)
                 .setName("§bGemstone")
                 .setOre()
                 .setUnplacable(true)
-                .setRarity(2, "GEMSTONE");
+                .setRarity(Rarity.UNCOMMON, "GEMSTONE");
         // -------------------------------------------- //
         Refined_Gemstone_1 = new ItemCreator(Material.MEDIUM_AMETHYST_BUD)
                 .setName("§bRefined Gemstone")
                 .setOre()
                 .setUnplacable(true)
-                .setRarity(3, "GEMSTONE");
+                .setRarity(Rarity.RARE, "GEMSTONE");
         // -------------------------------------------- //
 
     }

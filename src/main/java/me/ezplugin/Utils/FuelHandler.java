@@ -44,4 +44,9 @@ public class FuelHandler {
             player.sendMessage("&cYour " + MainHand.getItemMeta().getDisplayName() + "has ran out of fuel.");
         }
     }
+
+    public static boolean getFuel(Player player) {
+        PersistentDataContainer data = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+        return data.has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
+    }
 }

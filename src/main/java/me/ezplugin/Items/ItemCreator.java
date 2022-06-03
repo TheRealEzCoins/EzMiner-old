@@ -1,7 +1,9 @@
 package me.ezplugin.Items;
 
+import me.ezplugin.Enums.Rarity;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Utils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -221,34 +223,13 @@ public class ItemCreator implements Listener {
         return getItemStack().getItemMeta().getDisplayName();
     }
 
-    public ItemCreator setRarity(int Rarity, String type) {
+    public ItemCreator setRarity(Rarity Rarity, String type) {
         ItemStack item = itemStack;
         ItemMeta meta = item.getItemMeta();
-        if (Rarity == 1) {
-            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "1");
-            itemStack.setItemMeta(meta);
-            addLore("&f&lCOMMON " + type.toUpperCase(Locale.ROOT));
-        }
-        if (Rarity == 2) {
-            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "2");
-            itemStack.setItemMeta(meta);
-            addLore("&a&lUNCOMMON " + type.toUpperCase(Locale.ROOT));
-        }
-        if (Rarity == 3) {
-            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "3");
-            itemStack.setItemMeta(meta);
-            addLore("&b&lRARE " + type.toUpperCase(Locale.ROOT));
-        }
-        if (Rarity == 4) {
-            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "4");
-            itemStack.setItemMeta(meta);
-            addLore("&9&lEPIC " + type.toUpperCase(Locale.ROOT));
-        }
-        if (Rarity == 5) {
-            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, "5");
-            itemStack.setItemMeta(meta);
-            addLore("&6&lLEGENDARY " + type.toUpperCase(Locale.ROOT));
-        }
+
+        meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, Rarity.name());
+        itemStack.setItemMeta(meta);
+        addLore("" + Rarity.getColor() + ChatColor.BOLD + Rarity + " " + type);
         return this;
     }
 

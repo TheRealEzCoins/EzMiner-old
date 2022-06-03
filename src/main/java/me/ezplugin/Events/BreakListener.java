@@ -1,6 +1,6 @@
 package me.ezplugin.Events;
 
-import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.Utils.BlockUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -17,8 +17,8 @@ public class BreakListener extends BlockUtils implements Listener {
         if(block.getBlock().getType().equals(Material.BEDROCK) && (!(player.getGameMode().equals(GameMode.CREATIVE)))) {
             block.setCancelled(true);
         } else {
-            BlockSetup(block, 1, Material.IRON_ORE, 1, ItemManager.Orichalchite, player, 100, 50L);
-            BlockSetup(block, 15, Material.GREEN_STAINED_GLASS, 2, ItemManager.Gemstone, player, 250, 500L);
+            BlockUtils.BlockSetup(block, player, Ores.Gems, 500L, 500);
+            BlockUtils.BlockSetup(block, player, Ores.Orichalchite, 100L, 100);
         }
     }
 }

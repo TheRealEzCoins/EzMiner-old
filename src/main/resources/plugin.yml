@@ -4,6 +4,8 @@ main: me.ezplugin.EzMiner
 api-version: 1.18
 authors: [ EzCoins ]
 description: Made by EzCoins
+depend:
+  - EzPets
 commands:
   Forge:
     description: Opens the forge
@@ -19,6 +21,9 @@ commands:
     usage: /<command>
   Date:
     description: Get the current Date
+    usage: /<command>
+  CreateBlock:
+    description: Sets the block you're looking at as a custom ore.
     usage: /<command>
   BreakBlock:
     description: Break the block you're looking at
