@@ -1,96 +1,133 @@
 package me.ezplugin.Utils;
 
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
-import me.ezplugin.Items.ItemCreator;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class BlockUtils extends Utils {
+import static me.ezplugin.Utils.Utils.*;
 
-    public static void BlockSetup(BlockBreakEvent block, Integer LevelReq, Material ore, Integer Hardness , ItemCreator drop , Player player, Integer ExpAmount, Long RespawnTimer) {
+public class BlockUtils {
+    public static void BlockSetup(BlockBreakEvent block, Player player, Ores ores, Long RespawnTimer, int ExpAmount) {
         if (Utils.isEmpty(player)) {
-            PersistentDataContainer pick = Utils.getMainHandData(player);
-            Boolean CheckTier = pick.has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
-            if (block.getBlock().getType() == ore && player.getWorld().getName().equals("world")) {
-                if (CheckTier) {
-                    int Tier = pick.get(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
-                    if (Tier >= Hardness) {
-                        int CurrentLVL = getLevel(player);
-                        if (CurrentLVL >= LevelReq) {
-                            int CurrentXP = getXP(player);
-                            ItemStack MainHand = player.getInventory().getItemInMainHand();
-                            Location BlockLocation = block.getBlock().getLocation();
-                            if (pick.has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER)) {
+            Block getBlock = block.getBlock();
+            if (getBlock.hasMetadata("CustomBlock")) {
+                if(getBlock.getType().equals(ores.getBlock())) {
+                    if(getLevel(player) >= ores.getLevel()) {
+                        if(Utils.getTier(player) >= ores.getTier()) {
+                            getBlock.removeMetadata("CustomBlock", EzMiner.getPlugin());
+
+                            if (FuelHandler.getFuel(player)) {
                                 FuelHandler.FuelConsume(player, block);
                             }
 
+                            Utils.doFortune(player, ores.getItem());
 
-                            // Handles Fortune
-                            if (MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
-                                int min = 1;
-                                int max = 3;
-                                int Rnd = (int) (Math.random() * (max - min + 1) + min);
-                                int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
-                                for (int output = Rnd; output < getFortune + 3; output++) {
-                                    player.getInventory().addItem(drop.getItemStack());
-                                }
-                            }
-                            if (!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
-                                player.getInventory().addItem(drop.getItemStack());
-                            }
-
-                            // Handles basic block breaking events
                             block.setDropItems(false);
-                            BlockLocation.getWorld().spawnParticle(Particle.CRIT, BlockLocation.add(0, 1, 0), 10);
                             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
                             block.setCancelled(true);
                             block.getBlock().setType(Material.BEDROCK);
-                            Utils.setscore(player, CurrentLVL, CurrentXP + ExpAmount);
 
 
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    block.getBlock().setType(ore);
+                                    block.getBlock().setType(ores.getBlock());
+                                    AddMeta(block);
                                 }
                             }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
 
-                            if (CurrentXP >= Utils.getRatio * CurrentLVL) {
-                                int totalLevel = CurrentLVL + 1;
-                                setLevel(player, CurrentLVL + 1);
-                                setXP(player, CurrentXP - (CurrentLVL * getRatio));
-                                player.sendMessage("§bLeveling...");
-                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                                player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
-                                Utils.setscore(player, CurrentLVL + 1, CurrentXP - (CurrentLVL * Utils.getRatio));
-                            } else {
-                                int totalXP = CurrentXP + ExpAmount;
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
-                                setXP(player, CurrentXP + ExpAmount);
-                            }
-                        } else {
-                            player.sendMessage("§cYou need to be §eLevel " + LevelReq + " §cto mine this.");
-                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+                            Utils.HandleXP(player, ExpAmount);
+
+                        }else {
+                            player.sendMessage("§cYour pickaxe must be §eTier " + ores.getTier() + " §cto mine this.");
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
                             block.setCancelled(true);
                         }
                     } else {
-                        player.sendMessage("§cYour pickaxe must be §eTier " + Hardness + " §cto mine this.");
-                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
+                        player.sendMessage("§cYou need to be §eLevel " + ores.getLevel() + " §cto mine this.");
+                        player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
                         block.setCancelled(true);
                     }
                 }
             }
-
-        } else {
-            return;
         }
+
+    }
+
+    public static void AddMeta(BlockBreakEvent block) {
+        assert block != null;
+        block.getBlock().setMetadata("CustomBlock", new MetadataValue() {
+            @Nullable
+            @Override
+            public Object value() {
+                return null;
+            }
+
+            @Override
+            public int asInt() {
+                return 0;
+            }
+
+            @Override
+            public float asFloat() {
+                return 0;
+            }
+
+            @Override
+            public double asDouble() {
+                return 0;
+            }
+
+            @Override
+            public long asLong() {
+                return 0;
+            }
+
+            @Override
+            public short asShort() {
+                return 0;
+            }
+
+            @Override
+            public byte asByte() {
+                return 0;
+            }
+
+            @Override
+            public boolean asBoolean() {
+                return false;
+            }
+
+            @NotNull
+            @Override
+            public String asString() {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public Plugin getOwningPlugin() {
+                return EzMiner.getPlugin();
+            }
+
+            @Override
+            public void invalidate() {
+
+            }
+
+        });
+
     }
 }
