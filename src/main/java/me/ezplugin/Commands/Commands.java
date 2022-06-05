@@ -1,9 +1,8 @@
 package me.ezplugin.Commands;
 
-import com.jeff_media.morepersistentdatatypes.DataType;
-import jdk.javadoc.internal.doclint.HtmlTag;
+import me.ezplugin.Enums.ForgeItems;
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
-import me.ezplugin.GUI.GUIS.StatsGUI;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.Utils.Utils;
@@ -11,13 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.BlockDataMeta;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -25,10 +23,9 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
+import java.util.LinkedHashSet;
 
 
 public class Commands implements CommandExecutor {
@@ -74,6 +71,7 @@ public class Commands implements CommandExecutor {
             if(player.hasPermission("EzMiner.ResetXP")) {
                 data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, 0);
                 data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, 1);
+                data.set(new NamespacedKey(EzMiner.getPlugin(), Ores.Gemstone_1.name()), PersistentDataType.INTEGER, 0);
                 player.sendMessage("§aReset xp!");
             }
         }
@@ -178,8 +176,39 @@ public class Commands implements CommandExecutor {
                 }
             }
 
-        } if (cmd.getName().equalsIgnoreCase("Stats")) {
-            player.openInventory(StatsGUI.StatsGUI(player));
+        }  if (cmd.getName().equalsIgnoreCase("Test")) {
+            LinkedHashSet<ItemStack> list = new LinkedHashSet<>();
+            ItemStack[] items = ForgeItems.Gemstone_2.getRecipe();
+            for (ItemStack stack : items) {
+                list.add(stack);
+            }
+
+            LinkedHashSet<ItemStack> inventory = new LinkedHashSet<>();
+            ItemStack[] inventoryitems = player.getInventory().getContents();
+            for(ItemStack stack : inventoryitems) {
+                inventory.add(stack);
+
+            }
+
+            for (int i = 0; i < ForgeItems.Gemstone_2.getRecipe().length; i++) {
+
+                for (ItemStack stack : player.getInventory().getContents()) {
+                    if (stack != null) {
+                        if (ForgeItems.Gemstone_2.getRecipe()[i].equals(stack.getType()) && stack.getAmount() >= ForgeItems.Gemstone_2.getRecipe()[i].getAmount()) {
+                            int newStack = stack.getAmount() - ForgeItems.Gemstone_2.getRecipe()[i].getAmount();
+                            stack.setAmount(newStack);
+                        } else {
+                            player.sendMessage("Missing items.");
+                        }
+                    } else {
+                        player.sendMessage("Inventory is null");
+                    }
+                }
+
+
+            }
+
+
         }
 
             return true;

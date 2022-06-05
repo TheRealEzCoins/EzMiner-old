@@ -80,11 +80,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.TheRealEzCoins</groupId>
-            <artifactId>EzPets</artifactId>
-            <version>6bf3bc9a45</version>
-        </dependency>
-        <dependency>
             <groupId>com.jeff_media</groupId>
             <artifactId>MorePersistentDataTypes</artifactId>
             <version>2.3.1</version>

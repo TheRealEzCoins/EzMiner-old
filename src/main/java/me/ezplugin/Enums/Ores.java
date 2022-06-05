@@ -6,7 +6,7 @@ import org.bukkit.Material;
 
 public enum Ores {
     Orichalchite(ItemManager.Orichalchite, Material.IRON_ORE, 1, 1),
-    Gems(ItemManager.Gemstone, Material.GREEN_STAINED_GLASS, 2, 15);
+    Gemstone_1(ItemManager.Gemstone, Material.GREEN_STAINED_GLASS, 2, 15);
 
 
     private ItemCreator itemCreator;

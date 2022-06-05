@@ -122,25 +122,6 @@ public class ForgeUtils {
     }
 
 
-    public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ItemCreator Craftable, String key) throws ParseException {
-
-        if (!openEvent.getView().getTitle().equalsIgnoreCase("Forge"))
-            return;
-
-        Player player = (Player) openEvent.getPlayer();
-        if(!player.getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING))
-            return;
-        PersistentDataContainer dataContainer = player.getPersistentDataContainer();
-        Date forgedate = Utils.formatter.parse(dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), key), PersistentDataType.STRING));
-
-        if (Utils.getTime().after(forgedate)) {
-            player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
-            Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
-            Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
-            dataContainer.remove(new NamespacedKey(EzMiner.getPlugin(), key));
-            player.getInventory().addItem(Craftable.getItemStack());
-        }
-    }
 
     private static ItemStack customForgeBuilder(ItemStack craftable, String displayName, String forgeLore) {
         ItemStack item = new ItemStack(craftable);

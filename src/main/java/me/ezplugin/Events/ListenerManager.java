@@ -9,13 +9,12 @@ public class ListenerManager {
     public ListenerManager() {
         addListener(new PickaxeGUIListener());
         addListener(new ForgeGUIListener());
-        addListener(new CastingGUIListener());
-        addListener(new ReFuelGUIListener());
+        addListener(new SelectorGUIListener());
         addListener(new BreakListener());
+        addListener(new ResourceGUIListener());
         addListener(new OnJoin());
         addListener(new PlaceListener());
         addListener(new RefiningGUIListener());
-        addListener(new StatsGUIListener());
 
     }
 

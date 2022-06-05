@@ -1,9 +1,11 @@
 package me.ezplugin.GUI;
 
-import me.ezplugin.GUI.GUIS.CastingGUI;
+import me.ezplugin.Enums.ForgeItems;
+import me.ezplugin.GUI.GUIS.SelectorGUI;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.ForgeUtils;
-import me.ezplugin.Utils.Utils;
+import me.ezplugin.Utils.GuiUtils;
+import me.ezplugin.Utils.newForgeUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -20,7 +22,7 @@ public class RefiningGUIListener implements Listener {
     @EventHandler
     public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
 
-        ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Refined_Gemstone_1, "GemstoneTime1");
+        newForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Refined_Gemstone_1, "GemstoneTime1");
     }
 
     @EventHandler
@@ -30,17 +32,10 @@ public class RefiningGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             } else if (e.getCurrentItem().getType().equals(ItemManager.Refined_Gemstone_1.getType())) {
-                ForgeUtils.CustomForgeSetup(
-                        player,
-                        1,
-                        ItemManager.Refined_Gemstone_1,
-                        ItemManager.Gemstone,
-                        16,
-                        300,
-                        "GemstoneTime1");
+                newForgeUtils.ForgeSetup(player, ForgeItems.Gemstone_2, "GemstoneTime1");
 
             }  else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
-                player.openInventory(CastingGUI.SelectorGUI());
+                player.openInventory(SelectorGUI.SelectorGUI());
 
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cClose")) {
                 player.closeInventory();

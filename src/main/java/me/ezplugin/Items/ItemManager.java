@@ -25,6 +25,7 @@ public class ItemManager {
                 .addEnchantment(Enchantment.DIG_SPEED, 1)
                 .getDigSpeed()
                 .getFortune()
+                .setPickaxe()
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //
@@ -34,6 +35,7 @@ public class ItemManager {
                 .setTier(2)
                 .getDigSpeed()
                 .getFortune()
+                .setPickaxe()
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //

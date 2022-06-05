@@ -6,11 +6,14 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -32,8 +35,8 @@ public class BlockUtils {
                                 FuelHandler.FuelConsume(player, block);
                             }
 
-                            Utils.doFortune(player, ores.getItem());
-
+                            checkResources(player, ores);
+                            Utils.doFortune(player, ores);
                             block.setDropItems(false);
                             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
                             block.setCancelled(true);
@@ -129,5 +132,12 @@ public class BlockUtils {
 
         });
 
+    }
+
+    public static void checkResources(Player player, Ores ores) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        if(!(data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER))) {
+            setupResources(player, ores.name(), 0);
+        }
     }
 }

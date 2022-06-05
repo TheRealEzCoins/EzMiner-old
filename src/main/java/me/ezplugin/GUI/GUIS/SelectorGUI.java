@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class CastingGUI extends GuiUtils {
+public class SelectorGUI extends GuiUtils {
     private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
 
     private static final int[] black_border = new int[] {

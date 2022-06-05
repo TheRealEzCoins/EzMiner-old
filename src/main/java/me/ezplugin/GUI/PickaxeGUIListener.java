@@ -1,9 +1,9 @@
 package me.ezplugin.GUI;
 
-import me.ezplugin.GUI.GUIS.CastingGUI;
+import me.ezplugin.GUI.GUIS.SelectorGUI;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.ForgeUtils;
-import me.ezplugin.Utils.Utils;
+import me.ezplugin.Utils.newForgeUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,12 +17,12 @@ import java.text.ParseException;
 
 public class PickaxeGUIListener implements Listener {
 
-        @EventHandler
-        public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
+    @EventHandler
+    public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
 
-            ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Orichalchite_Pickaxe, "OrichTime");
-            ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Obsidian_Pickaxe, "ObsidianTime");
-        }
+        newForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Orichalchite_Pickaxe, "OrichTime");
+        newForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Obsidian_Pickaxe, "ObsidianTime");
+    }
 
     @EventHandler
     public void onClick(InventoryClickEvent e) throws ParseException {
@@ -50,7 +50,7 @@ public class PickaxeGUIListener implements Listener {
                         60,
                         "ObsidianTime");
             } else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
-                player.openInventory(CastingGUI.SelectorGUI());
+                player.openInventory(SelectorGUI.SelectorGUI());
 
             } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cClose")) {
                 player.closeInventory();

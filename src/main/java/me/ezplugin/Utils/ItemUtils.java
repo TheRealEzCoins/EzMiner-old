@@ -1,10 +1,14 @@
 package me.ezplugin.Utils;
 
+import me.ezplugin.Items.ItemManager;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class ItemUtils extends Utils {
 
@@ -26,4 +30,5 @@ public class ItemUtils extends Utils {
         item.setItemMeta(meta);
         return item;
     }
+
 }

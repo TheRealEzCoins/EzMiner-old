@@ -1,5 +1,6 @@
 package me.ezplugin.Items;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import me.ezplugin.Enums.Rarity;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Utils;
@@ -230,6 +231,15 @@ public class ItemCreator implements Listener {
         meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, Rarity.name());
         itemStack.setItemMeta(meta);
         addLore("" + Rarity.getColor() + ChatColor.BOLD + Rarity + " " + type);
+        return this;
+    }
+
+    public ItemCreator setPickaxe() {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+
+        meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Pickaxe"), DataType.BOOLEAN, Boolean.TRUE);
+        itemStack.setItemMeta(meta);
         return this;
     }
 

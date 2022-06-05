@@ -1,5 +1,6 @@
 package me.ezplugin.Utils;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemCreator;
@@ -108,19 +109,22 @@ public class Utils {
         return skull;
     }
 
-    public static void doFortune(Player player, ItemCreator itemCreator) {
+    public static void doFortune(Player player, Ores ores) {
         ItemStack MainHand = player.getInventory().getItemInMainHand();
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        int getAmount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
         if (MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
             int min = 1;
             int max = 3;
             int Rnd = (int) (Math.random() * (max - min + 1) + min);
             int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
             for (int output = Rnd; output < getFortune + 3; output++) {
-                player.getInventory().addItem(itemCreator.getItemStack());
+                int otherAmount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
+                data.set(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER, otherAmount + 1);
             }
         }
         if (!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
-            player.getInventory().addItem(itemCreator.getItemStack());
+            data.set(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER, getAmount + 1);
         }
     }
 
@@ -139,6 +143,16 @@ public class Utils {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
             setXP(player, CurrentXP + ExpAmount);
         }
+    }
+
+    public static void setupResources(Player player, String Ore, int Amount ) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        data.set(new NamespacedKey(EzMiner.getPlugin(), Ore), PersistentDataType.INTEGER, Amount);
+    }
+
+    public static int getResources(Player player, Ores ore) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        return data.get(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER);
     }
 
 
