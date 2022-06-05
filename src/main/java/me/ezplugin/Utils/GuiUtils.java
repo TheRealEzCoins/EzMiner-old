@@ -97,7 +97,9 @@ public class GuiUtils extends ItemUtils {
                 "§fAmount: §a" + amount,
                 "",
                 "§c→ §fLeft-Click to deposit",
-                "§c→ §fRight-Click to withdraw");
+                "§c→ §fShift-Left-Click to deposit all",
+                "§c→ §fRight-Click to withdraw",
+                "§c→ §fShift-Right-Click to withdraw 64");
     }
 
     public static ItemStack createItem(ItemCreator itemCreator, Material material, int amount, String time) {
@@ -196,12 +198,13 @@ public class GuiUtils extends ItemUtils {
                 for (ItemStack item : player.getInventory().getContents()) {
                     if (item != null && item.getType().equals(ore.getItem().getType())) {
                         amount += item.getAmount();
-                        player.getInventory().removeItem(ore.getItem().getItemStack());
                     }
                 }
+                ore.getItem().getItemStack().setAmount(64);
+                player.getInventory().remove(ore.getItem().getItemStack());
                 int getAmount = Utils.getResources(player, ore);
                 data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount + amount);
-                player.sendMessage("§c+ " + amount + ore.getItem().getName());
+                player.sendMessage("§c+" + amount + " " + ore.getItem().getName());
                 player.openInventory(ResourcesGUI.ResourcesGUI(player));
 
             } else {
