@@ -17,7 +17,7 @@ public class SelectorGUI extends GuiUtils {
             42, 43, 44, 45, 46, 47, 50, 51, 52, 53 };
 
     public static Inventory SelectorGUI() {
-        Inventory inventory = Bukkit.createInventory(null, 54, "Casting");
+        Inventory inventory = Bukkit.createInventory(null, 54, "§8Selector");
 
         inventory.setItem(20, customItemName(Material.DIAMOND, "§aRefining", "", "§eU can refine ore here"));
         inventory.setItem(24, customItemName(Material.DIAMOND_PICKAXE, "§aPickaxes", "" ,"§eU can make pickaxes here."));

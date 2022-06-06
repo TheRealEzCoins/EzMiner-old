@@ -148,6 +148,19 @@ public class ItemCreator implements Listener {
         return this;
     }
 
+
+    public ItemCreator setAsFuel(int FuelAmount) {
+        ItemMeta meta = itemStack.getItemMeta();
+        if(meta != null) {
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "reFuel"), PersistentDataType.INTEGER, FuelAmount);
+            itemStack.setItemMeta(meta);
+            addLore(" ");
+            addLore("§fFuel: " + "§b 1000");
+        }
+        return this;
+    }
+
+
     public boolean HasFuel() {
         ItemMeta meta = itemStack.getItemMeta();
         boolean HasFuel = meta.getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);

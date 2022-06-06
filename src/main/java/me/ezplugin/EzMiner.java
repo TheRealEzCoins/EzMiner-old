@@ -57,6 +57,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         getCommand("SetXP").setExecutor(new Commands());
         getCommand("Stats").setExecutor(new Commands());
         getCommand("Test").setExecutor(new Commands());
+        getCommand("ResetAll").setExecutor(new Commands());
 
 
         // Item int

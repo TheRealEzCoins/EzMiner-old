@@ -34,5 +34,8 @@ commands:
     description: Check your stats
     usage: /<command>
   test:
+    description: Test Command
+    usage: /<command>
+  ResetAll:
     description: Check your stats
     usage: /<command>

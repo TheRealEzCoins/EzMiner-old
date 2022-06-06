@@ -1,9 +1,12 @@
 package me.ezplugin.Utils;
 
+import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.GUIS.ResourcesGUI;
+import me.ezplugin.GUI.GUIS.SelectorGUI;
 import me.ezplugin.Items.ItemCreator;
+import me.ezplugin.Items.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -74,17 +77,6 @@ public class GuiUtils extends ItemUtils {
                 "§8Goes back to the selection menu!.");
     }
 
-    public static ItemStack createCustomItem(ItemCreator itemCreator, ItemCreator material, int amount, String time) {
-        return customItemName(
-                itemCreator.getType(),
-                itemCreator.getName(),
-                "",
-                "§eItems required",
-                ChatColor.GRAY + material.getName().toLowerCase(Locale.ROOT).substring(0, 1).toUpperCase(Locale.ROOT) + material.getName().substring(1) + " §7x" + amount,
-                "",
-                "§8Duration: §b" + time);
-    }
-
     public static ItemStack ResourceCreation(Ores ores, Player player) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         int amount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
@@ -102,15 +94,31 @@ public class GuiUtils extends ItemUtils {
                 "§c→ §fShift-Right-Click to withdraw 64");
     }
 
-    public static ItemStack createItem(ItemCreator itemCreator, Material material, int amount, String time) {
+    public static ItemStack createItem(ItemCreator itemCreator, Ores Resource_1, ForgeItems forgeItems) {
+        int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[0]);
         return customItemName(
                 itemCreator.getType(),
                 itemCreator.getName(),
                 "",
                 "§eItems required",
-                ChatColor.GRAY + material.name().toLowerCase(Locale.ROOT).substring(0, 1).toUpperCase(Locale.ROOT) + material.name().substring(1).toLowerCase(Locale.ROOT) + " §7x" + amount,
+                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Value,
                 "",
-                "§8Duration: §b" + time);
+                "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
+    }
+
+    public static ItemStack createItem_2(ItemCreator itemCreator, Ores Resource_1, Ores Resource_2, ForgeItems forgeItems) {
+        int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[0]);
+        int Value2 = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[1]);
+
+        return customItemName(
+                itemCreator.getType(),
+                itemCreator.getName(),
+                "",
+                "§eItems required",
+                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Value,
+                ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Value2,
+                "",
+                "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
     public static void fillBorder(Inventory inventory) {
@@ -193,15 +201,19 @@ public class GuiUtils extends ItemUtils {
 
 
         } if(e.isLeftClick() && e.isShiftClick()) {
-            if (player.getInventory().containsAtLeast(ore.getItem().getItemStack(), 64)) {
+            if (player.getInventory().containsAtLeast(ore.getItem().getItemStack(), 1)) {
                 int amount = 0;
                 for (ItemStack item : player.getInventory().getContents()) {
                     if (item != null && item.getType().equals(ore.getItem().getType())) {
                         amount += item.getAmount();
+                        if(item.getType() == ore.getItem().getType() && item.getAmount() >= 1) {
+                            int newStack = item.getAmount() - item.getAmount();
+                            item.setAmount(newStack);
+                        }
                     }
+
                 }
-                ore.getItem().getItemStack().setAmount(64);
-                player.getInventory().remove(ore.getItem().getItemStack());
+
                 int getAmount = Utils.getResources(player, ore);
                 data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount + amount);
                 player.sendMessage("§c+" + amount + " " + ore.getItem().getName());
@@ -216,5 +228,24 @@ public class GuiUtils extends ItemUtils {
 
     public static String nameSetup(Ores ore) {
         return ore.getItem().getName() + " ";
+    }
+
+    public static void MiscSetup(InventoryClickEvent e, Inventory inventory) {
+        Player player = (Player) e.getWhoClicked();
+        if (e.getCurrentItem().getType().equals(Material.ARROW)) {
+            player.openInventory(inventory);
+            player.playSound(player.getLocation(), Sound.BLOCK_LEVER_CLICK, 1f, 5f);
+        } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cClose")) {
+            player.closeInventory();
+            player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1f, -1f);
+        } else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§7Locked!")) {
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, -10f);
+            player.sendMessage("§cYou need to be a higher level to forge this!");
+        }
+    }
+
+    public static int ResourcesGathering(ForgeItems forgeItems, int i) {
+        int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[i]);
+        return Value;
     }
 }

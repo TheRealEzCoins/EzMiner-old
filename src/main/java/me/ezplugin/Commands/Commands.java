@@ -16,6 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -26,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 
 public class Commands implements CommandExecutor {
@@ -48,6 +50,7 @@ public class Commands implements CommandExecutor {
             if(player.hasPermission("EzMiner.Pickaxe")) {
                 player.getInventory().addItem(ItemManager.Orichalchite_Pickaxe.getItemStack());
                 player.getInventory().addItem(ItemManager.Obsidian_Pickaxe.getItemStack());
+                player.getInventory().addItem(ItemManager.OIL_BARREL.getItemStack());
             }
         }
 
@@ -177,38 +180,14 @@ public class Commands implements CommandExecutor {
             }
 
         }  if (cmd.getName().equalsIgnoreCase("Test")) {
-            LinkedHashSet<ItemStack> list = new LinkedHashSet<>();
-            ItemStack[] items = ForgeItems.Gemstone_2.getRecipe();
-            for (ItemStack stack : items) {
-                list.add(stack);
-            }
-
-            LinkedHashSet<ItemStack> inventory = new LinkedHashSet<>();
-            ItemStack[] inventoryitems = player.getInventory().getContents();
-            for(ItemStack stack : inventoryitems) {
-                inventory.add(stack);
-
-            }
-
-            for (int i = 0; i < ForgeItems.Gemstone_2.getRecipe().length; i++) {
-
-                for (ItemStack stack : player.getInventory().getContents()) {
-                    if (stack != null) {
-                        if (ForgeItems.Gemstone_2.getRecipe()[i].equals(stack.getType()) && stack.getAmount() >= ForgeItems.Gemstone_2.getRecipe()[i].getAmount()) {
-                            int newStack = stack.getAmount() - ForgeItems.Gemstone_2.getRecipe()[i].getAmount();
-                            stack.setAmount(newStack);
-                        } else {
-                            player.sendMessage("Missing items.");
-                        }
-                    } else {
-                        player.sendMessage("Inventory is null");
-                    }
-                }
+            player.sendMessage(ForgeItems.Obsidian_Pickaxe.getAmountInteger().split(" ")[1]);
 
 
-            }
-
-
+        } if(cmd.getName().equalsIgnoreCase("ResetAll")) {
+            data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, 0);
+            data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, 1);
+            data.set(new NamespacedKey(EzMiner.getPlugin(), Ores.Gemstone_1.name()), PersistentDataType.INTEGER, 0);
+            data.set(new NamespacedKey(EzMiner.getPlugin(), Ores.Orichalchite.name()), PersistentDataType.INTEGER, 0);
         }
 
             return true;

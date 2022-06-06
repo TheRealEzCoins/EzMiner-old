@@ -15,6 +15,7 @@ public class ListenerManager {
         addListener(new OnJoin());
         addListener(new PlaceListener());
         addListener(new RefiningGUIListener());
+        addListener(new FuelListener());
 
     }
 

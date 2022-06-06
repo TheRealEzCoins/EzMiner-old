@@ -137,7 +137,7 @@ public class BlockUtils {
     public static void checkResources(Player player, Ores ores) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         if(!(data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER))) {
-            setupResources(player, ores.name(), 0);
+            setupResources(player, ores, 0);
         }
     }
 }

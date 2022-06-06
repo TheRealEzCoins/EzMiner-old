@@ -1,5 +1,7 @@
 package me.ezplugin.GUI.GUIS;
 
+import me.ezplugin.Enums.ForgeItems;
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
 import org.bukkit.Bukkit;
@@ -20,7 +22,7 @@ public class PickaxeGUI extends GuiUtils {
 
     public static Inventory PickaxeGUI(Player player) {
 
-        Inventory PickaxeGUI = Bukkit.createInventory(null, 54, "Pickaxe Forge");
+        Inventory PickaxeGUI = Bukkit.createInventory(null, 54, "§8Pickaxe Forge");
 
 
         Integer Level = getLevel(player);
@@ -28,7 +30,7 @@ public class PickaxeGUI extends GuiUtils {
         if(Level >= 1) {
             PickaxeGUI.setItem(
                     10,
-                    GuiUtils.createCustomItem(ItemManager.Orichalchite_Pickaxe, ItemManager.Orichalchite, 16, "30s"));
+                    GuiUtils.createItem(ItemManager.Orichalchite_Pickaxe, Ores.Orichalchite, ForgeItems.Orichalchite_Pickaxe));
 
             PickaxeGUI.setItem(
                     45,
@@ -52,7 +54,7 @@ public class PickaxeGUI extends GuiUtils {
         if(Level >= 5) {
             PickaxeGUI.setItem(
                     11,
-                    GuiUtils.createItem(ItemManager.Obsidian_Pickaxe, Material.OBSIDIAN, 16, "30s"));
+                    GuiUtils.createItem_2(ItemManager.Obsidian_Pickaxe, Ores.Gemstone_1, Ores.Orichalchite, ForgeItems.Obsidian_Pickaxe));
 
         }
 

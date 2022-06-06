@@ -2,22 +2,24 @@ package me.ezplugin.Enums;
 
 import me.ezplugin.Items.ItemCreator;
 import me.ezplugin.Items.ItemManager;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 public enum ForgeItems {
-    Gemstone_2(ItemManager.Refined_Gemstone_1, 5, 10,new ItemStack[]{new ItemStack(Material.HONEY_BOTTLE, 6), new ItemStack(Material.GREEN_STAINED_GLASS, 3)});
+    Obsidian_Pickaxe(ItemManager.Obsidian_Pickaxe, 15, 30, 15, 14),
+    Orichalchite_Pickaxe(ItemManager.Orichalchite_Pickaxe, 1, 15, 128),
+    Gemstone_2(ItemManager.Refined_Gemstone_1, 5, 10, 16);
 
     private ItemCreator output;
     private int Level;
     private int Time;
-    private ItemStack[] Recipe;
+    private int[] Amount;
 
-    ForgeItems(ItemCreator output, int Level, int Time ,ItemStack[] recipe) {
+    ForgeItems(ItemCreator output, int Level, int Time, int... Amount) {
         this.output = output;
         this.Level = Level;
         this.Time = Time;
-        this.Recipe = recipe;
+        this.Amount = Amount;
 
     }
 
@@ -33,8 +35,13 @@ public enum ForgeItems {
         return this.Time;
     }
 
-    public ItemStack[] getRecipe() {
-        return this.Recipe;
+    public int[] getAmount() {
+        return this.Amount;
+    }
+
+    public String getAmountInteger() {
+        String str = Arrays.toString(getAmount()).replaceAll(",|\\]|\\[", "");
+        return str;
     }
 
 }

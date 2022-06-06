@@ -16,6 +16,7 @@ public class ItemManager {
     public static ItemCreator Refined_Gemstone_1;
     public static ItemCreator Orichalchite_Pickaxe;
     public static ItemCreator Obsidian_Pickaxe;
+    public static ItemCreator OIL_BARREL;
 
 
     private static void ItemSetup() {
@@ -56,6 +57,12 @@ public class ItemManager {
                 .setUnplacable(true)
                 .setRarity(Rarity.RARE, "GEMSTONE");
         // -------------------------------------------- //
+        OIL_BARREL = new ItemCreator(Material.LAVA_BUCKET)
+                .setName("§2Oil Bucket")
+                .setUnplacable(true)
+                .HideItemFlags()
+                .setAsFuel(1000)
+                .setRarity(Rarity.UNCOMMON, "FUEL");
 
     }
 

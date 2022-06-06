@@ -1,6 +1,7 @@
 package me.ezplugin.GUI.GUIS;
 
 import me.ezplugin.Enums.ForgeItems;
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
@@ -18,14 +19,14 @@ public class RefiningGUI extends GuiUtils {
 
     public static Inventory RefiningGUI(Player player) {
 
-        Inventory RefiningGUI = Bukkit.createInventory(null, 54, "Refining");
+        Inventory RefiningGUI = Bukkit.createInventory(null, 54, "§8Refining");
         GuiUtils.fillBorder(RefiningGUI);
 
 
         if(getLevel(player) >= 1) {
             RefiningGUI.setItem(
                     10,
-                    GuiUtils.createCustomItem(ItemManager.Refined_Gemstone_1, ItemManager.Gemstone, 16, Utils.TimeSetup(ForgeItems.Gemstone_2.getTime())));
+                    GuiUtils.createItem(ItemManager.Refined_Gemstone_1, Ores.Gemstone_1, ForgeItems.Gemstone_2));
 
             RefiningGUI.setItem(
                     49,

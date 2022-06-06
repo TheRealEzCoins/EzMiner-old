@@ -6,6 +6,7 @@ import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,7 +17,7 @@ public class ResourcesGUI extends GuiUtils {
 
     public static Inventory ResourcesGUI(Player player) {
 
-        Inventory ResourcesGUI = Bukkit.createInventory(null, 54, "Resources");
+        Inventory ResourcesGUI = Bukkit.createInventory(null, 54, "§8Resources");
         GuiUtils.fillBorder(ResourcesGUI);
 
 
@@ -24,12 +25,9 @@ public class ResourcesGUI extends GuiUtils {
             ResourcesGUI.setItem(
                     10,
                     GuiUtils.ResourceCreation(Ores.Orichalchite, player));
-
             ResourcesGUI.setItem(
                     11,
-                    GuiUtils.ResourceCreation(Ores.Gemstone_1, player)
-            );
-
+                    GuiUtils.unlockable(15));
             ResourcesGUI.setItem(
                     49,
                     GuiUtils.menuClose());
@@ -38,6 +36,13 @@ public class ResourcesGUI extends GuiUtils {
             ResourcesGUI.setItem(
                     48,
                     GuiUtils.menuReturn());
+        }
+
+        if(getLevel(player) >= 15) {
+
+            ResourcesGUI.setItem(
+                    11,
+                    GuiUtils.ResourceCreation(Ores.Gemstone_1, player));
         }
 
         return ResourcesGUI;

@@ -36,7 +36,7 @@ public class ForgeGUI extends GuiUtils {
 
     public static Inventory FORGEGUI(Player player) {
 
-        Inventory FORGEGUI = Bukkit.createInventory(null, 54, "Forge");
+        Inventory FORGEGUI = Bukkit.createInventory(null, 54, "§8Forge");
 
         FORGEGUI.setItem(20,
                 customItemName(

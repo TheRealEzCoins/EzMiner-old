@@ -33,7 +33,7 @@ public class Utils {
 
 
     public static String TimeSetup(int time) {
-        int s = time / 2;
+        int s = time;
         int sec = s % 60;
         int min = (s / 60)%60;
         int hours = (s/60)/60;
@@ -145,14 +145,19 @@ public class Utils {
         }
     }
 
-    public static void setupResources(Player player, String Ore, int Amount ) {
+    public static void setupResources(Player player, Ores ore, int Amount ) {
         PersistentDataContainer data = player.getPersistentDataContainer();
-        data.set(new NamespacedKey(EzMiner.getPlugin(), Ore), PersistentDataType.INTEGER, Amount);
+        data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, Amount);
     }
 
     public static int getResources(Player player, Ores ore) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         return data.get(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER);
+    }
+
+    public static void TakeResources(Player player, Ores ore, int Amount) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, (getResources(player, ore) - Amount));
     }
 
 
