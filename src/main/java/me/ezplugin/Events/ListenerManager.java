@@ -16,6 +16,7 @@ public class ListenerManager {
         addListener(new PlaceListener());
         addListener(new RefiningGUIListener());
         addListener(new FuelListener());
+        addListener(new WorldListener());
 
     }
 

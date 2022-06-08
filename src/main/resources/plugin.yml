@@ -6,36 +6,6 @@ authors: [ EzCoins ]
 description: Made by EzCoins
 depend:
 commands:
-  Forge:
+  EzMiner:
     description: Opens the forge
-    usage: /<command>
-  Pickaxe:
-    description: Gives Pickaxe
-    usage: /<command>
-  CheckXP:
-    description: Checks xp
-    usage: /<command>
-  ResetXP:
-    description: Reset xp
-    usage: /<command>
-  Date:
-    description: Get the current Date
-    usage: /<command>
-  CreateBlock:
-    description: Sets the block you're looking at as a custom ore.
-    usage: /<command>
-  BreakBlock:
-    description: Break the block you're looking at
-    usage: /<command>
-  SetXP:
-    description: Sets the xp of a user
-    usage: /<command>
-  Stats:
-    description: Check your stats
-    usage: /<command>
-  test:
-    description: Test Command
-    usage: /<command>
-  ResetAll:
-    description: Check your stats
     usage: /<command>

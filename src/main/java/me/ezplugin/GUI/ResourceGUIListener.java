@@ -5,6 +5,7 @@ import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.GUI.GUIS.ResourcesGUI;
 import me.ezplugin.GUI.GUIS.SelectorGUI;
 import me.ezplugin.Utils.GuiUtils;
+import me.ezplugin.Utils.ResourceSetup;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -21,9 +22,9 @@ public class ResourceGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             }   else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(GuiUtils.nameSetup(Ores.Orichalchite))) {
-                GuiUtils.ResourceListener(player, e, Ores.Orichalchite);
+                ResourceSetup.ResourceListener(player, e, Ores.Orichalchite);
             } else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(GuiUtils.nameSetup(Ores.Gemstone_1))) {
-                GuiUtils.ResourceListener(player, e, Ores.Gemstone_1);
+                ResourceSetup.ResourceListener(player, e, Ores.Gemstone_1);
             } else {
                 GuiUtils.MiscSetup(e, ForgeGUI.FORGEGUI(player));
             }

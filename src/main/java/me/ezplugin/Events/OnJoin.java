@@ -17,7 +17,7 @@ public class OnJoin implements Listener {
 
         if(!player.hasPlayedBefore()) {
             Utils.setXP(player, 0);
-            Utils.setLevel(player, 0);
+            Utils.setLevel(player, 1);
             Utils.setupResources(player, Ores.Gemstone_1, 0);
             Utils.setupResources(player, Ores.Orichalchite, 0);
         }

@@ -96,7 +96,7 @@ public class Utils {
 
     public static void setLevel(Player player, int Level) {
         PersistentDataContainer data = player.getPersistentDataContainer();
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, Level);
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, Level);
     }
 
     public static ItemStack getPlayerSkull(Player paramPlayer) {

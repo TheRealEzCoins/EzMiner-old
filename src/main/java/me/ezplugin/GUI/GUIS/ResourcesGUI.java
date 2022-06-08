@@ -4,6 +4,7 @@ import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
+import me.ezplugin.Utils.ResourceSetup;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -22,28 +23,26 @@ public class ResourcesGUI extends GuiUtils {
 
 
         if(getLevel(player) >= 1) {
-            ResourcesGUI.setItem(
-                    10,
-                    GuiUtils.ResourceCreation(Ores.Orichalchite, player));
+            ResourceSetup.ResourceCreation(Ores.Orichalchite, player, ResourcesGUI);
+
             ResourcesGUI.setItem(
                     11,
                     GuiUtils.unlockable(15));
-            ResourcesGUI.setItem(
-                    49,
-                    GuiUtils.menuClose());
-
-
-            ResourcesGUI.setItem(
-                    48,
-                    GuiUtils.menuReturn());
         }
 
         if(getLevel(player) >= 15) {
 
-            ResourcesGUI.setItem(
-                    11,
-                    GuiUtils.ResourceCreation(Ores.Gemstone_1, player));
+            ResourceSetup.ResourceCreation(Ores.Gemstone_1, player, ResourcesGUI);
         }
+
+        ResourcesGUI.setItem(
+                49,
+                GuiUtils.menuClose());
+
+
+        ResourcesGUI.setItem(
+                48,
+                GuiUtils.menuReturn());
 
         return ResourcesGUI;
     }

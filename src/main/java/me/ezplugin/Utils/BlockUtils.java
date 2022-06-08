@@ -11,25 +11,19 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static me.ezplugin.Utils.Utils.*;
 
 public class BlockUtils {
     public static void BlockSetup(BlockBreakEvent block, Player player, Ores ores, Long RespawnTimer, int ExpAmount) {
-        if (Utils.isEmpty(player)) {
-            Block getBlock = block.getBlock();
-            if (getBlock.hasMetadata("CustomBlock")) {
-                if(getBlock.getType().equals(ores.getBlock())) {
+        Block getBlock = block.getBlock();
+        if(getBlock.getType().equals(ores.getBlock())) {
+            if (Utils.isEmpty(player)) {
                     if(getLevel(player) >= ores.getLevel()) {
                         if(Utils.getTier(player) >= ores.getTier()) {
-                            getBlock.removeMetadata("CustomBlock", EzMiner.getPlugin());
 
                             if (FuelHandler.getFuel(player)) {
                                 FuelHandler.FuelConsume(player, block);
@@ -47,7 +41,6 @@ public class BlockUtils {
                                 @Override
                                 public void run() {
                                     block.getBlock().setType(ores.getBlock());
-                                    AddMeta(block);
                                 }
                             }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
 
@@ -64,73 +57,9 @@ public class BlockUtils {
                         block.setCancelled(true);
                     }
                 }
-            }
+        } else {
+            block.setCancelled(true);
         }
-
-    }
-
-    public static void AddMeta(BlockBreakEvent block) {
-        assert block != null;
-        block.getBlock().setMetadata("CustomBlock", new MetadataValue() {
-            @Nullable
-            @Override
-            public Object value() {
-                return null;
-            }
-
-            @Override
-            public int asInt() {
-                return 0;
-            }
-
-            @Override
-            public float asFloat() {
-                return 0;
-            }
-
-            @Override
-            public double asDouble() {
-                return 0;
-            }
-
-            @Override
-            public long asLong() {
-                return 0;
-            }
-
-            @Override
-            public short asShort() {
-                return 0;
-            }
-
-            @Override
-            public byte asByte() {
-                return 0;
-            }
-
-            @Override
-            public boolean asBoolean() {
-                return false;
-            }
-
-            @NotNull
-            @Override
-            public String asString() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Plugin getOwningPlugin() {
-                return EzMiner.getPlugin();
-            }
-
-            @Override
-            public void invalidate() {
-
-            }
-
-        });
 
     }
 
