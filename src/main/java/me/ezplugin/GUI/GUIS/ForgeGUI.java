@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import static me.ezplugin.Utils.Utils.*;
+import static me.ezplugin.Utils.ItemUtils.customItemName;
 
 public class ForgeGUI extends GuiUtils {
 

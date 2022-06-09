@@ -6,6 +6,7 @@ import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.GUIS.ResourcesGUI;
 import me.ezplugin.Items.ItemCreator;
 import me.ezplugin.Items.ItemManager;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,14 +17,17 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import static me.ezplugin.Utils.ItemUtils.customItemName;
+import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
+import static me.ezplugin.Utils.Utils.setupResources;
 
 public class ResourceSetup {
 
     public static ItemStack ResourceItem(Ores ores, Player player) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         int amount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
-        return customItemName(
-                ores.getItem().getType(),
+
+        return customItemUsingStack(
+                ores.getItem().getItemStack(),
                 GuiUtils.nameSetup(ores),
                 "§fRequired Level: §c" + ores.getLevel(),
                 "§fRequired Tier: §c" + ores.getTier(),
@@ -36,10 +40,45 @@ public class ResourceSetup {
                 "§c→ §fShift-Right-Click to withdraw 64");
     }
 
-    public static void ResourceCreation(Ores ores, Player player , Inventory inventory) {
-        inventory.setItem(
-                inventory.firstEmpty(),
-                ResourceSetup.ResourceItem(ores, player));
+
+    public static void ResourceCreation(Player player , Inventory inventory) {
+        for(Ores ores : Ores.values()) {
+            if(Utils.getLevel(player) >= ores.getLevel()) {
+                inventory.setItem(
+                        inventory.firstEmpty(),
+                        ResourceSetup.ResourceItem(ores, player));
+            } else {
+                inventory.setItem(
+                        inventory.firstEmpty(),
+                        GuiUtils.unlockableitem(ores.getLevel())
+                );
+            }
+        }
+    }
+
+    public static void ResourceNBTCreator(Player player) {
+        for(Ores ores : Ores.values()) {
+            PersistentDataContainer data = player.getPersistentDataContainer();
+            Boolean hasData = data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
+            if(!hasData) {
+                data.set(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER, 0);
+            }
+        }
+    }
+
+    public static void ResourceGUISetup(InventoryClickEvent e, Player player) {
+        for(Ores ores : Ores.values()) {
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(GuiUtils.nameSetup(ores))) {
+                ResourceSetup.ResourceListener(player, e, ores);
+            }
+        }
+    }
+
+    public static void checkResources(Player player, Ores ores) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        if(!(data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER))) {
+            setupResources(player, ores, 0);
+        }
     }
 
     public static void ResourceListener(Player player, InventoryClickEvent e, Ores ore) {
@@ -63,6 +102,7 @@ public class ResourceSetup {
             }
         } if(e.isLeftClick() && !(e.isShiftClick())) {
             if(player.getInventory().containsAtLeast(ore.getItem().getItemStack(), 1)) {
+                ore.getItem().getItemStack().setAmount(1);
                 player.getInventory().removeItem(ore.getItem().getItemStack());
                 int getAmount = Utils.getResources(player, ore);
                 data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount + 1);
@@ -79,6 +119,7 @@ public class ResourceSetup {
                 if(player.getInventory().firstEmpty() != -1) {
                     ore.getItem().getItemStack().setAmount(64);
                     player.getInventory().addItem(ore.getItem().getItemStack());
+                    ore.getItem().getItemStack().setAmount(1);
                     int getAmount = Utils.getResources(player, ore);
                     data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount - 64);
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 5f);

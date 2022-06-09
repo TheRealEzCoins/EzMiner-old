@@ -17,6 +17,7 @@ public class ListenerManager {
         addListener(new RefiningGUIListener());
         addListener(new FuelListener());
         addListener(new WorldListener());
+        addListener(new onOpen());
 
     }
 

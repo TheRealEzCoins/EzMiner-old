@@ -2,31 +2,24 @@ package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
-import me.ezplugin.EzMiner;
-import me.ezplugin.GUI.GUIS.ResourcesGUI;
-import me.ezplugin.GUI.GUIS.SelectorGUI;
+import me.ezplugin.Enums.Type;
 import me.ezplugin.Items.ItemCreator;
-import me.ezplugin.Items.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.RequiresNonNull;
 
 import java.util.Arrays;
-import java.util.Locale;
 
-public class GuiUtils extends ItemUtils {
+import static me.ezplugin.Utils.ItemUtils.customItemName;
+import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
+
+public class GuiUtils  {
 
     protected static ItemStack FILLER_GLASS = makeItem(Material.BLACK_STAINED_GLASS_PANE, " ", 1, 15);
 
@@ -54,11 +47,17 @@ public class GuiUtils extends ItemUtils {
         return item;
     }
 
-    public static ItemStack unlockable(int Level) {
+    protected static ItemStack unlockableitem(int Level) {
       return customItemName(
               Material.BARRIER,
               "§7Locked!",
               "", "§8Unlocks at Level " + Level);
+    }
+
+    public static void unlockable(Inventory inventory, int level) {
+        inventory.setItem(
+                inventory.firstEmpty(),
+                unlockableitem(level));
     }
 
     public static ItemStack menuClose() {
@@ -78,11 +77,11 @@ public class GuiUtils extends ItemUtils {
     }
 
 
-    public static ItemStack createItem(ItemCreator itemCreator, Ores Resource_1, ForgeItems forgeItems) {
+    public static ItemStack createItem(ForgeItems forgeItems, Ores Resource_1) {
         int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[0]);
-        return customItemName(
-                itemCreator.getType(),
-                itemCreator.getName(),
+        return customItemUsingStack(
+                forgeItems.getOuput().getItemStack(),
+                forgeItems.getOuput().getName(),
                 "",
                 "§eItems required",
                 ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Value,
@@ -90,19 +89,39 @@ public class GuiUtils extends ItemUtils {
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
-    public static ItemStack createItem_2(ItemCreator itemCreator, Ores Resource_1, Ores Resource_2, ForgeItems forgeItems) {
+    public static void SetupItem(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1) {
+        if (Utils.getLevel(player) >= forgeItems.getLevel()) {
+            inventory.setItem(
+                    inventory.firstEmpty(),
+                    createItem(forgeItems, Resource_1));
+        } else {
+            inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
+        }
+    }
+
+    public static ItemStack createItem_2(ForgeItems forgeItems, Ores Resource_1, Ores Resource_2) {
         int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[0]);
         int Value2 = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[1]);
 
-        return customItemName(
-                itemCreator.getType(),
-                itemCreator.getName(),
+        return customItemUsingStack(
+                forgeItems.getOuput().getItemStack(),
+                forgeItems.getOuput().getName(),
                 "",
                 "§eItems required",
                 ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Value,
                 ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Value2,
                 "",
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
+    }
+
+    public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1, Ores Resource_2) {
+        if (Utils.getLevel(player) >= forgeItems.getLevel()) {
+            inventory.setItem(
+                    inventory.firstEmpty(),
+                    createItem_2(forgeItems, Resource_1, Resource_2));
+        } else {
+            inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
+        }
     }
 
     public static void fillBorder(Inventory inventory) {
@@ -128,17 +147,7 @@ public class GuiUtils extends ItemUtils {
         }
     }
 
-    public static void GUISetup(Player player, InventoryClickEvent e, String GUI_Name, Inventory Previous_GUI) {
-        if (e.getView().getTitle().equalsIgnoreCase(GUI_Name)) {
-            e.setCancelled(true);
-            if (e.getCurrentItem() == null) {
-            }  else if (e.getCurrentItem().getType().equals(Material.ARROW)) {
-                player.openInventory(Previous_GUI);
-            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§cClose")) {
-                player.closeInventory();
-            }
-        }
-    }
+
 
     public static String nameSetup(Ores ore) {
         return ore.getItem().getName() + " ";
@@ -158,8 +167,4 @@ public class GuiUtils extends ItemUtils {
         }
     }
 
-    public static int ResourcesGathering(ForgeItems forgeItems, int i) {
-        int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[i]);
-        return Value;
-    }
 }

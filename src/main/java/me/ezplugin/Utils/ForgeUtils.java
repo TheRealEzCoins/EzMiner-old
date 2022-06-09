@@ -24,7 +24,7 @@ public class ForgeUtils {
         cal.setTime(Utils.getTime());
         cal.add(Calendar.SECOND, forgeItems.getTime());
         String time = Utils.formatter.format(cal.getTime());
-        dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name()), PersistentDataType.STRING, time);
+        dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING, time);
 
 
         player.sendMessage("§7Crafting: \n§8- " + forgeItems.getOuput().getName() + "§b " + Utils.TimeSetup(forgeItems.getTime()));
@@ -40,29 +40,29 @@ public class ForgeUtils {
         }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()) * 20L);
     }
 
-    public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ItemCreator Craftable, ForgeItems forgeItems) throws ParseException {
+    public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ForgeItems forgeItems) throws ParseException {
 
         if (!openEvent.getView().getTitle().equalsIgnoreCase("§8Forge"))
             return;
 
         Player player = (Player) openEvent.getPlayer();
-        if(!player.getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name()), PersistentDataType.STRING))
+        if(!player.getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING))
             return;
         PersistentDataContainer dataContainer = player.getPersistentDataContainer();
-        Date forgedate = Utils.formatter.parse(dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name()), PersistentDataType.STRING));
+        Date forgedate = Utils.formatter.parse(dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING));
 
         if (Utils.getTime().after(forgedate)) {
             player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
             Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
             Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
-            dataContainer.remove(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name()));
-            player.getInventory().addItem(Craftable.getItemStack());
+            dataContainer.remove(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"));
+            player.getInventory().addItem(forgeItems.getOuput().getItemStack());
         }
     }
 
     public static boolean checkTime(ForgeItems forgeItems, Player player) throws ParseException {
         PersistentDataContainer dataContainer = player.getPersistentDataContainer();
-        if (dataContainer.has(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name()), PersistentDataType.STRING)) {
+        if (dataContainer.has(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING)) {
                 player.sendMessage("§cYou're already crafting an item!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
                 return false;

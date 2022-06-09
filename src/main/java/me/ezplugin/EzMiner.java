@@ -4,6 +4,7 @@ import me.ezplugin.Commands.Commands;
 import me.ezplugin.Commands.TabCompletion;
 import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Utils.ResourceSetup;
 import me.ezplugin.World.WorldClass;
 import me.ezplugin.World.WorldCreation;
 import org.bukkit.Bukkit;
@@ -43,6 +44,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+
 
         getServer().createWorld(new WorldCreator("MiningWorld_Main"));
         try {

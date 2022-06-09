@@ -1,5 +1,7 @@
 package me.ezplugin.Items;
 
+import dev.dbassett.skullcreator.SkullCreator;
+import me.ezplugin.Enums.Heads;
 import me.ezplugin.Enums.Rarity;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -24,7 +26,6 @@ public class ItemManager {
                 .setName("§9Orichalchite Pickaxe")
                 .setTier(1)
                 .addEnchantment(Enchantment.DIG_SPEED, 1)
-                .getDigSpeed()
                 .getFortune()
                 .setPickaxe()
                 .HideItemFlags()
@@ -32,10 +33,9 @@ public class ItemManager {
         // -------------------------------------------- //
         Obsidian_Pickaxe = new ItemCreator(Material.DIAMOND_PICKAXE)
                 .setName("§8Obsidian Pickaxe")
-                .setFuel(1000)
                 .setTier(2)
-                .getDigSpeed()
                 .getFortune()
+                .setFuel(1000)
                 .setPickaxe()
                 .HideItemFlags()
                 .setUnbreakable(true);
@@ -45,13 +45,13 @@ public class ItemManager {
                 .setRarity(Rarity.COMMON, "ORE")
                 .setOre();
         // -------------------------------------------- //
-        Gemstone = new ItemCreator(Material.SMALL_AMETHYST_BUD)
+        Gemstone = new ItemCreator(SkullCreator.itemFromUrl(Heads.Gemstone.getURL()))
                 .setName("§bGemstone")
                 .setOre()
                 .setUnplacable(true)
                 .setRarity(Rarity.UNCOMMON, "GEMSTONE");
         // -------------------------------------------- //
-        Refined_Gemstone_1 = new ItemCreator(Material.MEDIUM_AMETHYST_BUD)
+        Refined_Gemstone_1 = new ItemCreator(SkullCreator.itemFromUrl(Heads.Refined_Gemstone_1.getURL()))
                 .setName("§bRefined Gemstone")
                 .setOre()
                 .setUnplacable(true)

@@ -290,39 +290,8 @@ public class ItemCreator implements Listener {
     public ItemCreator getFortune() {
         ItemStack item = itemStack;
         int EnchantLevel = item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
-        addLore("&e☘ Fortune " + EnchantLevel);
-
-        return this;
-    }
-
-    public ItemCreator getDigSpeed() {
-        ItemStack item = itemStack;
-        int EnchantLevel = item.getEnchantmentLevel(Enchantment.DIG_SPEED);
-        Double DefaultDigSpeed = 2.5;
-        int DefaultValue = (int)(DefaultDigSpeed + EnchantLevel);
-        if (item.getType().equals(Material.WOODEN_PICKAXE)) {
-            addLore("&e☘ Dig speed " + DefaultValue);
-        }
-
-        if (item.getType().equals(Material.STONE_PICKAXE)) {
-            addLore("&e☘ Dig speed " + DefaultValue * 2);
-        }
-
-        if (item.getType().equals(Material.IRON_PICKAXE)) {
-            addLore("&e☘ Dig speed " + DefaultValue * 3);
-        }
-
-        if (item.getType().equals(Material.DIAMOND_PICKAXE)) {
-            addLore("&e☘ Dig speed " + DefaultValue * 13);
-        }
-
-        if (item.getType().equals(Material.NETHERITE_PICKAXE)) {
-            addLore("&e☘ Dig speed " + DefaultValue * 15);
-        }
-
-        if (item.getType().equals(Material.GOLDEN_PICKAXE)) {
-            addLore("&e☘ Dig speed " + DefaultValue * 6);
-        }
+        int Tier = getTier() * 10;
+        addLore("&eFortune " + (EnchantLevel + Tier) + "☘");
 
         return this;
     }

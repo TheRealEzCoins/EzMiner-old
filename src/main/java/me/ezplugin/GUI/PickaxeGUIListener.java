@@ -18,12 +18,6 @@ import java.text.ParseException;
 
 public class PickaxeGUIListener implements Listener {
 
-    @EventHandler
-    public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
-
-        ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Orichalchite_Pickaxe, ForgeItems.Orichalchite_Pickaxe);
-        ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Obsidian_Pickaxe, ForgeItems.Obsidian_Pickaxe);
-    }
 
     @EventHandler
     public void onClick(InventoryClickEvent e) throws ParseException {
@@ -34,12 +28,18 @@ public class PickaxeGUIListener implements Listener {
             } else if (e.getCurrentItem().getType().equals(ItemManager.Orichalchite_Pickaxe.getType())) {
                 if(Utils.getLevel(player) >= ForgeItems.Orichalchite_Pickaxe.getLevel()) {
                     int Value = Integer.parseInt(ForgeItems.Orichalchite_Pickaxe.getAmountInteger());
-                    if(Utils.getResources(player, Ores.Orichalchite) > Value) {
+                    if(Utils.getResources(player, Ores.Orichalchite) >= Value) {
                         if(ForgeUtils.checkTime(ForgeItems.Orichalchite_Pickaxe, player)) {
                             ForgeUtils.ForgeSetup(player, ForgeItems.Orichalchite_Pickaxe);
                             Utils.TakeResources(player, Ores.Orichalchite, Value);
                         }
+                    } else {
+                        player.sendMessage("§cYou do not have enough resources to craft this!");
+                        Utils.FailedSound(player);
                     }
+                } else {
+                    player.sendMessage("§cYou're not high enough level to forge this!");
+                    Utils.FailedSound(player);
                 }
 
 
@@ -48,13 +48,19 @@ public class PickaxeGUIListener implements Listener {
                 if(Utils.getLevel(player) >= ForgeItems.Obsidian_Pickaxe.getLevel()) {
                     int Value = Integer.parseInt((ForgeItems.Obsidian_Pickaxe.getAmountInteger().split(" ")[0]));
                     int Value2 = Integer.parseInt((ForgeItems.Obsidian_Pickaxe.getAmountInteger().split(" ")[1]));
-                    if(Utils.getResources(player, Ores.Gemstone_1) > Value && Utils.getResources(player, Ores.Orichalchite) > Value2) {
+                    if(Utils.getResources(player, Ores.Gemstone_1) >= Value && Utils.getResources(player, Ores.Orichalchite) >= Value2) {
                         if(ForgeUtils.checkTime(ForgeItems.Obsidian_Pickaxe, player)) {
                             ForgeUtils.ForgeSetup(player, ForgeItems.Obsidian_Pickaxe);
                             Utils.TakeResources(player, Ores.Gemstone_1, Value);
                             Utils.TakeResources(player, Ores.Orichalchite, Value2);
                         }
+                    } else {
+                        player.sendMessage("§cYou do not have enough resources to craft this!");
+                        Utils.FailedSound(player);
                     }
+                } else {
+                    player.sendMessage("§cYou're not high enough level to forge this!");
+                    Utils.FailedSound(player);
                 }
 
 

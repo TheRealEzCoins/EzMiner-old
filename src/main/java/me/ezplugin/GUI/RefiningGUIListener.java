@@ -19,12 +19,6 @@ import java.text.ParseException;
 public class RefiningGUIListener implements Listener {
 
     @EventHandler
-    public void onOpen (InventoryOpenEvent openEvent) throws ParseException {
-
-        ForgeUtils.ForgeTimeSetup(openEvent, ItemManager.Refined_Gemstone_1, ForgeItems.Gemstone_2);
-    }
-
-    @EventHandler
     public void onClick(InventoryClickEvent e) throws ParseException {
         Player player = (Player) e.getWhoClicked();
         if (e.getView().getTitle().equalsIgnoreCase("§8Refining")) {
@@ -32,8 +26,8 @@ public class RefiningGUIListener implements Listener {
             if (e.getCurrentItem() == null) {
             } else if (e.getCurrentItem().getType().equals(ItemManager.Refined_Gemstone_1.getType())) {
                 if(Utils.getLevel(player) >= ForgeItems.Gemstone_2.getLevel()) {
-                    int Value = ForgeItems.Gemstone_2.getAmountInteger().indexOf(0);
-                    if(Utils.getResources(player, Ores.Gemstone_1) > Value) {
+                    int Value = Integer.parseInt((ForgeItems.Gemstone_2.getAmountInteger().split(" ")[0]));
+                    if(Utils.getResources(player, Ores.Gemstone_1) >= Value) {
                         if(ForgeUtils.checkTime(ForgeItems.Gemstone_2, player)) {
                             Utils.TakeResources(player, Ores.Gemstone_1, Integer.parseInt(ForgeItems.Gemstone_2.getAmountInteger()));
                             ForgeUtils.ForgeSetup(player, ForgeItems.Gemstone_2);

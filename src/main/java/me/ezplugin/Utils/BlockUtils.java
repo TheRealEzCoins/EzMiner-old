@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import static me.ezplugin.Utils.ResourceSetup.checkResources;
 import static me.ezplugin.Utils.Utils.*;
 
 public class BlockUtils {
@@ -63,10 +64,4 @@ public class BlockUtils {
 
     }
 
-    public static void checkResources(Player player, Ores ores) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        if(!(data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER))) {
-            setupResources(player, ores, 0);
-        }
-    }
 }
