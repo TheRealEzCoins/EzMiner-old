@@ -15,10 +15,13 @@ public class ItemManager {
 
     public static ItemCreator Orichalchite;
     public static ItemCreator Gemstone;
-    public static ItemCreator Refined_Gemstone_1;
+    public static ItemCreator Refined_Gemstone;
+    public static ItemCreator Polished_Gemstone;
+    public static ItemCreator Perfect_Gemstone;
     public static ItemCreator Orichalchite_Pickaxe;
     public static ItemCreator Obsidian_Pickaxe;
     public static ItemCreator OIL_BARREL;
+    public static ItemCreator GEMSTONE_POT;
 
 
     private static void ItemSetup() {
@@ -51,11 +54,23 @@ public class ItemManager {
                 .setUnplacable(true)
                 .setRarity(Rarity.UNCOMMON, "GEMSTONE");
         // -------------------------------------------- //
-        Refined_Gemstone_1 = new ItemCreator(SkullCreator.itemFromUrl(Heads.Refined_Gemstone_1.getURL()))
+        Refined_Gemstone = new ItemCreator(SkullCreator.itemFromUrl(Heads.Refined_Gemstone.getURL()))
                 .setName("§bRefined Gemstone")
                 .setOre()
                 .setUnplacable(true)
                 .setRarity(Rarity.RARE, "GEMSTONE");
+        // -------------------------------------------- //
+        Polished_Gemstone = new ItemCreator(SkullCreator.itemFromUrl(Heads.Polished_Gemstone.getURL()))
+                .setName("§bPolished Gemstone")
+                .setOre()
+                .setUnplacable(true)
+                .setRarity(Rarity.EPIC, "GEMSTONE");
+        // -------------------------------------------- //
+        Perfect_Gemstone = new ItemCreator(SkullCreator.itemFromUrl(Heads.Perfect_Gemstone.getURL()))
+                .setName("§bPerfect Gemstone")
+                .setOre()
+                .setUnplacable(true)
+                .setRarity(Rarity.LEGENDARY, "GEMSTONE");
         // -------------------------------------------- //
         OIL_BARREL = new ItemCreator(Material.LAVA_BUCKET)
                 .setName("§2Oil Bucket")
@@ -63,6 +78,9 @@ public class ItemManager {
                 .HideItemFlags()
                 .setAsFuel(1000)
                 .setRarity(Rarity.UNCOMMON, "FUEL");
+        // -------------------------------------------- //
+        GEMSTONE_POT = new ItemCreator(SkullCreator.itemFromUrl(Heads.Gemstone_Pot.getURL()))
+                .setName("§bGemstones");
 
     }
 

@@ -16,7 +16,7 @@ public class PickaxeGUI extends GuiUtils {
         GuiUtils.fillBorder(PickaxeGUI);
 
         GuiUtils.SetupItem(player, PickaxeGUI, ForgeItems.Orichalchite_Pickaxe, Ores.Orichalchite);
-        GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Obsidian_Pickaxe, Ores.Gemstone_1, Ores.Gemstone_2);
+        GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Obsidian_Pickaxe, Ores.Refined_Gemstone, Ores.Orichalchite);
 
         PickaxeGUI.setItem(
                 49,

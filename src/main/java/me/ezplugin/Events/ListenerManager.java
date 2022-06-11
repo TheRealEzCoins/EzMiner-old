@@ -12,12 +12,14 @@ public class ListenerManager {
         addListener(new SelectorGUIListener());
         addListener(new BreakListener());
         addListener(new ResourceGUIListener());
+        addListener(new GemsGUIListener());
         addListener(new OnJoin());
         addListener(new PlaceListener());
         addListener(new RefiningGUIListener());
         addListener(new FuelListener());
         addListener(new WorldListener());
         addListener(new onOpen());
+        addListener(new onQuit());
 
     }
 

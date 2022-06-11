@@ -15,7 +15,9 @@ public class RefiningGUI extends GuiUtils {
         Inventory RefiningGUI = Bukkit.createInventory(null, 54, "§8Refining");
         GuiUtils.fillBorder(RefiningGUI);
 
-        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Gemstone_2, Ores.Gemstone_1);
+        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Refined_Gem, Ores.Gemstone);
+        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Polished_Gem, Ores.Refined_Gemstone);
+        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Ores.Polished_Gemstone);
 
             RefiningGUI.setItem(
                     49,

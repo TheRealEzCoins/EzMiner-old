@@ -4,9 +4,11 @@ import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemCreator;
+import me.ezplugin.Items.ItemManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -73,6 +75,48 @@ public class ForgeUtils {
 
 
 
-}
+    public static void SingleCraft(Player player, ForgeItems craft, Ores Resource_1) throws ParseException {
+        if(Utils.getLevel(player) >= craft.getLevel()) {
+            int Value = Integer.parseInt(craft.getAmountInteger());
+            if(Utils.getResources(player, Resource_1) >= Value) {
+                if(ForgeUtils.checkTime(craft, player)) {
+                    ForgeUtils.ForgeSetup(player, craft);
+                    Utils.TakeResources(player, Resource_1, Value);
+                }
+            } else {
+                player.sendMessage("§cYou do not have enough resources to craft this!");
+                Utils.FailedSound(player);
+            }
+        } else {
+            player.sendMessage("§cYou're not high enough level to forge this!");
+            Utils.FailedSound(player);
+        }
+    }
+
+    public static void DoubleCraft(Player player, ForgeItems craft, Ores Resource_1, Ores Resource_2) throws ParseException {
+            if(Utils.getLevel(player) >= craft.getLevel()) {
+                int Value = Integer.parseInt((craft.getAmountInteger().split(" ")[0]));
+                int Value2 = Integer.parseInt((craft.getAmountInteger().split(" ")[1]));
+                if(Utils.getResources(player, Resource_1) >= Value && Utils.getResources(player, Resource_2) >= Value2) {
+                    if(ForgeUtils.checkTime(craft, player)) {
+                        ForgeUtils.ForgeSetup(player, craft);
+                        Utils.TakeResources(player, Resource_1, Value);
+                        Utils.TakeResources(player, Resource_2, Value2);
+                    }
+                } else {
+                    player.sendMessage("§cYou do not have enough resources to craft this!");
+                    Utils.FailedSound(player);
+                }
+            } else {
+                player.sendMessage("§cYou're not high enough level to forge this!");
+                Utils.FailedSound(player);
+            }
+
+
+
+
+
+        }
+    }
 
 

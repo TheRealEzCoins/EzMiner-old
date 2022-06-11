@@ -4,6 +4,7 @@ import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
 import me.ezplugin.Items.ItemCreator;
+import me.ezplugin.Utils.Stats.StatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -24,8 +25,8 @@ public class GuiUtils  {
     protected static ItemStack FILLER_GLASS = makeItem(Material.BLACK_STAINED_GLASS_PANE, " ", 1, 15);
 
     public static ItemStack getStatsAsSkull(Player player ) {
-        int getLevel = Utils.getLevel(player);
-        int getXP = Utils.getXP(player);
+        int getLevel = StatUtils.getHashLevel(player);
+        int getXP = StatUtils.getHashXP(player);
         int xpLeft = (getLevel * 500 - getXP);
         return customItemUsingStack(
                 Utils.getPlayerSkull(player),
@@ -73,7 +74,7 @@ public class GuiUtils  {
                 Material.ARROW,
                 "§bGo Back!",
                 "",
-                "§8Goes back to the selection menu!.");
+                "§8Goes back to the previous menu!");
     }
 
 
@@ -144,6 +145,15 @@ public class GuiUtils  {
             int[] slots = new int[]{i * 9 - 1, (i - 1) * 9};
             inventory.setItem(slots[0], item);
             inventory.setItem(slots[1], item);
+        }
+    }
+
+    public static void fillEmpty(Inventory inventory) {
+        ItemStack item = FILLER_GLASS;
+        int size = inventory.getSize();
+
+        for(int slot = 0; slot < size; slot++){
+            inventory.setItem(slot, item);
         }
     }
 

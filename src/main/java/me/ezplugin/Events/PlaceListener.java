@@ -1,6 +1,7 @@
 package me.ezplugin.Events;
 
 import me.ezplugin.EzMiner;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,14 @@ public class PlaceListener implements Listener {
             event.setCancelled(true);
         } else {
             return;
+        }
+    }
+    @EventHandler
+    public static void onBlockPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        if(player.getWorld().equals(Bukkit.getWorld("MineWorld"))) {
+            event.setCancelled(true);
+            event.setBuild(false);
         }
     }
 }

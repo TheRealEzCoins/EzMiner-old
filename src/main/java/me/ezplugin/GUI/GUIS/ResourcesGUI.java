@@ -1,9 +1,13 @@
 package me.ezplugin.GUI.GUIS;
 
+import dev.dbassett.skullcreator.SkullCreator;
 import me.ezplugin.Enums.ForgeItems;
+import me.ezplugin.Enums.Heads;
 import me.ezplugin.Enums.Ores;
+import me.ezplugin.Items.ItemCreator;
 import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
+import me.ezplugin.Utils.ItemUtils;
 import me.ezplugin.Utils.ResourceSetup;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
@@ -35,6 +39,13 @@ public class ResourcesGUI extends GuiUtils {
                 48,
                 GuiUtils.menuReturn());
 
+        ResourcesGUI.setItem(
+                45,
+                ItemUtils.customItemUsingStack(ItemManager.GEMSTONE_POT.getItemStack(), "§bGemstone Pot")
+
+        );
+
         return ResourcesGUI;
     }
+
 }

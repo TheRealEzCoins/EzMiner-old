@@ -4,7 +4,6 @@ import me.ezplugin.Commands.Commands;
 import me.ezplugin.Commands.TabCompletion;
 import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
-import me.ezplugin.Utils.ResourceSetup;
 import me.ezplugin.World.WorldClass;
 import me.ezplugin.World.WorldCreation;
 import org.bukkit.Bukkit;
@@ -22,6 +21,9 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     public static EzMiner plugin;
     private ListenerManager listenerManager;
+    private static File PlayerDataFolder;
+    private static File PlayerData;
+
 
     public static ListenerManager getListenerManager() {
         return plugin.listenerManager;
@@ -44,6 +46,19 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        getDataFolder().mkdirs();
+
+        saveConfig();
+
+        File PlayerDataFolder = new File(getDataFolder(), "PlayerData");
+        this.PlayerDataFolder = PlayerDataFolder;
+        if(!PlayerDataFolder.exists()) {
+            PlayerDataFolder.mkdirs();
+
+        }
+
+
+
 
 
         getServer().createWorld(new WorldCreator("MiningWorld_Main"));
@@ -76,7 +91,6 @@ public final class EzMiner extends JavaPlugin implements Listener {
         WorldClass.copyWorld(sourceFolder, targetFolder);
         Bukkit.getWorld("MineWorld").setSpawnLocation(138, 119, 237, 180);
         Bukkit.getWorld("MiningWorld_Main").setSpawnLocation(138, 119, 237, 180);
-
 
 
         System.out.println("Plugin has started.");
@@ -112,6 +126,14 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     public static EzMiner getPlugin(){
         return plugin;
+    }
+
+    public static File getPlayerDataFolder() {
+        return PlayerDataFolder;
+    }
+
+    public static File getPlayerData() {
+        return PlayerData;
     }
 
 

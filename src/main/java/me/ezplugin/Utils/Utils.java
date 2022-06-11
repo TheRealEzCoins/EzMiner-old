@@ -1,9 +1,8 @@
 package me.ezplugin.Utils;
 
-import com.jeff_media.morepersistentdatatypes.DataType;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
-import me.ezplugin.Items.ItemCreator;
+import me.ezplugin.Utils.Stats.StatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -88,17 +87,6 @@ public class Utils {
         return data.get(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
     }
 
-    public static void setXP(Player player, int xp) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-            data.set(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER, xp);
-        }
-
-
-    public static void setLevel(Player player, int Level) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER, Level);
-    }
-
     public static ItemStack getPlayerSkull(Player paramPlayer) {
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1, (short) SkullType.PLAYER.ordinal());
 
@@ -112,36 +100,37 @@ public class Utils {
     public static void doFortune(Player player, Ores ores) {
         ItemStack MainHand = player.getInventory().getItemInMainHand();
         PersistentDataContainer data = player.getPersistentDataContainer();
-        int getAmount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
+        int getAmount = StatUtils.getResources(player, ores);
         if (MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
             int min = 1;
             int max = 3;
             int Rnd = (int) (Math.random() * (max - min + 1) + min);
             int getFortune = MainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
             for (int output = Rnd; output < getFortune + 3; output++) {
-                int otherAmount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
-                data.set(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER, otherAmount + 1);
+                int otherAmount = StatUtils.getResources(player, ores);
+                StatUtils.setResources(player, ores, otherAmount + 1);
             }
         }
         if (!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
-            data.set(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER, getAmount + 1);
+            StatUtils.setResources(player, ores, getAmount + 1);
         }
     }
 
     public static void HandleXP(Player player, int ExpAmount) {
-        int CurrentLVL = getLevel(player);
-        int CurrentXP = getXP(player);
+
+        int CurrentLVL = StatUtils.getHashLevel(player);
+        int CurrentXP = StatUtils.getHashXP(player);
         if (CurrentXP >= Utils.getRatio * CurrentLVL) {
             int totalLevel = CurrentLVL + 1;
-            setLevel(player, CurrentLVL + 1);
-            setXP(player, CurrentXP - (CurrentLVL * getRatio));
+            StatUtils.setHashLevel(player, CurrentLVL + 1);
+            StatUtils.setHashXP(player, CurrentXP - (CurrentLVL * getRatio));
             player.sendMessage("§bLeveling...");
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
             player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
         } else {
             int totalXP = CurrentXP + ExpAmount;
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
-            setXP(player, CurrentXP + ExpAmount);
+            StatUtils.setHashXP(player, CurrentXP + ExpAmount);
         }
     }
 

@@ -8,7 +8,9 @@ import java.util.Arrays;
 public enum ForgeItems {
     Obsidian_Pickaxe(Type.TOOL, ItemManager.Obsidian_Pickaxe, 15, 30, 15, 14),
     Orichalchite_Pickaxe(Type.ORE, ItemManager.Orichalchite_Pickaxe, 1, 15, 128),
-    Gemstone_2(Type.ORE, ItemManager.Refined_Gemstone_1, 5, 10, 16);
+    Refined_Gem(Type.ORE, ItemManager.Refined_Gemstone, 10, 10, 128),
+    Polished_Gem(Type.ORE, ItemManager.Polished_Gemstone, 15, 10, 64),
+    Perfect_Gem(Type.ORE, ItemManager.Perfect_Gemstone, 20, 10, 32);
 
     private ItemCreator output;
     private Type type;

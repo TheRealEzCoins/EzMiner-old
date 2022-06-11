@@ -18,14 +18,5 @@ public class WorldListener implements Listener {
         if(world.equals(Bukkit.getWorld("MiningWorld_Main"))) {
             player.sendMessage("§c§lYou are entering the main MineWorld!!!!");
         }
-
-        if(world.equals(Bukkit.getWorld("MineWorld"))) {
-            player.setGameMode(GameMode.ADVENTURE);
-        }
-
-        if(ExitWorld.equals(Bukkit.getWorld("MineWorld"))) {
-            player.setGameMode(GameMode.SURVIVAL);
-        }
-
     }
 }

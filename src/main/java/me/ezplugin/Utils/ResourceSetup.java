@@ -1,12 +1,11 @@
 package me.ezplugin.Utils;
 
-import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Type;
 import me.ezplugin.EzMiner;
+import me.ezplugin.GUI.GUIS.GemsGUI;
 import me.ezplugin.GUI.GUIS.ResourcesGUI;
-import me.ezplugin.Items.ItemCreator;
-import me.ezplugin.Items.ItemManager;
-import org.bukkit.Material;
+import me.ezplugin.Utils.Stats.StatUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -16,15 +15,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import static me.ezplugin.Utils.ItemUtils.customItemName;
 import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
 import static me.ezplugin.Utils.Utils.setupResources;
 
 public class ResourceSetup {
 
     public static ItemStack ResourceItem(Ores ores, Player player) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        int amount = data.get(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
+        int amount = StatUtils.getResources(player, ores);
 
         return customItemUsingStack(
                 ores.getItem().getItemStack(),
@@ -41,30 +38,54 @@ public class ResourceSetup {
     }
 
 
+    /**
+     * It loops through all the ores, checks if the player has the required level to unlock the ore, and if so, adds the
+     * ore to the inventory
+     *
+     * @param player The player who is opening the inventory
+     * @param inventory The inventory you want to add the items to.
+     */
     public static void ResourceCreation(Player player , Inventory inventory) {
         for(Ores ores : Ores.values()) {
-            if(Utils.getLevel(player) >= ores.getLevel()) {
-                inventory.setItem(
-                        inventory.firstEmpty(),
-                        ResourceSetup.ResourceItem(ores, player));
-            } else {
-                inventory.setItem(
-                        inventory.firstEmpty(),
-                        GuiUtils.unlockableitem(ores.getLevel())
-                );
+            if (ores.getType().equals(Type.ORE)) {
+                if (Utils.getLevel(player) >= ores.getLevel()) {
+                    inventory.setItem(
+                            inventory.firstEmpty(),
+                            ResourceSetup.ResourceItem(ores, player));
+                } else {
+                    inventory.setItem(
+                            inventory.firstEmpty(),
+                            GuiUtils.unlockableitem(ores.getLevel())
+                    );
+                }
             }
         }
     }
 
-    public static void ResourceNBTCreator(Player player) {
+    /**
+     * It checks if the player has the required level to unlock the item, if they do, it adds the item to the inventory, if
+     * they don't, it adds a placeholder item
+     *
+     * @param player The player who is viewing the inventory
+     * @param inventory The inventory you want to add the items to.
+     */
+    public static void GemCreation(Player player , Inventory inventory) {
         for(Ores ores : Ores.values()) {
-            PersistentDataContainer data = player.getPersistentDataContainer();
-            Boolean hasData = data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER);
-            if(!hasData) {
-                data.set(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER, 0);
+            if (ores.getType().equals(Type.GEM)) {
+                if (Utils.getLevel(player) >= ores.getLevel()) {
+                    inventory.setItem(
+                            inventory.firstEmpty(),
+                            ResourceSetup.ResourceItem(ores, player));
+                } else {
+                    inventory.setItem(
+                            inventory.firstEmpty(),
+                            GuiUtils.unlockableitem(ores.getLevel())
+                    );
+                }
             }
         }
     }
+
 
     public static void ResourceGUISetup(InventoryClickEvent e, Player player) {
         for(Ores ores : Ores.values()) {
@@ -81,18 +102,29 @@ public class ResourceSetup {
         }
     }
 
+    /**
+     * It's a function that allows you to add and remove items from your inventory and the database
+     *
+     * @param player The player who is interacting with the inventory
+     * @param e InventoryClickEvent
+     * @param ore The ore you want to use.
+     */
     public static void ResourceListener(Player player, InventoryClickEvent e, Ores ore) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         if(e.isRightClick() && !(e.isShiftClick())) {
-            if(!(Utils.getResources(player, ore) <= 0)) {
+            if(!(StatUtils.getResources(player, ore) <= 0)) {
                 if(player.getInventory().firstEmpty() != -1) {
                     ore.getItem().getItemStack().setAmount(1);
                     player.getInventory().addItem(ore.getItem().getItemStack());
-                    int getAmount = Utils.getResources(player, ore);
-                    data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount - 1);
+                    int getAmount = StatUtils.getResources(player, ore);
+                    StatUtils.setResources(player, ore, getAmount - 1);
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 5f);
                     player.sendMessage("§c-1 " + ore.getItem().getName());
-                    player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                    if(ore.getType().equals(Type.ORE)) {
+                        player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                    } else {
+                        player.openInventory(GemsGUI.GemGUI(player));
+                    }
                 } else {
                     player.sendMessage("§cPlease empty your inventory first!");
                 }
@@ -104,27 +136,35 @@ public class ResourceSetup {
             if(player.getInventory().containsAtLeast(ore.getItem().getItemStack(), 1)) {
                 ore.getItem().getItemStack().setAmount(1);
                 player.getInventory().removeItem(ore.getItem().getItemStack());
-                int getAmount = Utils.getResources(player, ore);
-                data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount + 1);
+                int getAmount = StatUtils.getResources(player, ore);
+                StatUtils.setResources(player, ore, getAmount + 1);
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 5f);
                 player.sendMessage("§c+1 " + ore.getItem().getName());
-                player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                if(ore.getType().equals(Type.ORE)) {
+                    player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                } else {
+                    player.openInventory(GemsGUI.GemGUI(player));
+                }
 
             } else {
                 player.sendMessage("§cYou do not have enough of that resource in your inventory!");
                 Utils.FailedSound(player);
             }
         } if(e.isShiftClick() && e.isRightClick()) {
-            if (!(Utils.getResources(player, ore) < 64)) {
+            if (!(StatUtils.getResources(player, ore) < 64)) {
                 if(player.getInventory().firstEmpty() != -1) {
                     ore.getItem().getItemStack().setAmount(64);
                     player.getInventory().addItem(ore.getItem().getItemStack());
                     ore.getItem().getItemStack().setAmount(1);
-                    int getAmount = Utils.getResources(player, ore);
-                    data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount - 64);
+                    int getAmount = StatUtils.getResources(player, ore);
+                    StatUtils.setResources(player, ore, getAmount - 64);
                     player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 5f);
                     player.sendMessage("§c-64 " + ore.getItem().getName());
-                    player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                    if(ore.getType().equals(Type.ORE)) {
+                        player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                    } else {
+                        player.openInventory(GemsGUI.GemGUI(player));
+                    }
                 } else {
                     player.sendMessage("§cPlease empty your inventory first!");
                 }
@@ -149,10 +189,14 @@ public class ResourceSetup {
 
                 }
 
-                int getAmount = Utils.getResources(player, ore);
-                data.set(new NamespacedKey(EzMiner.getPlugin(), ore.name()), PersistentDataType.INTEGER, getAmount + amount);
+                int getAmount = StatUtils.getResources(player, ore);
+                StatUtils.setResources(player, ore, getAmount + amount);
                 player.sendMessage("§c+" + amount + " " + ore.getItem().getName());
-                player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                if(ore.getType().equals(Type.ORE)) {
+                    player.openInventory(ResourcesGUI.ResourcesGUI(player));
+                } else {
+                    player.openInventory(GemsGUI.GemGUI(player));
+                }
 
             } else {
                 player.sendMessage("§cYou do not have enough of that resource!");

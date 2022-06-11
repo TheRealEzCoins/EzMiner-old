@@ -1,25 +1,24 @@
 package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Stats;
 import me.ezplugin.EzMiner;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
+import me.ezplugin.Utils.Stats.StatUtils;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 import static me.ezplugin.Utils.ResourceSetup.checkResources;
 import static me.ezplugin.Utils.Utils.*;
 
 public class BlockUtils {
     public static void BlockSetup(BlockBreakEvent block, Player player, Ores ores, Long RespawnTimer, int ExpAmount) {
+
         Block getBlock = block.getBlock();
         if(getBlock.getType().equals(ores.getBlock())) {
             if (Utils.isEmpty(player)) {
@@ -45,7 +44,9 @@ public class BlockUtils {
                                 }
                             }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
 
+
                             Utils.HandleXP(player, ExpAmount);
+
 
                         }else {
                             player.sendMessage("§cYour pickaxe must be §eTier " + ores.getTier() + " §cto mine this.");

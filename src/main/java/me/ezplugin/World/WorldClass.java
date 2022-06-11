@@ -1,13 +1,18 @@
 package me.ezplugin.World;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WorldClass {
+    /**
+     * If the source file is a directory, create a new directory in the target location and then copy all the files in the
+     * source directory to the target directory. If the source file is not a directory, copy the file to the target
+     * location.
+     *
+     * @param source The source file or directory.
+     * @param target The file you want to copy to.
+     */
     public static void copyWorld(File source, File target){
         try {
             ArrayList<String> ignore = new ArrayList<String>(Arrays.asList("uid.dat", "session.dat"));

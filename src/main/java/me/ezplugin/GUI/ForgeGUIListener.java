@@ -22,7 +22,7 @@ public class ForgeGUIListener implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_IRON_TRAPDOOR_OPEN, 1f, -5f);
             } else if (e.getCurrentItem() != null && e.getCurrentItem().getType().equals(Material.ENDER_CHEST)) {
                 player.openInventory(ResourcesGUI.ResourcesGUI(player));
-                player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, 1f, -5f);
+                player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, -5f);
             }
         }
     }

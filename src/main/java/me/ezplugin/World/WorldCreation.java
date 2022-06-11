@@ -1,9 +1,7 @@
 package me.ezplugin.World;
 
-import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 
-import java.io.File;
 import java.io.IOException;
 
 public class WorldCreation {
@@ -19,15 +17,5 @@ public class WorldCreation {
         }
     }
 
-    public static void DeleteWorld() throws IOException {
-        if(Bukkit.getWorld("MineWorld") != null) {
-            Bukkit.unloadWorld("MineWorld", false);
-            World thisWorld = Bukkit.getWorld("MineWorld");
-            assert thisWorld != null;
-            FileUtils.deleteDirectory(new File("MineWorld"));
-
-
-        }
-    }
 
 }
