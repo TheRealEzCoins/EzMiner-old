@@ -3,16 +3,13 @@ package me.ezplugin.Events;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
 import me.ezplugin.Utils.Stats.PlayerDataStuff;
-import me.ezplugin.Utils.ResourceSetup;
 import me.ezplugin.Utils.Stats.StatUtils;
-import me.ezplugin.Utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.io.IOException;
 import java.util.UUID;
 
 
@@ -57,11 +54,16 @@ public class OnJoin implements Listener {
         }
 
 
+
         StatUtils.EXP.put(playerUUID, StatUtils.getConfigXP(player));
         StatUtils.Level.put(playerUUID, StatUtils.getConfigLevel(player));
 
 
-
+        if(!PlayerDataStuff.HasData("Time.")) {
+            PlayerDataStuff.fileData.addDefault("Forge." + "Times", 0);
+            PlayerDataStuff.fileData.options().copyDefaults(true);
+            PlayerDataStuff.savePlayerData();
+        }
 
 
 

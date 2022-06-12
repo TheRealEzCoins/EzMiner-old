@@ -13,7 +13,7 @@ public class GemsGUI {
         ResourceSetup.GemCreation(player, GemGUI);
 
         GemGUI.setItem(
-                18,
+                49,
                 GuiUtils.menuReturn());
 
         return GemGUI;

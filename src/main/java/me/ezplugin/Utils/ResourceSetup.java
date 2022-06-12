@@ -15,8 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
-import static me.ezplugin.Utils.Utils.setupResources;
+import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;;
 
 public class ResourceSetup {
 
@@ -95,12 +94,6 @@ public class ResourceSetup {
         }
     }
 
-    public static void checkResources(Player player, Ores ores) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        if(!(data.has(new NamespacedKey(EzMiner.getPlugin(), ores.name()), PersistentDataType.INTEGER))) {
-            setupResources(player, ores, 0);
-        }
-    }
 
     /**
      * It's a function that allows you to add and remove items from your inventory and the database

@@ -13,7 +13,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-import static me.ezplugin.Utils.ResourceSetup.checkResources;
 import static me.ezplugin.Utils.Utils.*;
 
 public class BlockUtils {
@@ -29,7 +28,7 @@ public class BlockUtils {
                                 FuelHandler.FuelConsume(player, block);
                             }
 
-                            checkResources(player, ores);
+                            StatUtils.getResources(player, ores);
                             Utils.doFortune(player, ores);
                             block.setDropItems(false);
                             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);

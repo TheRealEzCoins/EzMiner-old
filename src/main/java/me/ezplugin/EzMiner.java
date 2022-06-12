@@ -4,17 +4,23 @@ import me.ezplugin.Commands.Commands;
 import me.ezplugin.Commands.TabCompletion;
 import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Utils.Stats.StatUtils;
 import me.ezplugin.World.WorldClass;
 import me.ezplugin.World.WorldCreation;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+
+import static me.ezplugin.Utils.Stats.StatUtils.CheckIfCorrect;
 
 
 public final class EzMiner extends JavaPlugin implements Listener {
@@ -44,8 +50,13 @@ public final class EzMiner extends JavaPlugin implements Listener {
         return plugin;
     }
 
+    public static EzMiner getPlugin(){
+        return plugin;
+    }
+
     @Override
     public void onEnable() {
+        plugin = this;
         getDataFolder().mkdirs();
 
         saveConfig();
@@ -58,6 +69,8 @@ public final class EzMiner extends JavaPlugin implements Listener {
         }
 
 
+
+        StatUtils.startAutoSave();
 
 
 
@@ -101,7 +114,6 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
         EzForagingInstalled = Bukkit.getServer().getPluginManager().isPluginEnabled("Vault");
 
-        plugin = this;
         this.listenerManager = new ListenerManager();
 
         this.getServer().getPluginManager().registerEvents(this, this);
@@ -124,9 +136,6 @@ public final class EzMiner extends JavaPlugin implements Listener {
     }
 
 
-    public static EzMiner getPlugin(){
-        return plugin;
-    }
 
     public static File getPlayerDataFolder() {
         return PlayerDataFolder;

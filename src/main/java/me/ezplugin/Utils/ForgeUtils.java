@@ -5,6 +5,7 @@ import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Items.ItemCreator;
 import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Utils.Stats.StatUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -19,14 +20,14 @@ import java.util.*;
 
 public class ForgeUtils {
     public static void ForgeSetup(Player player ,ForgeItems forgeItems) {
-        PersistentDataContainer dataContainer = player.getPersistentDataContainer();
 
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(Utils.getTime());
         cal.add(Calendar.SECOND, forgeItems.getTime());
         String time = Utils.formatter.format(cal.getTime());
-        dataContainer.set(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING, time);
+        StatUtils.setTimer(player, forgeItems, time);
+
 
 
         player.sendMessage("§7Crafting: \n§8- " + forgeItems.getOuput().getName() + "§b " + Utils.TimeSetup(forgeItems.getTime()));
@@ -48,23 +49,20 @@ public class ForgeUtils {
             return;
 
         Player player = (Player) openEvent.getPlayer();
-        if(!player.getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING))
-            return;
-        PersistentDataContainer dataContainer = player.getPersistentDataContainer();
-        Date forgedate = Utils.formatter.parse(dataContainer.get(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING));
+        if(!StatUtils.hasTimer(player, forgeItems)) return;
+        Date forgeDate = Utils.formatter.parse(StatUtils.getTimer(player, forgeItems));
 
-        if (Utils.getTime().after(forgedate)) {
+        if (Utils.getTime().after(forgeDate)) {
             player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
             Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
             Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
-            dataContainer.remove(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"));
+            StatUtils.setTimer(player, forgeItems, null);
             player.getInventory().addItem(forgeItems.getOuput().getItemStack());
         }
     }
 
     public static boolean checkTime(ForgeItems forgeItems, Player player) throws ParseException {
-        PersistentDataContainer dataContainer = player.getPersistentDataContainer();
-        if (dataContainer.has(new NamespacedKey(EzMiner.getPlugin(), forgeItems.name() + "_Timer"), PersistentDataType.STRING)) {
+        if (StatUtils.hasTimer(player, forgeItems)) {
                 player.sendMessage("§cYou're already crafting an item!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
                 return false;
@@ -76,12 +74,12 @@ public class ForgeUtils {
 
 
     public static void SingleCraft(Player player, ForgeItems craft, Ores Resource_1) throws ParseException {
-        if(Utils.getLevel(player) >= craft.getLevel()) {
+        if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
             int Value = Integer.parseInt(craft.getAmountInteger());
-            if(Utils.getResources(player, Resource_1) >= Value) {
+            if(StatUtils.getResources(player, Resource_1) >= Value) {
                 if(ForgeUtils.checkTime(craft, player)) {
                     ForgeUtils.ForgeSetup(player, craft);
-                    Utils.TakeResources(player, Resource_1, Value);
+                    StatUtils.RemoveResources(player, Resource_1, Value);
                 }
             } else {
                 player.sendMessage("§cYou do not have enough resources to craft this!");
@@ -94,14 +92,14 @@ public class ForgeUtils {
     }
 
     public static void DoubleCraft(Player player, ForgeItems craft, Ores Resource_1, Ores Resource_2) throws ParseException {
-            if(Utils.getLevel(player) >= craft.getLevel()) {
+            if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
                 int Value = Integer.parseInt((craft.getAmountInteger().split(" ")[0]));
                 int Value2 = Integer.parseInt((craft.getAmountInteger().split(" ")[1]));
-                if(Utils.getResources(player, Resource_1) >= Value && Utils.getResources(player, Resource_2) >= Value2) {
+                if(StatUtils.getResources(player, Resource_1) >= Value && StatUtils.getResources(player, Resource_2) >= Value2) {
                     if(ForgeUtils.checkTime(craft, player)) {
                         ForgeUtils.ForgeSetup(player, craft);
-                        Utils.TakeResources(player, Resource_1, Value);
-                        Utils.TakeResources(player, Resource_2, Value2);
+                        StatUtils.RemoveResources(player, Resource_1, Value);
+                        StatUtils.RemoveResources(player, Resource_2, Value2);
                     }
                 } else {
                     player.sendMessage("§cYou do not have enough resources to craft this!");

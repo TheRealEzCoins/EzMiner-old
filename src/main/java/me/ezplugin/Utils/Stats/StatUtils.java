@@ -1,10 +1,15 @@
 package me.ezplugin.Utils.Stats;
 
+import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
+import me.ezplugin.EzMiner;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +18,9 @@ import java.util.UUID;
 
 import static me.ezplugin.EzMiner.plugin;
 
+
 public class StatUtils {
+
 
     public static HashMap<UUID, Integer> EXP = new HashMap<>();
     public static HashMap<UUID, Integer> Level = new HashMap<>();
@@ -121,4 +128,50 @@ public class StatUtils {
             e.printStackTrace();
         }
     }
+
+    public static void setTimer(Player player, ForgeItems forgeItems, String time) {
+        FileConfiguration config = CheckIfCorrect(player);
+        config.set("Forge." + "Times." + forgeItems, time);
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getTimer(Player player, ForgeItems forgeItems) {
+        FileConfiguration config = CheckIfCorrect(player);
+        return (String) config.get("Forge." + "Times." + forgeItems.name());
+    }
+
+    public static boolean hasTimer(Player player, ForgeItems forgeItems) {
+        FileConfiguration config = CheckIfCorrect(player);
+        return config.contains("Forge." + "Times." + forgeItems.name());
+    }
+
+
+    public static void startAutoSave() {
+        long interval = 6000;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    StatUtils.setConfigXP(player, StatUtils.getHashXP(player));
+                    StatUtils.setConfigLevel(player, StatUtils.getHashLevel(player));
+                    FileConfiguration config = CheckIfCorrect(player);
+                    File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+                    try {
+                        config.save(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                plugin.getLogger().fine("Player data saved!");
+            }
+        }.runTaskTimerAsynchronously(EzMiner.getPlugin(), interval, interval);
+    }
+
+
+
 }
