@@ -113,6 +113,7 @@ public class StatUtils {
         }
     }
 
+
     public static void RemoveResources(Player player, Ores ores, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
 
@@ -151,6 +152,7 @@ public class StatUtils {
     }
 
 
+
     public static void startAutoSave() {
         long interval = 6000;
         new BukkitRunnable() {
@@ -167,7 +169,7 @@ public class StatUtils {
                         e.printStackTrace();
                     }
                 }
-                plugin.getLogger().fine("Player data saved!");
+                plugin.getLogger().info("Player data saved!");
             }
         }.runTaskTimerAsynchronously(EzMiner.getPlugin(), interval, interval);
     }

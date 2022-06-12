@@ -2,7 +2,7 @@ package me.ezplugin.Events;
 
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
-import me.ezplugin.Utils.Stats.PlayerDataStuff;
+import me.ezplugin.Utils.Stats.PlayerData;
 import me.ezplugin.Utils.Stats.StatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -21,36 +21,36 @@ public class OnJoin implements Listener {
         String StringUUID = String.valueOf(player.getUniqueId());
         UUID playerUUID = player.getUniqueId();
 
-        PlayerDataStuff.setupFile(player);
-        if(!PlayerDataStuff.HasData("UUID")) {
-            PlayerDataStuff.fileData.addDefault("UUID", StringUUID + " : " + player.getName());
-            PlayerDataStuff.fileData.options().copyDefaults(true);
-            PlayerDataStuff.savePlayerData();
+        PlayerData.setupFile(player);
+        if(!PlayerData.HasData("UUID")) {
+            PlayerData.fileData.addDefault("UUID", StringUUID + " : " + player.getName());
+            PlayerData.fileData.options().copyDefaults(true);
+            PlayerData.savePlayerData();
         }
 
-        if(!PlayerDataStuff.HasData("Stats.")) {
-            PlayerDataStuff.fileData.addDefault("Stats." + "Level", 1);
-            PlayerDataStuff.fileData.addDefault("Stats." + "EXP", 0);
-            PlayerDataStuff.fileData.options().copyDefaults(true);
-            PlayerDataStuff.savePlayerData();
+        if(!PlayerData.HasData("Stats.")) {
+            PlayerData.fileData.addDefault("Stats." + "Level", 1);
+            PlayerData.fileData.addDefault("Stats." + "EXP", 0);
+            PlayerData.fileData.options().copyDefaults(true);
+            PlayerData.savePlayerData();
         }
 
-        if(!PlayerDataStuff.HasData("Ores.")) {
+        if(!PlayerData.HasData("Ores.")) {
             for(Ores ores : Ores.values())
                 if(ores.getType().equals(Type.ORE)) {
-                    PlayerDataStuff.fileData.addDefault("Ores." + ores, 0);
+                    PlayerData.fileData.addDefault("Ores." + ores, 0);
                 }
-            PlayerDataStuff.fileData.options().copyDefaults(true);
-            PlayerDataStuff.savePlayerData();
+            PlayerData.fileData.options().copyDefaults(true);
+            PlayerData.savePlayerData();
         }
 
-        if(!PlayerDataStuff.HasData("Gems.")) {
+        if(!PlayerData.HasData("Gems.")) {
             for(Ores ores : Ores.values())
                 if(ores.getType().equals(Type.GEM)) {
-                    PlayerDataStuff.fileData.addDefault("Gems." + ores, 0);
+                    PlayerData.fileData.addDefault("Gems." + ores, 0);
                 }
-            PlayerDataStuff.fileData.options().copyDefaults(true);
-            PlayerDataStuff.savePlayerData();
+            PlayerData.fileData.options().copyDefaults(true);
+            PlayerData.savePlayerData();
         }
 
 
@@ -59,10 +59,10 @@ public class OnJoin implements Listener {
         StatUtils.Level.put(playerUUID, StatUtils.getConfigLevel(player));
 
 
-        if(!PlayerDataStuff.HasData("Time.")) {
-            PlayerDataStuff.fileData.addDefault("Forge." + "Times", 0);
-            PlayerDataStuff.fileData.options().copyDefaults(true);
-            PlayerDataStuff.savePlayerData();
+        if(!PlayerData.HasData("Time.")) {
+            PlayerData.fileData.addDefault("Forge." + "Times", 0);
+            PlayerData.fileData.options().copyDefaults(true);
+            PlayerData.savePlayerData();
         }
 
 

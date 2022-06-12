@@ -71,17 +71,6 @@ public class Utils {
     }
 
 
-
-    public static Integer getXP(Player player) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        return data.get(new NamespacedKey(EzMiner.getPlugin(), "XP"), PersistentDataType.INTEGER);
-    }
-
-    public static Integer getLevel(Player player) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
-        return data.get(new NamespacedKey(EzMiner.getPlugin(), "LEVEL"), PersistentDataType.INTEGER);
-    }
-
     public static Integer getTier(Player player) {
         PersistentDataContainer data = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
         return data.get(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER);
@@ -97,9 +86,8 @@ public class Utils {
         return skull;
     }
 
-    public static void doFortune(Player player, Ores ores) {
+    /*public static void doFortune(Player player, Ores ores) {
         ItemStack MainHand = player.getInventory().getItemInMainHand();
-        PersistentDataContainer data = player.getPersistentDataContainer();
         int getAmount = StatUtils.getResources(player, ores);
         if (MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
             int min = 1;
@@ -112,6 +100,19 @@ public class Utils {
             }
         }
         if (!(MainHand.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))) {
+            StatUtils.setResources(player, ores, getAmount + 1);
+        }
+    } */
+
+    public static void HandleFortune(Player player, Ores ores) {
+        ItemStack MainHand  = player.getInventory().getItemInMainHand();
+        PersistentDataContainer data = MainHand.getItemMeta().getPersistentDataContainer();
+        int getAmount = StatUtils.getResources(player, ores);
+        if(data.has(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER)) {
+            int getFortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
+            int newAmount = getFortune / 100;
+            StatUtils.setResources(player, ores, getAmount + 1 + newAmount);
+        } else {
             StatUtils.setResources(player, ores, getAmount + 1);
         }
     }

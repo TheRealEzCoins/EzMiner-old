@@ -47,7 +47,7 @@ public class ResourceSetup {
     public static void ResourceCreation(Player player , Inventory inventory) {
         for(Ores ores : Ores.values()) {
             if (ores.getType().equals(Type.ORE)) {
-                if (Utils.getLevel(player) >= ores.getLevel()) {
+                if (StatUtils.getHashLevel(player) >= ores.getLevel()) {
                     inventory.setItem(
                             inventory.firstEmpty(),
                             ResourceSetup.ResourceItem(ores, player));
@@ -71,7 +71,7 @@ public class ResourceSetup {
     public static void GemCreation(Player player , Inventory inventory) {
         for(Ores ores : Ores.values()) {
             if (ores.getType().equals(Type.GEM)) {
-                if (Utils.getLevel(player) >= ores.getLevel()) {
+                if (StatUtils.getHashLevel(player) >= ores.getLevel()) {
                     inventory.setItem(
                             inventory.firstEmpty(),
                             ResourceSetup.ResourceItem(ores, player));
@@ -103,7 +103,6 @@ public class ResourceSetup {
      * @param ore The ore you want to use.
      */
     public static void ResourceListener(Player player, InventoryClickEvent e, Ores ore) {
-        PersistentDataContainer data = player.getPersistentDataContainer();
         if(e.isRightClick() && !(e.isShiftClick())) {
             if(!(StatUtils.getResources(player, ore) <= 0)) {
                 if(player.getInventory().firstEmpty() != -1) {

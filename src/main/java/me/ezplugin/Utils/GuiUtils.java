@@ -91,7 +91,7 @@ public class GuiUtils  {
     }
 
     public static void SetupItem(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1) {
-        if (Utils.getLevel(player) >= forgeItems.getLevel()) {
+        if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
                     inventory.firstEmpty(),
                     createItem(forgeItems, Resource_1));
@@ -116,7 +116,7 @@ public class GuiUtils  {
     }
 
     public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1, Ores Resource_2) {
-        if (Utils.getLevel(player) >= forgeItems.getLevel()) {
+        if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
                     inventory.firstEmpty(),
                     createItem_2(forgeItems, Resource_1, Resource_2));

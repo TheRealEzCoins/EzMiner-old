@@ -20,7 +20,7 @@ public class ListenerManager {
         addListener(new WorldListener());
         addListener(new onOpen());
         addListener(new onQuit());
-
+        addListener(new PortalEnterEvent());
     }
 
     private void addListener(Listener listener) {

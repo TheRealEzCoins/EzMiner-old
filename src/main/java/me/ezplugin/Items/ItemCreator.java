@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -249,6 +250,7 @@ public class ItemCreator implements Listener {
         ItemMeta meta = item.getItemMeta();
 
         meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Pickaxe"), DataType.BOOLEAN, Boolean.TRUE);
+        meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, 0);
         itemStack.setItemMeta(meta);
         return this;
     }
@@ -284,11 +286,27 @@ public class ItemCreator implements Listener {
         return this;
     }
 
+    public ItemCreator addFortune(int Amount) {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Amount);
+        item.setItemMeta(meta);
+
+        return this;
+    }
+
     public ItemCreator getFortune() {
         ItemStack item = itemStack;
-        int EnchantLevel = item.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
-        int Tier = getTier() * 10;
-        addLore("&eFortune " + (EnchantLevel + Tier) + "☘");
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        int Fortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
+        int Tier = getTier();
+        int newFortune = Fortune + Tier;
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Fortune + newFortune);
+        item.setItemMeta(meta);
+
+        addLore("&eFortune " + newFortune + "☘");
 
         return this;
     }

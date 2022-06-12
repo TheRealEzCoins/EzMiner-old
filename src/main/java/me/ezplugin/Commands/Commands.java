@@ -44,7 +44,7 @@ public class Commands implements CommandExecutor {
                             }
                         } else if(args[0].equalsIgnoreCase("Stats")) {
                             if (args.length < 2) {
-                                player.sendMessage("§b" + player.getName() + "'s stats:" + "\n§cLevel: " + Utils.getLevel(player) + "\n§cXP: " + Utils.getXP(player));
+                                player.sendMessage("§b" + player.getName() + "'s stats:" + "\n§cLevel: " + StatUtils.getHashLevel(player) + "\n§cXP: " + StatUtils.getHashXP(player));
                             } else {
                                 Player Target = Bukkit.getPlayer(args[1]);
                                 if (Target != null) {

@@ -27,19 +27,20 @@ public class ItemManager {
     private static void ItemSetup() {
         Orichalchite_Pickaxe = new ItemCreator(Material.WOODEN_PICKAXE)
                 .setName("§9Orichalchite Pickaxe")
+                .setPickaxe()
                 .setTier(1)
                 .addEnchantment(Enchantment.DIG_SPEED, 1)
+                .addFortune(150)
                 .getFortune()
-                .setPickaxe()
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //
         Obsidian_Pickaxe = new ItemCreator(Material.DIAMOND_PICKAXE)
                 .setName("§8Obsidian Pickaxe")
+                .setPickaxe()
                 .setTier(2)
                 .getFortune()
                 .setFuel(1000)
-                .setPickaxe()
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //
