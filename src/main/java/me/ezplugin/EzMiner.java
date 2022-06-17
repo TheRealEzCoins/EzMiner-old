@@ -4,26 +4,23 @@ import me.ezplugin.Commands.Commands;
 import me.ezplugin.Commands.TabCompletion;
 import me.ezplugin.Events.ListenerManager;
 import me.ezplugin.Items.ItemManager;
-import me.ezplugin.Utils.Stats.StatUtils;
+import me.ezplugin.Utils.Files.StatUtils;
 import me.ezplugin.World.WorldClass;
 import me.ezplugin.World.WorldCreation;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 
-import static me.ezplugin.Utils.Stats.StatUtils.CheckIfCorrect;
-
 
 public final class EzMiner extends JavaPlugin implements Listener {
+
+
 
     public static EzMiner plugin;
     private ListenerManager listenerManager;
@@ -70,11 +67,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
 
 
-        StatUtils.startAutoSave();
-
-
-
-        getServer().createWorld(new WorldCreator("MiningWorld_Main"));
+        getServer().createWorld(new WorldCreator("MiningWorld_Admin"));
         try {
             WorldCreation.createWorld();
         } catch (IOException e) {
@@ -82,7 +75,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         }
 
 
-        World source = Bukkit.getWorld("MiningWorld_Main");
+        World source = Bukkit.getWorld("MiningWorld_Admin");
         File sourceFolder;
 
         {
@@ -91,7 +84,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         }
 
         // The world to overwrite when copying
-        World target = Bukkit.getWorld("MineWorld");
+        World target = Bukkit.getWorld("MiningWorld");
         File targetFolder;
 
         {
@@ -102,11 +95,14 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
 
         WorldClass.copyWorld(sourceFolder, targetFolder);
-        Bukkit.getWorld("MineWorld").setSpawnLocation(138, 119, 237, 180);
-        Bukkit.getWorld("MiningWorld_Main").setSpawnLocation(138, 119, 237, 180);
 
+
+        Bukkit.getWorld("MiningWorld").setSpawnLocation(138, 119, 237, 180);
+        Bukkit.getWorld("MiningWorld_Admin").setSpawnLocation(138, 119, 237, 180);
 
         System.out.println("Plugin has started.");
+        StatUtils.startAutoSave();
+
 
         getConfig().options().copyDefaults();
         getConfig().addDefault("Level-Scaling." + "Exp", 500);
@@ -132,6 +128,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        StatUtils.save();
         System.out.println("Plugin has been disabled.");
     }
 

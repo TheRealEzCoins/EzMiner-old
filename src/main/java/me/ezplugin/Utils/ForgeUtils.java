@@ -3,16 +3,10 @@ package me.ezplugin.Utils;
 import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
-import me.ezplugin.Items.ItemCreator;
-import me.ezplugin.Items.ItemManager;
-import me.ezplugin.Utils.Stats.StatUtils;
-import org.bukkit.NamespacedKey;
+import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.ParseException;
@@ -43,6 +37,41 @@ public class ForgeUtils {
         }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()) * 20L);
     }
 
+    public static void newForgeSetup(Player player ,ForgeItems forgeItems) {
+
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(Utils.getTime());
+        cal.add(Calendar.SECOND, forgeItems.getTime());
+        String time = Utils.formatter.format(cal.getTime());
+        StatUtils.newSetTimer(StatUtils.PlayerClickedSlot.get(player.getUniqueId()), player, forgeItems, time);
+
+
+
+        player.sendMessage("§7Crafting: \n§8- " + forgeItems.getOuput().getName() + "§b " + Utils.TimeSetup(forgeItems.getTime()));
+        Utils.SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
+        Utils.SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
+                player.sendMessage("§aYour item finished crafting!");
+            }
+        }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()) * 20L);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public static void ForgeTimeSetup(InventoryOpenEvent openEvent, ForgeItems forgeItems) throws ParseException {
 
         if (!openEvent.getView().getTitle().equalsIgnoreCase("§8Forge"))
@@ -52,16 +81,17 @@ public class ForgeUtils {
         if(!StatUtils.hasTimer(player, forgeItems)) return;
         Date forgeDate = Utils.formatter.parse(StatUtils.getTimer(player, forgeItems));
 
+
         if (Utils.getTime().after(forgeDate)) {
             player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
             Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
             Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
-            StatUtils.setTimer(player, forgeItems, null);
+                StatUtils.setTimer(player, forgeItems, null);
+            }
             player.getInventory().addItem(forgeItems.getOuput().getItemStack());
         }
-    }
 
-    public static boolean checkTime(ForgeItems forgeItems, Player player) throws ParseException {
+    public static boolean checkTime(ForgeItems forgeItems, Player player) {
         if (StatUtils.hasTimer(player, forgeItems)) {
                 player.sendMessage("§cYou're already crafting an item!");
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
@@ -88,6 +118,16 @@ public class ForgeUtils {
         } else {
             player.sendMessage("§cYou're not high enough level to forge this!");
             Utils.FailedSound(player);
+        }
+    }
+
+    public static void newSingleCraft(Player player, ForgeItems craft, Ores Resource_1) {
+        if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
+            int Value = Integer.parseInt(craft.getAmountInteger());
+            if(StatUtils.getResources(player, Resource_1) >= Value) {
+                ForgeUtils.newForgeSetup(player, craft);
+                StatUtils.RemoveResources(player, Resource_1, Value);
+            }
         }
     }
 

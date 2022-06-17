@@ -2,18 +2,14 @@ package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
-import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.GUIS.GemsGUI;
 import me.ezplugin.GUI.GUIS.ResourcesGUI;
-import me.ezplugin.Utils.Stats.StatUtils;
-import org.bukkit.NamespacedKey;
+import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;;
 

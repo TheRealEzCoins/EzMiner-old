@@ -2,8 +2,8 @@ package me.ezplugin.Events;
 
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
-import me.ezplugin.Utils.Stats.PlayerData;
-import me.ezplugin.Utils.Stats.StatUtils;
+import me.ezplugin.Utils.Files.PlayerData;
+import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

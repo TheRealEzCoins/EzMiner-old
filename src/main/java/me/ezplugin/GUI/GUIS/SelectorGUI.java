@@ -16,8 +16,9 @@ public class SelectorGUI extends GuiUtils {
 
         GuiUtils.fillEmpty(inventory);
 
-        inventory.setItem(20, customItemName(Material.DIAMOND, "§aRefining", "", "§eU can refine ore here"));
-        inventory.setItem(24, customItemName(Material.DIAMOND_PICKAXE, "§aPickaxes", "" ,"§eU can make pickaxes here."));
+        inventory.setItem(20, customItemName(Material.DIAMOND, "§aRefining", "", "§eYou can refine ore here."));
+        inventory.setItem(31, customItemName(Material.ENCHANTED_BOOK, "§aUpgrades", "", "§eYou can forge upgrades here."));
+        inventory.setItem(24, customItemName(Material.DIAMOND_PICKAXE, "§aPickaxes", "" ,"§eYou can make pickaxes here."));
         inventory.setItem(49, GuiUtils.menuClose());
         inventory.setItem(48, GuiUtils.menuReturn());
 

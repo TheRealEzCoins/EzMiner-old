@@ -1,4 +1,4 @@
-package me.ezplugin.Utils.Stats;
+package me.ezplugin.Utils.Files;
 
 import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -24,6 +23,7 @@ public class StatUtils {
 
     public static HashMap<UUID, Integer> EXP = new HashMap<>();
     public static HashMap<UUID, Integer> Level = new HashMap<>();
+    public static HashMap<UUID, Integer> PlayerClickedSlot = new HashMap<>();
 
 
     public static FileConfiguration CheckIfCorrect(Player player) {
@@ -141,9 +141,35 @@ public class StatUtils {
         }
     }
 
+    public static void newSetTimer(int Slot, Player player, ForgeItems forgeItems, String time) {
+        FileConfiguration config = CheckIfCorrect(player);
+        config.set("Forge." + "Times." + "Slot" + Slot + "." + forgeItems, time);
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String getTimer(Player player, ForgeItems forgeItems) {
         FileConfiguration config = CheckIfCorrect(player);
         return (String) config.get("Forge." + "Times." + forgeItems.name());
+    }
+
+    public static String newGetTimer(int Slot, Player player, ForgeItems forgeItems) {
+        FileConfiguration config = CheckIfCorrect(player);
+        return (String) config.get("Forge." + "Times." + "Slot" + Slot + "." + forgeItems);
+    }
+
+    public static boolean newHasTimer(int Slot, Player player, ForgeItems forgeItems) {
+        FileConfiguration config = CheckIfCorrect(player);
+        return config.contains("Forge." + "Times." + "Slot" + Slot + "." + forgeItems.name());
+    }
+
+    public static ForgeItems getItemInSlot(int Slot, Player player) {
+        FileConfiguration config = CheckIfCorrect(player);
+        return (ForgeItems) config.get("Forge." + "Times." + "Slot" + Slot + ".");
     }
 
     public static boolean hasTimer(Player player, ForgeItems forgeItems) {
@@ -172,6 +198,21 @@ public class StatUtils {
                 plugin.getLogger().info("Player data saved!");
             }
         }.runTaskTimerAsynchronously(EzMiner.getPlugin(), interval, interval);
+    }
+
+    public static void save() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    StatUtils.setConfigXP(player, StatUtils.getHashXP(player));
+                    StatUtils.setConfigLevel(player, StatUtils.getHashLevel(player));
+                    FileConfiguration config = CheckIfCorrect(player);
+                    File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+                    try {
+                        config.save(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                plugin.getLogger().info("Player data saved!");
     }
 
 

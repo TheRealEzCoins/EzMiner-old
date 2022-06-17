@@ -286,30 +286,21 @@ public class ItemCreator implements Listener {
         return this;
     }
 
-    public ItemCreator addFortune(int Amount) {
-        ItemStack item = itemStack;
-        ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer data = meta.getPersistentDataContainer();
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Amount);
-        item.setItemMeta(meta);
-
-        return this;
-    }
-
-    public ItemCreator getFortune() {
+    public ItemCreator setFortune(int Amount) {
         ItemStack item = itemStack;
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer data = meta.getPersistentDataContainer();
         int Fortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
-        int Tier = getTier();
+        int Tier = getTier() * 25;
         int newFortune = Fortune + Tier;
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Fortune + newFortune);
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, (Fortune + newFortune + Amount));
         item.setItemMeta(meta);
 
-        addLore("&eFortune " + newFortune + "☘");
+        addLore("§eFortune " + newFortune + "☘");
 
         return this;
     }
+
 
 
 }

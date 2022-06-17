@@ -21,6 +21,9 @@ public class ListenerManager {
         addListener(new onOpen());
         addListener(new onQuit());
         addListener(new PortalEnterEvent());
+        addListener(new UpgradeGUIListener());
+        addListener(new CraftEvent());
+        addListener(new CloseInventory());
     }
 
     private void addListener(Listener listener) {

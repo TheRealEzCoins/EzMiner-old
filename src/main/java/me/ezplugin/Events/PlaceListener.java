@@ -1,8 +1,11 @@
 package me.ezplugin.Events;
 
+import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,12 +22,17 @@ public class PlaceListener implements Listener {
             return;
         }
     }
+
     @EventHandler
     public static void onBlockPlace(BlockPlaceEvent event) {
+        Block block = event.getBlock();
         Player player = event.getPlayer();
-        if(player.getWorld().equals(Bukkit.getWorld("MineWorld"))) {
-            event.setCancelled(true);
-            event.setBuild(false);
+        World world = player.getWorld();
+
+        for(Ores oreBlock : Ores.values()) {
+            if (block.getType().equals(oreBlock.getBlock()) && world.equals(Bukkit.getWorld("MineWorld"))) {
+                event.setCancelled(true);
+            }
         }
     }
 }

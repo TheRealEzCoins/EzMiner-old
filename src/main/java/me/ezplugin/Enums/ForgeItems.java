@@ -6,11 +6,17 @@ import me.ezplugin.Items.ItemManager;
 import java.util.Arrays;
 
 public enum ForgeItems {
+    /** Pickaxe crafting (Forge) */
     Obsidian_Pickaxe(Type.TOOL, ItemManager.Obsidian_Pickaxe, 15, 30, 15, 14),
-    Orichalchite_Pickaxe(Type.ORE, ItemManager.Orichalchite_Pickaxe, 1, 15, 128),
+    Orichalchite_Pickaxe(Type.TOOL, ItemManager.Orichalchite_Pickaxe, 1, 15, 128),
+
+    /** Gemstone crafting (Forge) */
     Refined_Gem(Type.ORE, ItemManager.Refined_Gemstone, 10, 10, 128),
     Polished_Gem(Type.ORE, ItemManager.Polished_Gemstone, 15, 10, 64),
-    Perfect_Gem(Type.ORE, ItemManager.Perfect_Gemstone, 20, 10, 32);
+    Perfect_Gem(Type.ORE, ItemManager.Perfect_Gemstone, 20, 10, 32),
+
+    /** Upgrade crafting (Forge) */
+    FortuneUpgrade(Type.UPGRADES, ItemManager.FortuneUpgrade, 25, 300, 3);
 
     private ItemCreator output;
     private Type type;

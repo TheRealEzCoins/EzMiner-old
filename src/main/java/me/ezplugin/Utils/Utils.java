@@ -2,12 +2,11 @@ package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
-import me.ezplugin.Utils.Stats.StatUtils;
+import me.ezplugin.Utils.Files.StatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -20,7 +19,7 @@ import java.util.*;
 public class Utils {
 
 
-    public static SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    public static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     static FileConfiguration config = EzMiner.plugin.getConfig();
     public static int getRatio = (int) config.get("Level-Scaling.Exp");
@@ -34,12 +33,12 @@ public class Utils {
     public static String TimeSetup(int time) {
         int s = time;
         int sec = s % 60;
-        int min = (s / 60)%60;
-        int hours = (s/60)/60;
+        int min = (s / 60) % 60;
+        int hours = (s / 60) / 60;
 
-        String strSec=(sec<10)?"0"+ sec :Integer.toString(sec);
-        String strmin=(min<10)?"0"+ min :Integer.toString(min);
-        String strHours=(hours<10)?"0"+ hours :Integer.toString(hours);
+        String strSec = (sec < 10) ? "0" + sec : Integer.toString(sec);
+        String strmin = (min < 10) ? "0" + min : Integer.toString(min);
+        String strHours = (hours < 10) ? "0" + hours : Integer.toString(hours);
 
         String Translated = strHours + ":" + strmin + ":" + strSec;
 
@@ -105,13 +104,14 @@ public class Utils {
     } */
 
     public static void HandleFortune(Player player, Ores ores) {
-        ItemStack MainHand  = player.getInventory().getItemInMainHand();
+        ItemStack MainHand = player.getInventory().getItemInMainHand();
         PersistentDataContainer data = MainHand.getItemMeta().getPersistentDataContainer();
         int getAmount = StatUtils.getResources(player, ores);
-        if(data.has(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER)) {
+        if (data.has(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER)) {
             int getFortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
             int newAmount = getFortune / 100;
             StatUtils.setResources(player, ores, getAmount + 1 + newAmount);
+            player.sendMessage("" + (newAmount + 1));
         } else {
             StatUtils.setResources(player, ores, getAmount + 1);
         }

@@ -2,9 +2,7 @@ package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
-import me.ezplugin.Enums.Type;
-import me.ezplugin.Items.ItemCreator;
-import me.ezplugin.Utils.Stats.StatUtils;
+import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;

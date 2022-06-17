@@ -2,6 +2,7 @@ package me.ezplugin.Events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,8 +16,9 @@ public class WorldListener implements Listener {
         World ExitWorld = event.getFrom();
         World world = player.getWorld();
 
-        if(world.equals(Bukkit.getWorld("MiningWorld_Main"))) {
-            player.sendMessage("§c§lYou are entering the main MineWorld!!!!");
+        if(world.equals(Bukkit.getWorld("MineWorld"))) {
+
         }
     }
+
 }

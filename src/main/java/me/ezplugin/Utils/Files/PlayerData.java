@@ -1,4 +1,4 @@
-package me.ezplugin.Utils.Stats;
+package me.ezplugin.Utils.Files;
 
 import me.ezplugin.EzMiner;
 import org.bukkit.configuration.file.FileConfiguration;

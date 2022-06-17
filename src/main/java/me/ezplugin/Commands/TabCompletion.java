@@ -21,6 +21,7 @@ public class TabCompletion implements TabCompleter {
             arg.add("resetall");
             arg.add("miner");
             arg.add("adminworld");
+            arg.add("help");
         }
 
         List<String> result = new ArrayList<>();

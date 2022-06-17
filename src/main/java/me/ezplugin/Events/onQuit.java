@@ -1,6 +1,6 @@
 package me.ezplugin.Events;
 
-import me.ezplugin.Utils.Stats.StatUtils;
+import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

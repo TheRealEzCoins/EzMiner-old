@@ -22,6 +22,7 @@ public class ItemManager {
     public static ItemCreator Obsidian_Pickaxe;
     public static ItemCreator OIL_BARREL;
     public static ItemCreator GEMSTONE_POT;
+    public static ItemCreator FortuneUpgrade;
 
 
     private static void ItemSetup() {
@@ -30,8 +31,7 @@ public class ItemManager {
                 .setPickaxe()
                 .setTier(1)
                 .addEnchantment(Enchantment.DIG_SPEED, 1)
-                .addFortune(150)
-                .getFortune()
+                .setFortune(0)
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //
@@ -39,7 +39,7 @@ public class ItemManager {
                 .setName("§8Obsidian Pickaxe")
                 .setPickaxe()
                 .setTier(2)
-                .getFortune()
+                .setFortune(0)
                 .setFuel(1000)
                 .HideItemFlags()
                 .setUnbreakable(true);
@@ -82,7 +82,12 @@ public class ItemManager {
         // -------------------------------------------- //
         GEMSTONE_POT = new ItemCreator(SkullCreator.itemFromUrl(Heads.Gemstone_Pot.getURL()))
                 .setName("§bGemstones");
-
+        // -------------------------------------------- //
+        FortuneUpgrade = new ItemCreator(SkullCreator.itemFromUrl(Heads.Fortune.getURL()))
+                .setName("§eFortune Boost")
+                .addLore("")
+                .addLore("§6Gives your pickaxe a 10☘ Fortune boost!")
+                .setRarity(Rarity.RARE, "UPGRADE");
     }
 
 

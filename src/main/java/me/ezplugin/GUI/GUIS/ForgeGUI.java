@@ -1,5 +1,7 @@
 package me.ezplugin.GUI.GUIS;
 
+import me.ezplugin.Enums.ForgeItems;
+import me.ezplugin.Utils.Files.StatUtils;
 import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.ItemUtils;
 import me.ezplugin.Utils.Utils;
@@ -13,24 +15,14 @@ import static me.ezplugin.Utils.ItemUtils.customItemName;
 
 public class ForgeGUI extends GuiUtils {
 
-    private static final ItemStack blackglass = customItemName(Material.BLACK_STAINED_GLASS_PANE, " ");
+    private static final ItemStack furnace = customItemName(Material.FURNACE, "§aForge Items");
     private static final ItemStack red_glass = customItemName(Material.RED_STAINED_GLASS_PANE, " ");
 
-    private static final int[] black_border = new int[] {
-            9,
-            10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23,
-             25, 26, 27, 28, 29, 30, 31,
-            32, 33, 34, 35, 36, 37, 38, 39,
-             41, 42, 43, 44, 45, 46, 47,
-            48, 49, 50, 51, 52, 53 };
+    private static final int[] furnaces = new int[] {
+            11, 12, 13, 14, 15 };
 
     private static final int[] red_border = new int[] {
-            0, 1, 2, 3, 4, 5, 6, 7, 8,
-            9, /* --------------- */ 17,
-            18, /* --------------- */ 26,
-            27, /* --------------- */ 35,
-            36, /* --------------- */ 44,
-            45, 46, 47, 48, 49, 50, 51, 52, 53
+            20, 21, 22, 23, 24
     };
 
 
@@ -38,12 +30,10 @@ public class ForgeGUI extends GuiUtils {
 
         Inventory FORGEGUI = Bukkit.createInventory(null, 54, "§8Forge");
 
-        FORGEGUI.setItem(20,
-                customItemName(
-                        Material.LAVA_BUCKET,
-                        "§bForge items here."));
+        GuiUtils.fillEmpty(FORGEGUI);
 
-        FORGEGUI.setItem(24,
+
+        FORGEGUI.setItem(39,
                 customItemName(
                         Material.ENDER_CHEST,
                         "§aResources"));
@@ -52,8 +42,13 @@ public class ForgeGUI extends GuiUtils {
                 40,
                 GuiUtils.getStatsAsSkull(player));
 
-        for(int slot : black_border){
-            FORGEGUI.setItem(slot, blackglass);
+
+        if(StatUtils.newHasTimer(1, player, StatUtils.getItemInSlot(1, player))) {
+            FORGEGUI.setItem(11, customItemName(Material.BARRIER, "Test"));
+        }
+
+        for(int slot : furnaces){
+            FORGEGUI.setItem(slot, furnace);
         }
 
         for(int slot : red_border){

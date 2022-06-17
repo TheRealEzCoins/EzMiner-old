@@ -13,7 +13,7 @@ public class PortalEnterEvent implements Listener {
     @EventHandler
     public void onNetherPortalEnter(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
-        if(player.getWorld().equals(Bukkit.getWorld("MiningWorld_Main")) || player.getWorld().equals(Bukkit.getWorld("MineWorld"))) {
+        if(player.getWorld().equals(Bukkit.getWorld("MineWorld"))) {
             if (event.getCause().equals(PlayerTeleportEvent.TeleportCause.NETHER_PORTAL)) {
                 if(!(player.getBedSpawnLocation() == null)) {
                     player.teleport(Objects.requireNonNull(player.getBedSpawnLocation()));
