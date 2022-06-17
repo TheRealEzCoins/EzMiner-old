@@ -1,7 +1,5 @@
 package me.ezplugin.GUI.GUIS;
 
-import me.ezplugin.Enums.ForgeItems;
-import me.ezplugin.Utils.Files.StatUtils;
 import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.ItemUtils;
 import me.ezplugin.Utils.Utils;
@@ -41,11 +39,6 @@ public class ForgeGUI extends GuiUtils {
         FORGEGUI.setItem(
                 40,
                 GuiUtils.getStatsAsSkull(player));
-
-
-        if(StatUtils.newHasTimer(1, player, StatUtils.getItemInSlot(1, player))) {
-            FORGEGUI.setItem(11, customItemName(Material.BARRIER, "Test"));
-        }
 
         for(int slot : furnaces){
             FORGEGUI.setItem(slot, furnace);

@@ -11,9 +11,9 @@ public enum ForgeItems {
     Orichalchite_Pickaxe(Type.TOOL, ItemManager.Orichalchite_Pickaxe, 1, 15, 128),
 
     /** Gemstone crafting (Forge) */
-    Refined_Gem(Type.ORE, ItemManager.Refined_Gemstone, 10, 10, 128),
-    Polished_Gem(Type.ORE, ItemManager.Polished_Gemstone, 15, 10, 64),
-    Perfect_Gem(Type.ORE, ItemManager.Perfect_Gemstone, 20, 10, 32),
+    Refined_Gem(Type.ORE, ItemManager.Refined_Gemstone, 10, 600, 128),
+    Polished_Gem(Type.ORE, ItemManager.Polished_Gemstone, 15, 600, 64),
+    Perfect_Gem(Type.ORE, ItemManager.Perfect_Gemstone, 20, 600, 32),
 
     /** Upgrade crafting (Forge) */
     FortuneUpgrade(Type.UPGRADES, ItemManager.FortuneUpgrade, 25, 300, 3);

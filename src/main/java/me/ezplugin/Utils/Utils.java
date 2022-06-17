@@ -21,6 +21,8 @@ public class Utils {
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
+    public static SimpleDateFormat HoursFormatter = new SimpleDateFormat("HH:mm:ss");
+
     static FileConfiguration config = EzMiner.plugin.getConfig();
     public static int getRatio = (int) config.get("Level-Scaling.Exp");
 

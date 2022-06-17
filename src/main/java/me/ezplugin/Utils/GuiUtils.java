@@ -13,7 +13,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static me.ezplugin.Utils.ItemUtils.customItemName;
 import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
@@ -96,6 +99,21 @@ public class GuiUtils  {
         } else {
             inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
         }
+    }
+
+    public static ItemStack Crafting(ForgeItems forgeItems, Player player) throws ParseException {
+        Date forgeDate = Utils.formatter.parse(StatUtils.getTimer(player, forgeItems));
+
+        long Time =  forgeDate.getTime() - Utils.getTime().getTime();
+        long diffSeconds = Time / 1000 % 60;
+        long diffMinutes = Time / (60 * 1000) % 60;
+        long diffHours = Time / (60 * 60 * 1000);
+        return customItemUsingStack(
+                forgeItems.getOuput().getItemStack(),
+                forgeItems.getOuput().getName(),
+                "",
+                "§fTime remaining: §c" + diffHours + ":" + diffMinutes + ":" + diffSeconds
+        );
     }
 
     public static ItemStack createItem_2(ForgeItems forgeItems, Ores Resource_1, Ores Resource_2) {

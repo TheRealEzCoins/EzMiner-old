@@ -2,22 +2,37 @@ package me.ezplugin.GUI.GUIS;
 
 import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
+import me.ezplugin.Utils.Files.StatUtils;
 import me.ezplugin.Utils.GuiUtils;
+import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.text.ParseException;
+import java.util.Date;
+
 public class RefiningGUI extends GuiUtils {
 
 
-    public static Inventory RefiningGUI(Player player) {
+
+    public static Inventory RefiningGUI(Player player) throws ParseException {
 
         Inventory RefiningGUI = Bukkit.createInventory(null, 54, "§8Refining");
         GuiUtils.fillBorder(RefiningGUI);
 
-        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Refined_Gem, Ores.Gemstone);
+
+        if(StatUtils.hasTimer(player, ForgeItems.Refined_Gem)) {
+            RefiningGUI.setItem(10, GuiUtils.Crafting(ForgeItems.Refined_Gem, player));
+            player.updateInventory();
+        } else {
+            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Refined_Gem, Ores.Gemstone);
+            player.updateInventory();
+        }
+
         GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Polished_Gem, Ores.Refined_Gemstone);
         GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Ores.Polished_Gemstone);
+
 
             RefiningGUI.setItem(
                     49,

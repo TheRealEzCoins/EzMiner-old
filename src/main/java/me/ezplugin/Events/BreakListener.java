@@ -17,7 +17,7 @@ public class BreakListener extends BlockUtils implements Listener {
     public void onBlockBreak(BlockBreakEvent block) {
         Player player = block.getPlayer();
         World world = player.getWorld();
-        if(world.equals(Bukkit.getWorld("MineWorld"))) {
+        if(world.equals(Bukkit.getWorld("MiningWorld"))) {
             if (block.getBlock().getType().equals(Material.BEDROCK) && (!(player.getGameMode().equals(GameMode.CREATIVE)))) {
                 block.setCancelled(true);
             } else {

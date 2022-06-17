@@ -37,37 +37,6 @@ public class ForgeUtils {
         }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()) * 20L);
     }
 
-    public static void newForgeSetup(Player player ,ForgeItems forgeItems) {
-
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(Utils.getTime());
-        cal.add(Calendar.SECOND, forgeItems.getTime());
-        String time = Utils.formatter.format(cal.getTime());
-        StatUtils.newSetTimer(StatUtils.PlayerClickedSlot.get(player.getUniqueId()), player, forgeItems, time);
-
-
-
-        player.sendMessage("§7Crafting: \n§8- " + forgeItems.getOuput().getName() + "§b " + Utils.TimeSetup(forgeItems.getTime()));
-        Utils.SoundSetup(player, Sound.BLOCK_LAVA_POP, 1, 10);
-        Utils.SoundSetup(player, Sound.BLOCK_FIRE_EXTINGUISH, 1, 10);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
-                player.sendMessage("§aYour item finished crafting!");
-            }
-        }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()) * 20L);
-    }
-
-
-
-
-
-
-
-
 
 
 
@@ -118,16 +87,6 @@ public class ForgeUtils {
         } else {
             player.sendMessage("§cYou're not high enough level to forge this!");
             Utils.FailedSound(player);
-        }
-    }
-
-    public static void newSingleCraft(Player player, ForgeItems craft, Ores Resource_1) {
-        if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
-            int Value = Integer.parseInt(craft.getAmountInteger());
-            if(StatUtils.getResources(player, Resource_1) >= Value) {
-                ForgeUtils.newForgeSetup(player, craft);
-                StatUtils.RemoveResources(player, Resource_1, Value);
-            }
         }
     }
 
