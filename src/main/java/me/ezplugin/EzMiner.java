@@ -67,8 +67,8 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
 
 
-        getServer().createWorld(new WorldCreator("MiningWorld_Admin"));
-        try {
+        getServer().createWorld(new WorldCreator("MiningWorld"));
+        /*try {
             WorldCreation.createWorld();
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,8 +97,10 @@ public final class EzMiner extends JavaPlugin implements Listener {
         WorldClass.copyWorld(sourceFolder, targetFolder);
 
 
+         */
+
+
         Bukkit.getWorld("MiningWorld").setSpawnLocation(138, 119, 237, 180);
-        Bukkit.getWorld("MiningWorld_Admin").setSpawnLocation(138, 119, 237, 180);
 
         System.out.println("Plugin has started.");
         StatUtils.startAutoSave();

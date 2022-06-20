@@ -30,8 +30,22 @@ public class RefiningGUI extends GuiUtils {
             player.updateInventory();
         }
 
-        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Polished_Gem, Ores.Refined_Gemstone);
-        GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Ores.Polished_Gemstone);
+        if(StatUtils.hasTimer(player, ForgeItems.Polished_Gem)) {
+            RefiningGUI.setItem(11, GuiUtils.Crafting(ForgeItems.Polished_Gem, player));
+            player.updateInventory();
+        } else {
+            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Polished_Gem, Ores.Refined_Gemstone);
+            player.updateInventory();
+        }
+
+        if(StatUtils.hasTimer(player, ForgeItems.Perfect_Gem)) {
+            RefiningGUI.setItem(11, GuiUtils.Crafting(ForgeItems.Perfect_Gem, player));
+            player.updateInventory();
+        } else {
+            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Ores.Polished_Gemstone);
+            player.updateInventory();
+        }
+
 
 
             RefiningGUI.setItem(

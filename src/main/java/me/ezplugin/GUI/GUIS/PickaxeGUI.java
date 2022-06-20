@@ -7,10 +7,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.text.ParseException;
+
 
 public class PickaxeGUI extends GuiUtils {
 
-    public static Inventory PickaxeGUI(Player player) {
+    public static Inventory PickaxeGUI(Player player) throws ParseException {
 
         Inventory PickaxeGUI = Bukkit.createInventory(null, 54, "§8Pickaxe Forge");
         GuiUtils.fillBorder(PickaxeGUI);

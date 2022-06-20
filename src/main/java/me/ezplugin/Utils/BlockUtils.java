@@ -3,12 +3,14 @@ package me.ezplugin.Utils;
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Files.StatUtils;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 
 public class BlockUtils {
@@ -20,7 +22,7 @@ public class BlockUtils {
      * @param ores The Ores enum that you want to use.
      * @param ExpAmount The amount of experience the player will receive for mining the block.
      */
-    public static void BlockSetup(BlockBreakEvent block, Player player, Ores ores, int ExpAmount) {
+    public static void BlockSetup(BlockBreakEvent block, Player player, Ores ores, int ExpAmount, int RespawnTimer) {
 
         Block getBlock = block.getBlock();
         if(getBlock.getType().equals(ores.getBlock())) {
@@ -28,6 +30,7 @@ public class BlockUtils {
                     if(StatUtils.getHashLevel(player) >= ores.getLevel()) {
                         if(Utils.getMainHandData(player).has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER)) {
                             if (Utils.getTier(player) >= ores.getTier()) {
+                                block.setCancelled(true);
 
                                 if (FuelHandler.getFuel(player)) {
                                     FuelHandler.FuelConsume(player, block);
@@ -36,7 +39,16 @@ public class BlockUtils {
                                 StatUtils.getResources(player, ores);
                                 Utils.HandleFortune(player, ores);
                                 block.setDropItems(false);
+                                block.getBlock().setType(Material.BEDROCK);
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
+
+
+                                new BukkitRunnable() {
+                                    @Override
+                                    public void run() {
+                                        block.getBlock().setType(ores.getBlock());
+                                    }
+                                }.runTaskLater(EzMiner.getPlugin(), RespawnTimer);
 
 
 

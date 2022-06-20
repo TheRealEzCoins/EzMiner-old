@@ -55,9 +55,9 @@ public class ForgeUtils {
             player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
             Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
             Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
-                StatUtils.setTimer(player, forgeItems, null);
-            }
+            StatUtils.setTimer(player, forgeItems, null);
             player.getInventory().addItem(forgeItems.getOuput().getItemStack());
+            }
         }
 
     public static boolean checkTime(ForgeItems forgeItems, Player player) {

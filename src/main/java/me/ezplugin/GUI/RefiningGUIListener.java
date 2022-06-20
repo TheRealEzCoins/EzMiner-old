@@ -2,6 +2,7 @@ package me.ezplugin.GUI;
 
 import me.ezplugin.Enums.ForgeItems;
 import me.ezplugin.Enums.Ores;
+import me.ezplugin.GUI.GUIS.RefiningGUI;
 import me.ezplugin.GUI.GUIS.SelectorGUI;
 import me.ezplugin.Utils.*;
 import me.ezplugin.Utils.Files.StatUtils;
