@@ -2,6 +2,7 @@ package me.ezplugin.Items;
 
 import com.jeff_media.morepersistentdatatypes.DataType;
 import me.ezplugin.Enums.Rarity;
+import me.ezplugin.Enums.Type;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.ChatColor;
@@ -217,6 +218,7 @@ public class ItemCreator implements Listener {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Ore"), PersistentDataType.STRING, "True");
+            meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "EzMiner-Name"), PersistentDataType.STRING, itemStack.toString());
             itemStack.setItemMeta(meta);
         }
         return this;
@@ -235,12 +237,13 @@ public class ItemCreator implements Listener {
         return getItemStack().getItemMeta().getDisplayName();
     }
 
-    public ItemCreator setRarity(Rarity Rarity, String type) {
+    public ItemCreator setRarity(Rarity Rarity, Type type) {
         ItemStack item = itemStack;
         ItemMeta meta = item.getItemMeta();
 
         meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Rarity"), PersistentDataType.STRING, Rarity.name());
         itemStack.setItemMeta(meta);
+        addLore("");
         addLore("" + Rarity.getColor() + ChatColor.BOLD + Rarity + " " + type);
         return this;
     }
@@ -299,6 +302,18 @@ public class ItemCreator implements Listener {
         addLore("§eFortune " + newFortune + "☘");
 
         return this;
+    }
+
+
+    public String getNameAsNBT() {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+
+        String nameAsNBT = data.get(new NamespacedKey(EzMiner.getPlugin(), "EzMiner-Name"), PersistentDataType.STRING);
+
+
+        return nameAsNBT;
     }
 
 

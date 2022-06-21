@@ -24,12 +24,12 @@ public class RefiningGUIListener implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("§8Refining")) {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
-            } else if (e.getCurrentItem().isSimilar(GuiUtils.createItem(ForgeItems.Refined_Gem, Ores.Gemstone))) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Refined_Gem, Ores.Gemstone);
-            } else if(e.getCurrentItem().isSimilar(GuiUtils.createItem(ForgeItems.Polished_Gem, Ores.Refined_Gemstone))) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Polished_Gem, Ores.Refined_Gemstone);
-            } else if(e.getCurrentItem().isSimilar(GuiUtils.createItem(ForgeItems.Perfect_Gem, Ores.Polished_Gemstone))) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Perfect_Gem, Ores.Polished_Gemstone);
+            } else if (e.getSlot() == 10) {
+                ForgeUtils.SingleCraft(player, ForgeItems.Refined_Gem, Ores.Gemstone, 128);
+            } else if(e.getSlot() == 11) {
+                ForgeUtils.SingleCraft(player, ForgeItems.Polished_Gem, Ores.Refined_Gemstone, 128);
+            } else if(e.getSlot() == 12) {
+                ForgeUtils.SingleCraft(player, ForgeItems.Perfect_Gem, Ores.Polished_Gemstone, 128);
 
 
 

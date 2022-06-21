@@ -13,7 +13,7 @@ public class UpgradeGUI extends GuiUtils {
         Inventory UpgradeGUI = Bukkit.createInventory(null, 54, "§8Upgrades");
         GuiUtils.fillBorder(UpgradeGUI);
 
-        GuiUtils.SetupItem(player, UpgradeGUI, ForgeItems.FortuneUpgrade, Ores.Perfect_Gemstone);
+        GuiUtils.SetupItem(player, UpgradeGUI, ForgeItems.FortuneUpgrade, Ores.Perfect_Gemstone, 4);
 
 
 

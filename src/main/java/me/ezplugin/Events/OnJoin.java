@@ -16,7 +16,6 @@ import java.util.UUID;
 public class OnJoin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent join) {
-        String user = join.getPlayer().getName();
         Player player = join.getPlayer();
         String StringUUID = String.valueOf(player.getUniqueId());
         UUID playerUUID = player.getUniqueId();
@@ -35,20 +34,23 @@ public class OnJoin implements Listener {
             PlayerData.savePlayerData();
         }
 
-        if(!PlayerData.HasData("Ores.")) {
-            for(Ores ores : Ores.values())
-                if(ores.getType().equals(Type.ORE)) {
-                    PlayerData.fileData.addDefault("Ores." + ores, 0);
+
+        for(Ores ores : Ores.values()) {
+            if(ores.getType().equals(Type.GEM)) {
+                if (!PlayerData.HasData("Gems." + ores)) {
+                    PlayerData.fileData.addDefault("Gems." + ores, 0);
                 }
+            }
             PlayerData.fileData.options().copyDefaults(true);
             PlayerData.savePlayerData();
         }
 
-        if(!PlayerData.HasData("Gems.")) {
-            for(Ores ores : Ores.values())
-                if(ores.getType().equals(Type.GEM)) {
-                    PlayerData.fileData.addDefault("Gems." + ores, 0);
+        for(Ores ores : Ores.values()) {
+            if(ores.getType().equals(Type.ORE)) {
+                if (!PlayerData.HasData("Ores." + ores)) {
+                    PlayerData.fileData.addDefault("Ores." + ores, 0);
                 }
+            }
             PlayerData.fileData.options().copyDefaults(true);
             PlayerData.savePlayerData();
         }
@@ -65,9 +67,6 @@ public class OnJoin implements Listener {
             PlayerData.savePlayerData();
         }
 
-
-
-        join.setJoinMessage(ChatColor.AQUA + "Welcome " + ChatColor.RED + ChatColor.BOLD + user + ChatColor.AQUA + " !");
     }
 
 

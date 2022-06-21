@@ -27,7 +27,7 @@ public class ListenerManager {
     }
 
     private void addListener(Listener listener) {
-        EzMiner.getPluginManager().registerEvents(listener, EzMiner.getInstance());
+        EzMiner.getPluginManager().registerEvents(listener, EzMiner.getPlugin());
     }
 
 }

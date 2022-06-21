@@ -21,8 +21,9 @@ public class BreakListener extends BlockUtils implements Listener {
             if (block.getBlock().getType().equals(Material.BEDROCK) && (!(player.getGameMode().equals(GameMode.CREATIVE)))) {
                 block.setCancelled(true);
             } else {
-                BlockSetup(block, player, Ores.Gemstone,  500, 100);
-                BlockSetup(block, player, Ores.Orichalchite,  100, 100);
+                for (Ores ores : Ores.values()) {
+                    BlockUtils.BlockSetup(block, player, ores, ores.getTier() * 100);
+                }
             }
         }
     }

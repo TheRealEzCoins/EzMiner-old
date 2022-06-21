@@ -21,10 +21,9 @@ public class UpgradeGUIListener implements Listener {
 
         if (e.getView().getTitle().equalsIgnoreCase("§8Upgrades")) {
             e.setCancelled(true);
-            if(e.getCurrentItem().equals(Material.AIR)) {
-
-            } else if (e.getCurrentItem().getType().equals(ItemManager.FortuneUpgrade.getType())) {
-                ForgeUtils.SingleCraft(player, ForgeItems.FortuneUpgrade, Ores.Perfect_Gemstone);
+            if(e.getCurrentItem() == null) {
+            } else if (e.getSlot() == 10 /* FortuneUpgrade */) {
+                ForgeUtils.SingleCraft(player, ForgeItems.FortuneUpgrade, Ores.Perfect_Gemstone, 4);
 
             }
             else {

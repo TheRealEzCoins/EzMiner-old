@@ -5,6 +5,7 @@ public enum Type {
     GEM(),
     ORE(),
     UPGRADES(),
+    FUEL(),
     TOOL();
 
 

@@ -72,13 +72,12 @@ public class ForgeUtils {
 
 
 
-    public static void SingleCraft(Player player, ForgeItems craft, Ores Resource_1) throws ParseException {
+    public static void SingleCraft(Player player, ForgeItems craft, Ores Resource, int Amount) throws ParseException {
         if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
-            int Value = Integer.parseInt(craft.getAmountInteger());
-            if(StatUtils.getResources(player, Resource_1) >= Value) {
+            if(StatUtils.getResources(player, Resource) >= Amount) {
                 if(ForgeUtils.checkTime(craft, player)) {
                     ForgeUtils.ForgeSetup(player, craft);
-                    StatUtils.RemoveResources(player, Resource_1, Value);
+                    StatUtils.RemoveResources(player, Resource, Amount);
                 }
             } else {
                 player.sendMessage("§cYou do not have enough resources to craft this!");
@@ -90,15 +89,13 @@ public class ForgeUtils {
         }
     }
 
-    public static void DoubleCraft(Player player, ForgeItems craft, Ores Resource_1, Ores Resource_2) throws ParseException {
+    public static void DoubleCraft(Player player, ForgeItems craft, Ores Resource_1, int Amount_1, Ores Resource_2, int Amount_2) throws ParseException {
             if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
-                int Value = Integer.parseInt((craft.getAmountInteger().split(" ")[0]));
-                int Value2 = Integer.parseInt((craft.getAmountInteger().split(" ")[1]));
-                if(StatUtils.getResources(player, Resource_1) >= Value && StatUtils.getResources(player, Resource_2) >= Value2) {
+                if(StatUtils.getResources(player, Resource_1) >= Amount_1 && StatUtils.getResources(player, Resource_2) >= Amount_2) {
                     if(ForgeUtils.checkTime(craft, player)) {
                         ForgeUtils.ForgeSetup(player, craft);
-                        StatUtils.RemoveResources(player, Resource_1, Value);
-                        StatUtils.RemoveResources(player, Resource_2, Value2);
+                        StatUtils.RemoveResources(player, Resource_1, Amount_1);
+                        StatUtils.RemoveResources(player, Resource_2, Amount_2);
                     }
                 } else {
                     player.sendMessage("§cYou do not have enough resources to craft this!");

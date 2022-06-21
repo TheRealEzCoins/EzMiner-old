@@ -24,11 +24,9 @@ public class PickaxeGUIListener implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("§8Pickaxe Forge")) {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
-            } else if (e.getCurrentItem().getType().equals(ItemManager.Orichalchite_Pickaxe.getType())) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Orichalchite_Pickaxe, Ores.Orichalchite);
+            } else if (e.getSlot() == 10) {
 
-            } else if (e.getCurrentItem().getType().equals(ItemManager.Obsidian_Pickaxe.getType())) {
-                ForgeUtils.DoubleCraft(player, ForgeItems.Obsidian_Pickaxe, Ores.Gemstone, Ores.Orichalchite);
+            } else if (e.getSlot() == 11) {
             }
             else {
                 GuiUtils.MiscSetup(e, SelectorGUI.SelectorGUI());

@@ -79,23 +79,22 @@ public class GuiUtils  {
     }
 
 
-    public static ItemStack createItem(ForgeItems forgeItems, Ores Resource_1) {
-        int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[0]);
+    public static ItemStack createItem(ForgeItems forgeItems, Ores Resource_1, int Amount) {
         return customItemUsingStack(
                 forgeItems.getOuput().getItemStack(),
                 forgeItems.getOuput().getName(),
                 "",
                 "§eItems required",
-                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Value,
+                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Amount,
                 "",
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
-    public static void SetupItem(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1) {
+    public static void SetupItem(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1, int Amount) {
         if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
                     inventory.firstEmpty(),
-                    createItem(forgeItems, Resource_1));
+                    createItem(forgeItems, Resource_1, Amount));
         } else {
             inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
         }
@@ -118,26 +117,24 @@ public class GuiUtils  {
         );
     }
 
-    public static ItemStack createItem_2(ForgeItems forgeItems, Ores Resource_1, Ores Resource_2) {
-        int Value = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[0]);
-        int Value2 = Integer.parseInt(forgeItems.getAmountInteger().split(" ")[1]);
+    public static ItemStack createItem_2(ForgeItems forgeItems, Ores Resource_1, int Amount_1,  Ores Resource_2, int Amount_2) {
 
         return customItemUsingStack(
                 forgeItems.getOuput().getItemStack(),
                 forgeItems.getOuput().getName(),
                 "",
                 "§eItems required",
-                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Value,
-                ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Value2,
+                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Amount_1,
+                ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Amount_2,
                 "",
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
-    public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1, Ores Resource_2) {
+    public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Ores Resource_1, int Amount_1, Ores Resource_2, int Amount_2) {
         if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
                     inventory.firstEmpty(),
-                    createItem_2(forgeItems, Resource_1, Resource_2));
+                    createItem_2(forgeItems, Resource_1, Amount_1, Resource_2, Amount_2));
         } else {
             inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
         }
@@ -191,7 +188,7 @@ public class GuiUtils  {
             player.playSound(player.getLocation(), Sound.BLOCK_CHEST_CLOSE, 1f, -1f);
         } else if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§7Locked!")) {
             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, -10f);
-            player.sendMessage("§cYou need to be a higher level to forge this!");
+            player.sendMessage("§cYou need to be a higher level to access this!");
         }
     }
 

@@ -21,7 +21,6 @@ public class Utils {
 
     public static SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-    public static SimpleDateFormat HoursFormatter = new SimpleDateFormat("HH:mm:ss");
 
     static FileConfiguration config = EzMiner.plugin.getConfig();
     public static int getRatio = (int) config.get("Level-Scaling.Exp");
@@ -113,12 +112,20 @@ public class Utils {
             int getFortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
             int newAmount = getFortune / 100;
             StatUtils.setResources(player, ores, getAmount + 1 + newAmount);
-            player.sendMessage("" + (newAmount + 1));
         } else {
             StatUtils.setResources(player, ores, getAmount + 1);
         }
     }
 
+    /**
+     * If the player's current XP is greater than or equal to the ratio multiplied by the player's current level, then the
+     * player's level is increased by one and the player's XP is decreased by the ratio multiplied by the player's current
+     * level. If the player's current XP is less than the ratio multiplied by the player's current level, then the player's
+     * XP is increased by the amount of XP the player is supposed to receive
+     *
+     * @param player The player who is gaining the XP
+     * @param ExpAmount The amount of XP to add to the player.
+     */
     public static void HandleXP(Player player, int ExpAmount) {
 
         int CurrentLVL = StatUtils.getHashLevel(player);

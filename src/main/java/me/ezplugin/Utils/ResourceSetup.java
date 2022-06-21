@@ -2,20 +2,44 @@ package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.Ores;
 import me.ezplugin.Enums.Type;
+import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.GUIS.GemsGUI;
 import me.ezplugin.GUI.GUIS.ResourcesGUI;
 import me.ezplugin.Utils.Files.StatUtils;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
+import javax.annotation.Nonnull;
 
 import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;;
 
 public class ResourceSetup {
 
     public static ItemStack ResourceItem(Ores ores, Player player) {
+        int amount = StatUtils.getResources(player, ores);
+
+        return customItemUsingStack(
+                ores.getItem().getItemStack(),
+                GuiUtils.nameSetup(ores),
+                "§fRequired Level: §c" + ores.getLevel(),
+                "§fRequired Tier: §c" + ores.getTier(),
+                "§fBlock of origin: §c" + ores.getBlock().toString().substring(0, 1).toUpperCase() + ores.getBlock().toString().replace("_", " ").substring(1).toLowerCase(),
+                "",
+                "§fAmount: §a" + amount,
+                "",
+                "§c→ §fLeft-Click to deposit",
+                "§c→ §fShift-Left-Click to deposit all",
+                "§c→ §fRight-Click to withdraw",
+                "§c→ §fShift-Right-Click to withdraw 64");
+    }
+
+    public static ItemStack ResourceItemNoBlock(Ores ores, Player player) {
         int amount = StatUtils.getResources(player, ores);
 
         return customItemUsingStack(
@@ -68,9 +92,15 @@ public class ResourceSetup {
         for(Ores ores : Ores.values()) {
             if (ores.getType().equals(Type.GEM)) {
                 if (StatUtils.getHashLevel(player) >= ores.getLevel()) {
-                    inventory.setItem(
-                            inventory.firstEmpty(),
-                            ResourceSetup.ResourceItem(ores, player));
+                    if(ores.getBlock() != null) {
+                        inventory.setItem(
+                                inventory.firstEmpty(),
+                                ResourceSetup.ResourceItem(ores, player));
+                    } else {
+                        inventory.setItem(
+                                inventory.firstEmpty(),
+                                ResourceSetup.ResourceItemNoBlock(ores, player));
+                    }
                 } else {
                     inventory.setItem(
                             inventory.firstEmpty(),
@@ -167,29 +197,43 @@ public class ResourceSetup {
             if (player.getInventory().containsAtLeast(ore.getItem().getItemStack(), 1)) {
                 int amount = 0;
                 for (ItemStack item : player.getInventory().getContents()) {
-                    if (item != null && item.getType().equals(ore.getItem().getType())) {
-                        amount += item.getAmount();
-                        if(item.getType() == ore.getItem().getType() && item.getAmount() >= 1) {
-                            int newStack = item.getAmount() - item.getAmount();
-                            item.setAmount(newStack);
-                        }
-                    }
+                    if(item != null) {
+                    PersistentDataContainer itemData = item.getItemMeta().getPersistentDataContainer();
+                    if (itemData.has(new NamespacedKey(EzMiner.getPlugin(), "EzMiner-Name"), PersistentDataType.STRING)) {
+                        String ItemName = itemData.get(new NamespacedKey(EzMiner.getPlugin(), "EzMiner-Name"), PersistentDataType.STRING);
+                        String oreDataName = ore.getItem().getNameAsNBT();
+                        if (item.getType().equals(ore.getItem().getType()) && ItemName.equals(oreDataName)) {
+                            amount += item.getAmount();
+                            if (item.getType() == ore.getItem().getType() && item.getAmount() >= 1) {
+                                int newStack = item.getAmount() - item.getAmount();
+                                item.setAmount(newStack);
 
+                            }
+                        }
+                        }
+
+                    }
                 }
 
                 int getAmount = StatUtils.getResources(player, ore);
                 StatUtils.setResources(player, ore, getAmount + amount);
                 player.sendMessage("§c+" + amount + " " + ore.getItem().getName());
-                if(ore.getType().equals(Type.ORE)) {
+                if (ore.getType().equals(Type.ORE)) {
                     player.openInventory(ResourcesGUI.ResourcesGUI(player));
                 } else {
                     player.openInventory(GemsGUI.GemGUI(player));
                 }
+
 
             } else {
                 player.sendMessage("§cYou do not have enough of that resource!");
                 Utils.FailedSound(player);
             }
         }
+    }
+
+
+    public static void resourceWithdraw() {
+        
     }
 }
