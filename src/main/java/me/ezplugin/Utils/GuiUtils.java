@@ -37,7 +37,7 @@ public class GuiUtils  {
         int Fragments = StatUtils.getHashFragments(player);
         return customItemUsingStack(
                 Utils.getPlayerSkull(player),
-                "",
+                "§9" + player.getName() + "'s stats." ,
                 "§7Current Level: §9" + getLevel,
                 "§7Current xp: §9" + getXP + " §7/ §9" + (getLevel * 500),
                 "§7Xp to next level: §9" + xpLeft,

@@ -16,6 +16,7 @@ public class OreItems {
     }
 
     public static ItemCreator Zaplium;
+    public static ItemCreator Uprum;
     public static ItemCreator Slaginite;
     public static ItemCreator Gryrium;
     public static ItemCreator Kreisium;
@@ -28,6 +29,11 @@ public class OreItems {
         // -------------------------------------------- //
         Nacrine = new ItemCreator(SkullCreator.itemFromUrl(Heads.Nacrine.getURL()))
                 .setName("§8Nacrine Ore")
+                .setRarity(Rarity.COMMON, Type.ORE)
+                .setOre();
+        // -------------------------------------------- //
+        Uprum = new ItemCreator(SkullCreator.itemFromUrl(Heads.Uprum.getURL()))
+                .setName("§4Uprum Ore")
                 .setRarity(Rarity.COMMON, Type.ORE)
                 .setOre();
         // -------------------------------------------- //

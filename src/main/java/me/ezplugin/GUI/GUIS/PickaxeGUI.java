@@ -16,12 +16,12 @@ public class PickaxeGUI extends GuiUtils {
         Inventory PickaxeGUI = Bukkit.createInventory(null, 54, "§8Pickaxe Forge");
         GuiUtils.fillBorder(PickaxeGUI);
 
-        //GuiUtils.SetupItem(player, PickaxeGUI, ForgeItems.Orichalchite_Pickaxe, Ores.Orichalchite, 16);
-        //GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Obsidian_Pickaxe, Ores.Refined_Gemstone, 15, Ores.Orichalchite, 16);
-
         GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Nacrine_Pickaxe, Resources.Nacrine, 500, ShopItems.Tier_1_Handle, 2);
 
+        GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Uprum_Pickaxe, Resources.Uprum, 250, ShopItems.Tier_1_Handle, 1);
+
         GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Zaplium_Pickaxe, Resources.Zaplium, 400, ShopItems.Tier_1_Handle, 2);
+
 
         PickaxeGUI.setItem(
                 49,

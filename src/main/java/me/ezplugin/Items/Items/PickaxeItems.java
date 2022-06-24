@@ -12,6 +12,7 @@ public class PickaxeItems {
 
     public static ItemCreator Starter_Pickaxe;
     public static ItemCreator Nacrine_Pickaxe;
+    public static ItemCreator Uprum_Pickaxe;
     public static ItemCreator Zaplium_Pickaxe;
 
     private static void ItemSetup() {
@@ -31,6 +32,16 @@ public class PickaxeItems {
                 .setTier(1)
                 .addEnchantment(Enchantment.DIG_SPEED, 2)
                 .setFortune(0)
+                .HideItemFlags()
+                .setUnbreakable(true);
+        // -------------------------------------------- //
+        Uprum_Pickaxe = new ItemCreator(Material.STONE_PICKAXE)
+                .setName("§4Uprum Pickaxe")
+                .setPickaxe()
+                .setTier(1)
+                .addEnchantment(Enchantment.DIG_SPEED, 10)
+                .setFortune(0)
+                .setFuel(100)
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //

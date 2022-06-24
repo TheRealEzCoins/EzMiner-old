@@ -7,6 +7,7 @@ import org.bukkit.Material;
 
 public enum Resources {
     Nacrine(Type.ORE, OreItems.Nacrine, Material.COAL_ORE, 1, 1),
+    Uprum(Type.ORE, OreItems.Uprum, Material.COPPER_ORE, 1, 10),
     Zaplium(Type.ORE, OreItems.Zaplium, Material.GOLD_ORE, 2, 30),
     Slaginite(Type.ORE, OreItems.Slaginite, Material.LAPIS_ORE, 3, 45),
     Gryrium(Type.ORE, OreItems.Gryrium, Material.DEEPSLATE_IRON_ORE, 3, 60),
