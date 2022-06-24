@@ -4,8 +4,9 @@ package me.ezplugin.Enums;
 public enum Type {
     GEM(),
     ORE(),
-    UPGRADES(),
+    UPGRADE(),
     FUEL(),
+    Material(),
     TOOL();
 
 

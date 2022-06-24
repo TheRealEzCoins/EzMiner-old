@@ -14,5 +14,6 @@ public class onQuit implements Listener {
 
         StatUtils.setConfigXP(player, StatUtils.getHashXP(player));
         StatUtils.setConfigLevel(player, StatUtils.getHashLevel(player));
+        StatUtils.setConfigFragments(player, StatUtils.getHashFragments(player));
     }
 }

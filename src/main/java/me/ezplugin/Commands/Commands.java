@@ -1,9 +1,11 @@
 package me.ezplugin.Commands;
 
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
 import me.ezplugin.EzMiner;
-import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Items.Items.MaterialItems;
+import me.ezplugin.Items.Items.OreItems;
 import me.ezplugin.GUI.GUIS.ForgeGUI;
+import me.ezplugin.Items.Items.PickaxeItems;
 import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -36,9 +38,8 @@ public class Commands implements CommandExecutor {
                             player.openInventory(ForgeGUI.FORGEGUI(player));
                         } else if(args[0].equalsIgnoreCase("Pickaxe")) {
                             if (player.hasPermission("EzMiner.Pickaxe")) {
-                                player.getInventory().addItem(ItemManager.Orichalchite_Pickaxe.getItemStack());
-                                player.getInventory().addItem(ItemManager.Obsidian_Pickaxe.getItemStack());
-                                player.getInventory().addItem(ItemManager.OIL_BARREL.getItemStack());
+                                player.getInventory().addItem(PickaxeItems.Nacrine_Pickaxe.getItemStack());
+                                player.getInventory().addItem(MaterialItems.OIL_BARREL.getItemStack());
                             }
                         } else if(args[0].equalsIgnoreCase("Stats")) {
                             if (args.length < 2) {
@@ -84,7 +85,7 @@ public class Commands implements CommandExecutor {
                             if(player.hasPermission("EzMiner.ResetAll")) {
                                 StatUtils.setHashXP(player, 0);
                                 StatUtils.setHashLevel(player, 1);
-                                for(Ores ores : Ores.values()) {
+                                for(Resources ores : Resources.values()) {
                                     StatUtils.setResources(player, ores, 0);
                                 }
                             }

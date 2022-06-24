@@ -1,16 +1,15 @@
 package me.ezplugin.Utils;
 
-import me.ezplugin.Enums.Ores;
+import com.jeff_media.morepersistentdatatypes.DataType;
+import me.ezplugin.Enums.Resources;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Files.StatUtils;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 
 public class BlockUtils {
@@ -22,13 +21,14 @@ public class BlockUtils {
      * @param ores The Ores enum that you want to use.
      * @param ExpAmount The amount of experience the player will receive for mining the block.
      */
-    public static void BlockSetup(BlockBreakEvent block, Player player, Ores ores, int ExpAmount) {
+    public static void BlockSetup(BlockBreakEvent block, Player player, Resources ores, int ExpAmount) {
 
         Block getBlock = block.getBlock();
         if(getBlock.getType().equals(ores.getBlock())) {
             if (Utils.isEmpty(player)) {
-                    if(StatUtils.getHashLevel(player) >= ores.getLevel()) {
-                        if(Utils.getMainHandData(player).has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER)) {
+                if (Utils.getMainHandData(player).has(new NamespacedKey(EzMiner.getPlugin(), "Pickaxe"), DataType.BOOLEAN)) {
+                    if (StatUtils.getHashLevel(player) >= ores.getLevel()) {
+                        if (Utils.getMainHandData(player).has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER)) {
                             if (Utils.getTier(player) >= ores.getTier()) {
 
                                 if (FuelHandler.getFuel(player)) {
@@ -41,6 +41,8 @@ public class BlockUtils {
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 
                                 Utils.HandleXP(player, ExpAmount);
+
+                                Utils.HandleFragment(player, ores.getTier());
 
 
                             } else {
@@ -58,6 +60,7 @@ public class BlockUtils {
                         block.setCancelled(true);
                     }
                 }
+            }
         }
 
     }

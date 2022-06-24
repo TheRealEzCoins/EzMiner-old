@@ -1,6 +1,7 @@
 package me.ezplugin.Utils;
 
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
+import me.ezplugin.Enums.ShopItems;
 import me.ezplugin.Enums.Type;
 import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.GUIS.GemsGUI;
@@ -15,13 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import javax.annotation.Nonnull;
-
 import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;;
 
 public class ResourceSetup {
 
-    public static ItemStack ResourceItem(Ores ores, Player player) {
+    public static ItemStack ResourceItem(Resources ores, Player player) {
         int amount = StatUtils.getResources(player, ores);
 
         return customItemUsingStack(
@@ -39,7 +38,7 @@ public class ResourceSetup {
                 "§c→ §fShift-Right-Click to withdraw 64");
     }
 
-    public static ItemStack ResourceItemNoBlock(Ores ores, Player player) {
+    public static ItemStack ResourceItemNoBlock(Resources ores, Player player) {
         int amount = StatUtils.getResources(player, ores);
 
         return customItemUsingStack(
@@ -56,6 +55,18 @@ public class ResourceSetup {
                 "§c→ §fShift-Right-Click to withdraw 64");
     }
 
+    public static ItemStack MaterialItem(ShopItems items, Player player) {
+        int amount = StatUtils.getMaterials(player, items);
+
+        return customItemUsingStack(
+                items.getItem().getItemStack(),
+                GuiUtils.nameSetupShop(items),
+                "§fRequired Level: §c" + items.getLevel(),
+                "§fFragment cost: §c" + items.getCost(),
+                "",
+                "§fAmount: §a" + amount);
+    }
+
 
     /**
      * It loops through all the ores, checks if the player has the required level to unlock the ore, and if so, adds the
@@ -65,7 +76,7 @@ public class ResourceSetup {
      * @param inventory The inventory you want to add the items to.
      */
     public static void ResourceCreation(Player player , Inventory inventory) {
-        for(Ores ores : Ores.values()) {
+        for(Resources ores : Resources.values()) {
             if (ores.getType().equals(Type.ORE)) {
                 if (StatUtils.getHashLevel(player) >= ores.getLevel()) {
                     inventory.setItem(
@@ -89,7 +100,7 @@ public class ResourceSetup {
      * @param inventory The inventory you want to add the items to.
      */
     public static void GemCreation(Player player , Inventory inventory) {
-        for(Ores ores : Ores.values()) {
+        for(Resources ores : Resources.values()) {
             if (ores.getType().equals(Type.GEM)) {
                 if (StatUtils.getHashLevel(player) >= ores.getLevel()) {
                     if(ores.getBlock() != null) {
@@ -111,9 +122,24 @@ public class ResourceSetup {
         }
     }
 
+    public static void MaterialCreation(Player player , Inventory inventory) {
+        for(ShopItems items : ShopItems.values()) {
+            if (items.getType().equals(Type.Material)) {
+                if (StatUtils.getHashLevel(player) >= items.getLevel()) {
+                    inventory.setItem(inventory.firstEmpty(), MaterialItem(items, player));
+                } else {
+                    inventory.setItem(
+                            inventory.firstEmpty(),
+                            GuiUtils.unlockableitem(items.getLevel())
+                    );
+                }
+            }
+        }
+    }
+
 
     public static void ResourceGUISetup(InventoryClickEvent e, Player player) {
-        for(Ores ores : Ores.values()) {
+        for(Resources ores : Resources.values()) {
             if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(GuiUtils.nameSetup(ores))) {
                 ResourceSetup.ResourceListener(player, e, ores);
             }
@@ -128,7 +154,7 @@ public class ResourceSetup {
      * @param e InventoryClickEvent
      * @param ore The ore you want to use.
      */
-    public static void ResourceListener(Player player, InventoryClickEvent e, Ores ore) {
+    public static void ResourceListener(Player player, InventoryClickEvent e, Resources ore) {
         if(e.isRightClick() && !(e.isShiftClick())) {
             if(!(StatUtils.getResources(player, ore) <= 0)) {
                 if(player.getInventory().firstEmpty() != -1) {

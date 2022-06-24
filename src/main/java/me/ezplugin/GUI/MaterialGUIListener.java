@@ -9,17 +9,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class GemsGUIListener implements Listener {
+public class MaterialGUIListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
 
-        if (e.getView().getTitle().equalsIgnoreCase("§bGems")) {
+        if (e.getView().getTitle().equalsIgnoreCase("§8Materials")) {
             e.setCancelled(true);
             GuiUtils.ResourceListener(e);
             if (e.getCurrentItem() == null) {
             } else {
-                ResourceSetup.ResourceGUISetup(e, player);
                 GuiUtils.MiscSetup(e, ForgeGUI.FORGEGUI(player));
             }
         }

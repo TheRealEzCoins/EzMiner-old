@@ -1,23 +1,24 @@
 package me.ezplugin.Enums;
 
 import me.ezplugin.Items.ItemCreator;
-import me.ezplugin.Items.ItemManager;
-
-import java.util.Arrays;
+import me.ezplugin.Items.Items.GemItems;
+import me.ezplugin.Items.Items.MaterialItems;
+import me.ezplugin.Items.Items.OreItems;
+import me.ezplugin.Items.Items.PickaxeItems;
 
 public enum ForgeItems {
     /** Pickaxe crafting (Forge) */
-    Obsidian_Pickaxe(Type.TOOL, ItemManager.Obsidian_Pickaxe, 15, 30),
-    Orichalchite_Pickaxe(Type.TOOL, ItemManager.Orichalchite_Pickaxe, 1, 15),
+    Nacrine_Pickaxe(Type.TOOL, PickaxeItems.Nacrine_Pickaxe, 1, 7200),
+    Zaplium_Pickaxe(Type.TOOL, PickaxeItems.Zaplium_Pickaxe, 30, 7200),
 
 
     /** Gemstone crafting (Forge) */
-    Refined_Gem(Type.ORE, ItemManager.Refined_Gemstone, 10, 600),
-    Polished_Gem(Type.ORE, ItemManager.Polished_Gemstone, 15, 600),
-    Perfect_Gem(Type.ORE, ItemManager.Perfect_Gemstone, 20, 600),
+    Refined_Gem(Type.ORE, GemItems.Refined_Gemstone, 10, 600),
+    Polished_Gem(Type.ORE, GemItems.Polished_Gemstone, 15, 600),
+    Perfect_Gem(Type.ORE, GemItems.Perfect_Gemstone, 20, 600),
 
     /** Upgrade crafting (Forge) */
-    FortuneUpgrade(Type.UPGRADES, ItemManager.FortuneUpgrade, 25, 300);
+    FortuneUpgrade(Type.UPGRADE, MaterialItems.FortuneUpgrade, 25, 172800);
 
     private final ItemCreator output;
     private final Type type;

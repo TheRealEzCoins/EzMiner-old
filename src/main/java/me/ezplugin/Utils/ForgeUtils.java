@@ -1,7 +1,8 @@
 package me.ezplugin.Utils;
 
 import me.ezplugin.Enums.ForgeItems;
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
+import me.ezplugin.Enums.ShopItems;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.Sound;
@@ -34,7 +35,7 @@ public class ForgeUtils {
                 player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
                 player.sendMessage("§aYour item finished crafting!");
             }
-        }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()) * 20L);
+        }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()));
     }
 
 
@@ -72,7 +73,7 @@ public class ForgeUtils {
 
 
 
-    public static void SingleCraft(Player player, ForgeItems craft, Ores Resource, int Amount) throws ParseException {
+    public static void SingleCraft(Player player, ForgeItems craft, Resources Resource, int Amount) {
         if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
             if(StatUtils.getResources(player, Resource) >= Amount) {
                 if(ForgeUtils.checkTime(craft, player)) {
@@ -89,13 +90,13 @@ public class ForgeUtils {
         }
     }
 
-    public static void DoubleCraft(Player player, ForgeItems craft, Ores Resource_1, int Amount_1, Ores Resource_2, int Amount_2) throws ParseException {
+    public static void DoubleCraft(Player player, ForgeItems craft, Resources Resource_1, int Amount_1, ShopItems Resource_2, int Amount_2) throws ParseException {
             if(StatUtils.getHashLevel(player) >= craft.getLevel()) {
-                if(StatUtils.getResources(player, Resource_1) >= Amount_1 && StatUtils.getResources(player, Resource_2) >= Amount_2) {
+                if(StatUtils.getResources(player, Resource_1) >= Amount_1 && StatUtils.getMaterials(player, Resource_2) >= Amount_2) {
                     if(ForgeUtils.checkTime(craft, player)) {
                         ForgeUtils.ForgeSetup(player, craft);
                         StatUtils.RemoveResources(player, Resource_1, Amount_1);
-                        StatUtils.RemoveResources(player, Resource_2, Amount_2);
+                        StatUtils.removeMaterials(player, Resource_2, Amount_2);
                     }
                 } else {
                     player.sendMessage("§cYou do not have enough resources to craft this!");

@@ -1,11 +1,10 @@
 package me.ezplugin.GUI;
 
 import me.ezplugin.Enums.ForgeItems;
-import me.ezplugin.Enums.Ores;
-import me.ezplugin.GUI.GUIS.SelectorGUI;
-import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Enums.Resources;
+import me.ezplugin.Enums.ShopItems;
+import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.Utils.GuiUtils;
-import me.ezplugin.Utils.Utils;
 import me.ezplugin.Utils.ForgeUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,11 +24,12 @@ public class PickaxeGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             } else if (e.getSlot() == 10) {
-
+                ForgeUtils.DoubleCraft(player, ForgeItems.Nacrine_Pickaxe, Resources.Nacrine, 500, ShopItems.Tier_1_Handle, 2);
             } else if (e.getSlot() == 11) {
+                ForgeUtils.DoubleCraft(player, ForgeItems.Zaplium_Pickaxe, Resources.Zaplium, 400, ShopItems.Tier_1_Handle, 2);
             }
             else {
-                GuiUtils.MiscSetup(e, SelectorGUI.SelectorGUI());
+                GuiUtils.MiscSetup(e, ForgeGUI.FORGEGUI(player));
             }
         }
     }

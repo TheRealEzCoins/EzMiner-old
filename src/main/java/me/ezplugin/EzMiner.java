@@ -3,11 +3,8 @@ package me.ezplugin;
 import me.ezplugin.Commands.Commands;
 import me.ezplugin.Commands.TabCompletion;
 import me.ezplugin.Events.ListenerManager;
-import me.ezplugin.Items.ItemManager;
+import me.ezplugin.Items.Items.*;
 import me.ezplugin.Utils.Files.StatUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,16 +19,9 @@ public final class EzMiner extends JavaPlugin implements Listener {
     public static EzMiner plugin;
     private ListenerManager listenerManager;
     private static File PlayerDataFolder;
-    private static File PlayerData;
-
 
     public static ListenerManager getListenerManager() {
         return plugin.listenerManager;
-    }
-
-    private static boolean EzForagingInstalled;
-    public static boolean isEzForagingInstalled() {
-        return EzForagingInstalled;
     }
 
     public static PluginManager getPluginManager() {
@@ -58,13 +48,6 @@ public final class EzMiner extends JavaPlugin implements Listener {
         }
 
 
-
-        getServer().createWorld(new WorldCreator("MiningWorld"));
-
-
-        Bukkit.getWorld("MiningWorld").setSpawnLocation(138, 119, 237, 180);
-
-
         System.out.println("Plugin has started.");
         StatUtils.startAutoSave();
 
@@ -72,8 +55,6 @@ public final class EzMiner extends JavaPlugin implements Listener {
         getConfig().options().copyDefaults();
         getConfig().addDefault("Level-Scaling." + "Exp", 500);
         saveDefaultConfig();
-
-        EzForagingInstalled = Bukkit.getServer().getPluginManager().isPluginEnabled("Vault");
 
         this.listenerManager = new ListenerManager();
 
@@ -85,7 +66,10 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
 
         // Item int
-        ItemManager.init();
+        OreItems.init();
+        GemItems.init();
+        MaterialItems.init();
+        PickaxeItems.init();
 
 
 
@@ -101,10 +85,6 @@ public final class EzMiner extends JavaPlugin implements Listener {
 
     public static File getPlayerDataFolder() {
         return PlayerDataFolder;
-    }
-
-    public static File getPlayerData() {
-        return PlayerData;
     }
 
 

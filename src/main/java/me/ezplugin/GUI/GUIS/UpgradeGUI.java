@@ -1,7 +1,7 @@
 package me.ezplugin.GUI.GUIS;
 
 import me.ezplugin.Enums.ForgeItems;
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
 import me.ezplugin.Utils.GuiUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ public class UpgradeGUI extends GuiUtils {
         Inventory UpgradeGUI = Bukkit.createInventory(null, 54, "§8Upgrades");
         GuiUtils.fillBorder(UpgradeGUI);
 
-        GuiUtils.SetupItem(player, UpgradeGUI, ForgeItems.FortuneUpgrade, Ores.Perfect_Gemstone, 4);
+        GuiUtils.SetupItem(player, UpgradeGUI, ForgeItems.FortuneUpgrade, Resources.Perfect_Gemstone, 4);
 
 
 

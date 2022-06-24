@@ -1,6 +1,6 @@
 package me.ezplugin.Utils;
 
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
 import me.ezplugin.EzMiner;
 import me.ezplugin.Utils.Files.StatUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -104,7 +104,7 @@ public class Utils {
         }
     } */
 
-    public static void HandleFortune(Player player, Ores ores) {
+    public static void HandleFortune(Player player, Resources ores) {
         ItemStack MainHand = player.getInventory().getItemInMainHand();
         PersistentDataContainer data = MainHand.getItemMeta().getPersistentDataContainer();
         int getAmount = StatUtils.getResources(player, ores);
@@ -142,6 +142,11 @@ public class Utils {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
             StatUtils.setHashXP(player, CurrentXP + ExpAmount);
         }
+    }
+
+    public static void HandleFragment(Player player, int Amount) {
+        int currentFragments = StatUtils.getHashFragments(player);
+        StatUtils.setHashFragments(player, currentFragments + Amount);
     }
 
 

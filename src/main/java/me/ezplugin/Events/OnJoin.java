@@ -1,10 +1,12 @@
 package me.ezplugin.Events;
 
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
+import me.ezplugin.Enums.ShopItems;
 import me.ezplugin.Enums.Type;
+import me.ezplugin.Items.Items.OreItems;
+import me.ezplugin.Items.Items.PickaxeItems;
 import me.ezplugin.Utils.Files.PlayerData;
 import me.ezplugin.Utils.Files.StatUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +24,7 @@ public class OnJoin implements Listener {
 
         PlayerData.setupFile(player);
         if(!PlayerData.HasData("UUID")) {
+            player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());
             PlayerData.fileData.addDefault("UUID", StringUUID + " : " + player.getName());
             PlayerData.fileData.options().copyDefaults(true);
             PlayerData.savePlayerData();
@@ -30,12 +33,13 @@ public class OnJoin implements Listener {
         if(!PlayerData.HasData("Stats.")) {
             PlayerData.fileData.addDefault("Stats." + "Level", 1);
             PlayerData.fileData.addDefault("Stats." + "EXP", 0);
+            PlayerData.fileData.addDefault("Stats." + "Fragments", 0);
             PlayerData.fileData.options().copyDefaults(true);
             PlayerData.savePlayerData();
         }
 
 
-        for(Ores ores : Ores.values()) {
+        for(Resources ores : Resources.values()) {
             if(ores.getType().equals(Type.GEM)) {
                 if (!PlayerData.HasData("Gems." + ores)) {
                     PlayerData.fileData.addDefault("Gems." + ores, 0);
@@ -45,10 +49,20 @@ public class OnJoin implements Listener {
             PlayerData.savePlayerData();
         }
 
-        for(Ores ores : Ores.values()) {
+        for(Resources ores : Resources.values()) {
             if(ores.getType().equals(Type.ORE)) {
                 if (!PlayerData.HasData("Ores." + ores)) {
                     PlayerData.fileData.addDefault("Ores." + ores, 0);
+                }
+            }
+            PlayerData.fileData.options().copyDefaults(true);
+            PlayerData.savePlayerData();
+        }
+
+        for(ShopItems items : ShopItems.values()) {
+            if(items.getType().equals(Type.Material)) {
+                if (!PlayerData.HasData("Materials." + items)) {
+                    PlayerData.fileData.addDefault("Materials." + items, 0);
                 }
             }
             PlayerData.fileData.options().copyDefaults(true);
@@ -59,6 +73,7 @@ public class OnJoin implements Listener {
 
         StatUtils.EXP.put(playerUUID, StatUtils.getConfigXP(player));
         StatUtils.Level.put(playerUUID, StatUtils.getConfigLevel(player));
+        StatUtils.Fragments.put(playerUUID, StatUtils.getConfigFragments(player));
 
 
         if(!PlayerData.HasData("Time.")) {
@@ -66,6 +81,7 @@ public class OnJoin implements Listener {
             PlayerData.fileData.options().copyDefaults(true);
             PlayerData.savePlayerData();
         }
+
 
     }
 

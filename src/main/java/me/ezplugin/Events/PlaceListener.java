@@ -1,6 +1,6 @@
 package me.ezplugin.Events;
 
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
 import me.ezplugin.EzMiner;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -29,7 +29,7 @@ public class PlaceListener implements Listener {
         Player player = event.getPlayer();
         World world = player.getWorld();
 
-        for(Ores oreBlock : Ores.values()) {
+        for(Resources oreBlock : Resources.values()) {
             if (block.getType().equals(oreBlock.getBlock()) && world.equals(Bukkit.getWorld("MineWorld"))) {
                 event.setCancelled(true);
             }

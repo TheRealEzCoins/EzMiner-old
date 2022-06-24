@@ -2,8 +2,6 @@ package me.ezplugin.GUI;
 
 import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.GUI.GUIS.GemsGUI;
-import me.ezplugin.GUI.GUIS.ResourcesGUI;
-import me.ezplugin.Items.ItemManager;
 import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.ItemUtils;
 import me.ezplugin.Utils.ResourceSetup;
@@ -20,10 +18,8 @@ public class ResourceGUIListener implements Listener {
 
         if (e.getView().getTitle().equalsIgnoreCase("§8Resources")) {
             e.setCancelled(true);
+            GuiUtils.ResourceListener(e);
             if (e.getCurrentItem() == null) {
-            } else if(e.getCurrentItem().isSimilar(ItemUtils.customItemUsingStack(ItemManager.GEMSTONE_POT.getItemStack(), "§bGemstone Pot"))) {
-                player.openInventory(GemsGUI.GemGUI(player));
-                player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, 1f, -5f);
             } else {
                 ResourceSetup.ResourceGUISetup(e, player);
                 GuiUtils.MiscSetup(e, ForgeGUI.FORGEGUI(player));

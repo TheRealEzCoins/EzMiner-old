@@ -1,7 +1,8 @@
 package me.ezplugin.Utils.Files;
 
 import me.ezplugin.Enums.ForgeItems;
-import me.ezplugin.Enums.Ores;
+import me.ezplugin.Enums.Resources;
+import me.ezplugin.Enums.ShopItems;
 import me.ezplugin.Enums.Type;
 import me.ezplugin.EzMiner;
 import org.bukkit.Bukkit;
@@ -24,6 +25,7 @@ public class StatUtils {
     public static HashMap<UUID, Integer> EXP = new HashMap<>();
     public static HashMap<UUID, Integer> Level = new HashMap<>();
     public static HashMap<UUID, Integer> PlayerClickedSlot = new HashMap<>();
+    public static HashMap<UUID, Integer> Fragments = new HashMap<>();
 
 
     public static FileConfiguration CheckIfCorrect(Player player) {
@@ -42,6 +44,12 @@ public class StatUtils {
         return (int) config.get("Stats." + "Level");
     }
 
+    public static int getConfigFragments(Player player) {
+        FileConfiguration config = CheckIfCorrect(player);
+
+        return (int) config.get("Stats." + "Fragments");
+    }
+
     public static void setConfigXP(Player player, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
         config.set("Stats." + "EXP", Amount);
@@ -58,6 +66,17 @@ public class StatUtils {
     public static void setConfigLevel(Player player, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
         config.set("Stats." + "Level", Amount);
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setConfigFragments(Player player, int Amount) {
+        FileConfiguration config = CheckIfCorrect(player);
+        config.set("Stats." + "Fragments", Amount);
         File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
         try {
             config.save(file);
@@ -86,7 +105,22 @@ public class StatUtils {
         Level.put(uuid, Amount);
     }
 
-    public static int getResources(Player player, Ores ores) {
+    public static void setHashFragments(Player player, int Amount) {
+        UUID uuid = player.getUniqueId();
+        Fragments.put(uuid, Amount);
+    }
+
+    public static int getHashFragments(Player player) {
+        UUID uuid = player.getUniqueId();
+        return Fragments.get(uuid);
+    }
+
+    public static void removeFragments(Player player, int Amount) {
+        UUID uuid = player.getUniqueId();
+        Fragments.put(uuid, getHashFragments(player) - Amount);
+    }
+
+    public static int getResources(Player player, Resources ores) {
         FileConfiguration config = CheckIfCorrect(player);
 
         if(ores.getType().equals(Type.GEM)) {
@@ -97,7 +131,7 @@ public class StatUtils {
         return 0;
     }
 
-    public static void setResources(Player player, Ores ores, int Amount) {
+    public static void setResources(Player player, Resources ores, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
 
         if(ores.getType().equals(Type.ORE)) {
@@ -114,7 +148,10 @@ public class StatUtils {
     }
 
 
-    public static void RemoveResources(Player player, Ores ores, int Amount) {
+
+
+
+    public static void RemoveResources(Player player, Resources ores, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
 
         if(ores.getType().equals(Type.ORE)) {
@@ -128,6 +165,43 @@ public class StatUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setMaterials(Player player, ShopItems items, int Amount) {
+        FileConfiguration config = CheckIfCorrect(player);
+
+        if(items.getType().equals(Type.Material)) {
+            config.set("Materials." + items, Amount);
+        }
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeMaterials(Player player, ShopItems items, int Amount) {
+        FileConfiguration config = CheckIfCorrect(player);
+
+        if(items.getType().equals(Type.Material)) {
+            config.set("Materials." + items, getMaterials(player, items) - Amount);
+        }
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getMaterials(Player player, ShopItems items) {
+        FileConfiguration config = CheckIfCorrect(player);
+
+        if(items.getType().equals(Type.Material)) {
+            return (int) config.get("Materials." + items);
+        }
+        return 0;
     }
 
     public static void setTimer(Player player, ForgeItems forgeItems, String time) {
@@ -162,6 +236,7 @@ public class StatUtils {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     StatUtils.setConfigXP(player, StatUtils.getHashXP(player));
                     StatUtils.setConfigLevel(player, StatUtils.getHashLevel(player));
+                    StatUtils.setConfigFragments(player, StatUtils.getHashFragments(player));
                     FileConfiguration config = CheckIfCorrect(player);
                     File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
                     try {
@@ -179,6 +254,7 @@ public class StatUtils {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     StatUtils.setConfigXP(player, StatUtils.getHashXP(player));
                     StatUtils.setConfigLevel(player, StatUtils.getHashLevel(player));
+                    StatUtils.setConfigFragments(player, StatUtils.getHashFragments(player));
                     FileConfiguration config = CheckIfCorrect(player);
                     File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
                     try {

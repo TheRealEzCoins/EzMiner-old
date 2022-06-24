@@ -9,7 +9,6 @@ public class ListenerManager {
     public ListenerManager() {
         addListener(new PickaxeGUIListener());
         addListener(new ForgeGUIListener());
-        addListener(new SelectorGUIListener());
         addListener(new BreakListener());
         addListener(new ResourceGUIListener());
         addListener(new GemsGUIListener());
@@ -17,13 +16,13 @@ public class ListenerManager {
         addListener(new PlaceListener());
         addListener(new RefiningGUIListener());
         addListener(new FuelListener());
-        addListener(new WorldListener());
         addListener(new onOpen());
         addListener(new onQuit());
-        addListener(new PortalEnterEvent());
         addListener(new UpgradeGUIListener());
-        addListener(new CraftEvent());
+        addListener(new EnchantEvent());
+        addListener(new ShopGUIListener());
         addListener(new CloseInventory());
+        addListener(new MaterialGUIListener());
     }
 
     private void addListener(Listener listener) {

@@ -1,5 +1,7 @@
 package me.ezplugin.GUI.GUIS;
 
+import dev.dbassett.skullcreator.SkullCreator;
+import me.ezplugin.Enums.Heads;
 import me.ezplugin.Utils.GuiUtils;
 import me.ezplugin.Utils.ItemUtils;
 import me.ezplugin.Utils.Utils;
@@ -10,18 +12,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import static me.ezplugin.Utils.ItemUtils.customItemName;
+import static me.ezplugin.Utils.ItemUtils.customItemUsingStack;
 
 public class ForgeGUI extends GuiUtils {
 
-    private static final ItemStack furnace = customItemName(Material.FURNACE, "§aForge Items");
-    private static final ItemStack red_glass = customItemName(Material.RED_STAINED_GLASS_PANE, " ");
 
-    private static final int[] furnaces = new int[] {
-            11, 12, 13, 14, 15 };
-
-    private static final int[] red_border = new int[] {
-            20, 21, 22, 23, 24
-    };
 
 
     public static Inventory FORGEGUI(Player player) {
@@ -29,6 +24,10 @@ public class ForgeGUI extends GuiUtils {
         Inventory FORGEGUI = Bukkit.createInventory(null, 54, "§8Forge");
 
         GuiUtils.fillEmpty(FORGEGUI);
+
+        FORGEGUI.setItem(20, customItemName(Material.DIAMOND, "§aRefining", "", "§eYou can refine ore here."));
+        FORGEGUI.setItem(22, customItemName(Material.ENCHANTED_BOOK, "§aUpgrades", "", "§eYou can forge upgrades here."));
+        FORGEGUI.setItem(24, customItemName(Material.DIAMOND_PICKAXE, "§aPickaxes", "" ,"§eYou can make pickaxes here."));
 
 
         FORGEGUI.setItem(39,
@@ -40,13 +39,9 @@ public class ForgeGUI extends GuiUtils {
                 40,
                 GuiUtils.getStatsAsSkull(player));
 
-        for(int slot : furnaces){
-            FORGEGUI.setItem(slot, furnace);
-        }
+        FORGEGUI.setItem(41, customItemUsingStack(SkullCreator.itemFromUrl(Heads.Shop.getURL()), "§6Shop"));
 
-        for(int slot : red_border){
-            FORGEGUI.setItem(slot, red_glass);
-        }
+
 
         return FORGEGUI;
     }
