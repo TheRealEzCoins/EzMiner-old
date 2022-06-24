@@ -30,41 +30,49 @@ public class OreItems {
         Nacrine = new ItemCreator(SkullCreator.itemFromUrl(Heads.Nacrine.getURL()))
                 .setName("§8Nacrine Ore")
                 .setRarity(Rarity.COMMON, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Uprum = new ItemCreator(SkullCreator.itemFromUrl(Heads.Uprum.getURL()))
                 .setName("§4Uprum Ore")
                 .setRarity(Rarity.COMMON, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Zaplium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Zaplium.getURL()))
                 .setName("§eZaplium Ore")
                 .setRarity(Rarity.UNCOMMON, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Slaginite = new ItemCreator(SkullCreator.itemFromUrl(Heads.Slaginite.getURL()))
-                .setName("§fSlaginite Ore")
+                .setName("§9Slaginite Ore")
                 .setRarity(Rarity.RARE, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Gryrium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Gryrium.getURL()))
                 .setName("§7Gryrium Ore")
                 .setRarity(Rarity.RARE, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Kreisium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Kreisium.getURL()))
                 .setName("§cKreisium Ore")
                 .setRarity(Rarity.EPIC, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Volcanium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Volcanium.getURL()))
                 .setName("§6Volcanium Ore")
                 .setRarity(Rarity.EPIC, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
         // -------------------------------------------- //
         Flotine = new ItemCreator(SkullCreator.itemFromUrl(Heads.Flotine.getURL()))
                 .setName("§aFlotine Ore")
                 .setRarity(Rarity.LEGENDARY, Type.ORE)
+                .setUnplacable(true)
                 .setOre();
 
 

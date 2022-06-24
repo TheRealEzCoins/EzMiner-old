@@ -129,6 +129,9 @@ public class Commands implements CommandExecutor {
                                 MainHand.setItemMeta(mainHandItemMeta);
                                 player.updateInventory();
                             }
+                        } else if(args[0].equalsIgnoreCase("Starter")) {
+                            player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());
+                            player.sendMessage("§cYou received a Starter Pickaxe!");
                         }
                         return true;
                     }

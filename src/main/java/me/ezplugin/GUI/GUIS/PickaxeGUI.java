@@ -20,7 +20,9 @@ public class PickaxeGUI extends GuiUtils {
 
         GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Uprum_Pickaxe, Resources.Uprum, 250, ShopItems.Tier_1_Handle, 1);
 
-        GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Zaplium_Pickaxe, Resources.Zaplium, 400, ShopItems.Tier_1_Handle, 2);
+        GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Zaplium_Pickaxe, Resources.Zaplium, 400, ShopItems.Tier_2_Handle, 2);
+
+        GuiUtils.SetupItem_2(player, PickaxeGUI, ForgeItems.Slaginite_Pickaxe, Resources.Slaginite, 500, ShopItems.Tier_2_Handle, 1);
 
 
         PickaxeGUI.setItem(

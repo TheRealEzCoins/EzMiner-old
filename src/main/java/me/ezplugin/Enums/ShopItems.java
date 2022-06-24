@@ -6,8 +6,8 @@ import org.bukkit.Material;
 
 public enum ShopItems {
 
-    Tier_1_Handle(Type.Material, MaterialItems.TIER_1_HANDLE, 2500, 1),
-    Tier_2_Handle(Type.Material, MaterialItems.TIER_2_HANDLE, 7500, 30),
+    Tier_1_Handle(Type.Material, MaterialItems.TIER_1_HANDLE, 500, 1),
+    Tier_2_Handle(Type.Material, MaterialItems.TIER_2_HANDLE, 1750, 30),
     FUEL(Type.Material, MaterialItems.OIL_BARREL, 250, 30);
 
 

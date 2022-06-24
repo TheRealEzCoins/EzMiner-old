@@ -14,6 +14,7 @@ public class PickaxeItems {
     public static ItemCreator Nacrine_Pickaxe;
     public static ItemCreator Uprum_Pickaxe;
     public static ItemCreator Zaplium_Pickaxe;
+    public static ItemCreator Slaginite_Pickaxe;
 
     private static void ItemSetup() {
 
@@ -30,7 +31,7 @@ public class PickaxeItems {
                 .setName("§8Nacrine Pickaxe")
                 .setPickaxe()
                 .setTier(1)
-                .addEnchantment(Enchantment.DIG_SPEED, 2)
+                .addEnchantment(Enchantment.DIG_SPEED, 3)
                 .setFortune(0)
                 .HideItemFlags()
                 .setUnbreakable(true);
@@ -38,7 +39,7 @@ public class PickaxeItems {
         Uprum_Pickaxe = new ItemCreator(Material.STONE_PICKAXE)
                 .setName("§4Uprum Pickaxe")
                 .setPickaxe()
-                .setTier(1)
+                .setTier(2)
                 .addEnchantment(Enchantment.DIG_SPEED, 10)
                 .setFortune(0)
                 .setFuel(100)
@@ -48,9 +49,18 @@ public class PickaxeItems {
         Zaplium_Pickaxe = new ItemCreator(Material.STONE_PICKAXE)
                 .setName("§eZaplium Pickaxe")
                 .setPickaxe()
-                .setTier(1)
-                .setFortune(100)
-                .setFuel(1000)
+                .setTier(3)
+                .setFortune(150)
+                .addEnchantment(Enchantment.DIG_SPEED, 3)
+                .HideItemFlags()
+                .setUnbreakable(true);
+        // -------------------------------------------- //
+        Slaginite_Pickaxe = new ItemCreator(Material.IRON_PICKAXE)
+                .setName("§9Slaginite Pickaxe")
+                .setPickaxe()
+                .setTier(3)
+                .setFortune(200)
+                .addEnchantment(Enchantment.DIG_SPEED, 1)
                 .HideItemFlags()
                 .setUnbreakable(true);
 

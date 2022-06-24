@@ -11,6 +11,7 @@ public enum ForgeItems {
     Nacrine_Pickaxe(Type.TOOL, PickaxeItems.Nacrine_Pickaxe, 1, 7200),
     Uprum_Pickaxe(Type.TOOL, PickaxeItems.Uprum_Pickaxe, 10, 3600),
     Zaplium_Pickaxe(Type.TOOL, PickaxeItems.Zaplium_Pickaxe, 30, 7200),
+    Slaginite_Pickaxe(Type.TOOL, PickaxeItems.Slaginite_Pickaxe, 45, 7200),
 
 
     /** Gemstone crafting (Forge) */
