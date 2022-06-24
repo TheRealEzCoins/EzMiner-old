@@ -2,6 +2,7 @@ package me.ezplugin.Enums;
 
 public enum Heads {
     Nacrine("fa3bcc8c18fc3e4aa6b7b7d5c1b3632ecdb72eb62046e8cf83762319dd6cdf3e"),
+    Uprum("b94181802c19e2812f53f56cf349f5dda27e6d0b0139da49c70cbe27bf8e0a"),
     Zaplium("5b34b4896e434ec4ef1669d6343b6da06cd830dc92927d61e3d883017683c422"),
     Slaginite("9115dc88e3214c38243d782d63edb0a6e06291eb6da8e600c7e2ea36e7f61b31"),
     Gryrium("7a8b87e46cfe8a2dc3525c1c67d8a69a25fd0a7f724a6fa911ad74adb6d82c2"),

@@ -89,12 +89,6 @@ public class Commands implements CommandExecutor {
                                     StatUtils.setResources(player, ores, 0);
                                 }
                             }
-                        } else if(args[0].equalsIgnoreCase("Miner")) {
-                            player.teleport(Bukkit.getWorld("MiningWorld").getSpawnLocation());
-                        } else if(args[0].equalsIgnoreCase("AdminWorld")) {
-                            if(player.hasPermission("EzMiner.AdminWorld")) {
-                                player.teleport(Bukkit.getWorld("MiningWorld_Admin").getSpawnLocation());
-                            }
 
                         } else if(args[0].equalsIgnoreCase("Help")) {
                             player.sendMessage("§6§l--------------------------------------------------");
@@ -103,8 +97,6 @@ public class Commands implements CommandExecutor {
                             player.sendMessage("§e§l/EzMiner Forge : §fOpens the forge menu.");
                             player.sendMessage(" ");
                             player.sendMessage("§e§l/EzMiner Stats : §fCheck your current stats.");
-                            player.sendMessage(" ");
-                            player.sendMessage("§e§l/EzMiner Miner : §fTeleports you to the mining world.");
                             player.sendMessage(" ");
                             player.sendMessage("§6§l-------------------------------------------------");
                             if(player.hasPermission("EzMiner.*")) {
@@ -116,26 +108,27 @@ public class Commands implements CommandExecutor {
                                 player.sendMessage(" ");
                                 player.sendMessage("§c§l/EzMiner ResetAll : §fResets everything.");
                                 player.sendMessage(" ");
-                                player.sendMessage("§c§l/EzMiner AdminWorld : §fTeleports you to the admin world.");
                                 player.sendMessage("§6§l-------------------------------------------------");
                             }
                         } else if(args[0].equalsIgnoreCase("test")) {
-                            ItemStack MainHand = player.getInventory().getItemInMainHand();
-                            ItemMeta mainHandItemMeta = MainHand.getItemMeta();
-                            PersistentDataContainer itemdata = mainHandItemMeta.getPersistentDataContainer();
-                            int Fortune = itemdata.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
-                            int Calculations = Fortune + Integer.parseInt(args[1]);
+                            if(player.hasPermission("EzMiner.*")) {
+                                ItemStack MainHand = player.getInventory().getItemInMainHand();
+                                ItemMeta mainHandItemMeta = MainHand.getItemMeta();
+                                PersistentDataContainer itemdata = mainHandItemMeta.getPersistentDataContainer();
+                                int Fortune = itemdata.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
+                                int Calculations = Fortune + Integer.parseInt(args[1]);
 
-                            itemdata.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Calculations);
+                                itemdata.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Calculations);
 
-                            List<String> lore = mainHandItemMeta.getLore();
+                                List<String> lore = mainHandItemMeta.getLore();
 
-                            int getIndex = lore.indexOf("§eFortune " + Fortune + "☘");
-                            lore.set(getIndex, "§eFortune " + Calculations + "☘");
+                                int getIndex = lore.indexOf("§eFortune " + Fortune + "☘");
+                                lore.set(getIndex, "§eFortune " + Calculations + "☘");
 
-                            mainHandItemMeta.setLore(lore);
-                            MainHand.setItemMeta(mainHandItemMeta);
-                            player.updateInventory();
+                                mainHandItemMeta.setLore(lore);
+                                MainHand.setItemMeta(mainHandItemMeta);
+                                player.updateInventory();
+                            }
                         }
                         return true;
                     }
