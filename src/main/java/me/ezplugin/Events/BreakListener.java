@@ -18,7 +18,7 @@ public class BreakListener extends BlockUtils implements Listener {
                 block.setCancelled(true);
             } else {
                 for (Resources ores : Resources.values()) {
-                    BlockUtils.BlockSetup(block, player, ores, ores.getTier() * 25);
+                    BlockUtils.BlockSetup(block, player, ores);
                 }
             }
     }

@@ -23,7 +23,6 @@ public class Utils {
 
 
     static FileConfiguration config = EzMiner.plugin.getConfig();
-    public static int getRatio = (int) config.get("Level-Scaling.Exp");
 
 
     public static String color(String str) {
@@ -104,7 +103,7 @@ public class Utils {
         }
     } */
 
-    public static void HandleFortune(Player player, Resources ores) {
+    public static void handleFortune(Player player, Resources ores) {
         ItemStack MainHand = player.getInventory().getItemInMainHand();
         PersistentDataContainer data = MainHand.getItemMeta().getPersistentDataContainer();
         int getAmount = StatUtils.getResources(player, ores);
@@ -117,34 +116,24 @@ public class Utils {
         }
     }
 
-    /**
-     * If the player's current XP is greater than or equal to the ratio multiplied by the player's current level, then the
-     * player's level is increased by one and the player's XP is decreased by the ratio multiplied by the player's current
-     * level. If the player's current XP is less than the ratio multiplied by the player's current level, then the player's
-     * XP is increased by the amount of XP the player is supposed to receive
-     *
-     * @param player The player who is gaining the XP
-     * @param ExpAmount The amount of XP to add to the player.
-     */
-    public static void HandleXP(Player player, int ExpAmount) {
+    public static void handleXP(Player player, Resources ores) {
 
-        int CurrentLVL = StatUtils.getHashLevel(player);
+        double CurrentLVL = StatUtils.getHashLevel(player);
         int CurrentXP = StatUtils.getHashXP(player);
-        if (CurrentXP >= Utils.getRatio * CurrentLVL) {
-            int totalLevel = CurrentLVL + 1;
-            StatUtils.setHashLevel(player, CurrentLVL + 1);
-            StatUtils.setHashXP(player, CurrentXP - (CurrentLVL * getRatio));
-            player.sendMessage("§bLeveling...");
+        final double v = 25 * Math.round((500 + CurrentLVL * Math.log(Math.pow(25, CurrentLVL))) / 25);
+        if (CurrentXP >= v) {
+            StatUtils.setHashLevel(player, (int) (CurrentLVL + 1));
+            StatUtils.setHashXP(player, (int) (CurrentXP - v));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-            player.sendMessage("§a§lLevel up!\n§6You are now level: " + totalLevel);
+            player.sendMessage("§a§lLevel up!\n§6You are now level: " + StatUtils.getHashLevel(player));
         } else {
-            int totalXP = CurrentXP + ExpAmount;
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + totalXP + " §9/ " + ChatColor.LIGHT_PURPLE + CurrentLVL * Utils.getRatio + ""));
-            StatUtils.setHashXP(player, CurrentXP + ExpAmount);
+            int newXP = StatUtils.getHashXP(player) + (ores.getTier() * 25);
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + newXP + " §9/ " + ChatColor.LIGHT_PURPLE + v + ""));
+            StatUtils.setHashXP(player, newXP);
         }
     }
 
-    public static void HandleFragment(Player player, int Amount) {
+    public static void handleFragment(Player player, int Amount) {
         int currentFragments = StatUtils.getHashFragments(player);
         StatUtils.setHashFragments(player, currentFragments + Amount);
     }

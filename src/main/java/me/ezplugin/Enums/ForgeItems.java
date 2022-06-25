@@ -10,8 +10,12 @@ public enum ForgeItems {
     /** Pickaxe crafting (Forge) */
     Nacrine_Pickaxe(Type.TOOL, PickaxeItems.Nacrine_Pickaxe, 1, 7200),
     Uprum_Pickaxe(Type.TOOL, PickaxeItems.Uprum_Pickaxe, 10, 3600),
-    Zaplium_Pickaxe(Type.TOOL, PickaxeItems.Zaplium_Pickaxe, 30, 7200),
-    Slaginite_Pickaxe(Type.TOOL, PickaxeItems.Slaginite_Pickaxe, 45, 7200),
+    Zaplium_Pickaxe(Type.TOOL, PickaxeItems.Zaplium_Pickaxe, 25, 7200),
+    Slaginite_Pickaxe(Type.TOOL, PickaxeItems.Slaginite_Pickaxe, 50, 7200),
+    Gryrium_Pickaxe(Type.TOOL, PickaxeItems.Gryrium_Pickaxe, 60, 14400),
+    Kreisium_Pickaxe(Type.TOOL, PickaxeItems.Kreisium_Pickaxe, 75, 14400),
+    Volcanium_Pickaxe(Type.TOOL, PickaxeItems.Volcanium_Pickaxe, 90, 14400),
+    Flotine_Pickaxe(Type.TOOL, PickaxeItems.Flotine_Pickaxe, 100, 28800),
 
 
     /** Gemstone crafting (Forge) */

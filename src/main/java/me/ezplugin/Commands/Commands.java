@@ -2,6 +2,7 @@ package me.ezplugin.Commands;
 
 import me.ezplugin.Enums.Resources;
 import me.ezplugin.EzMiner;
+import me.ezplugin.GUI.GUIS.UpgradeGUI;
 import me.ezplugin.Items.Items.MaterialItems;
 import me.ezplugin.Items.Items.OreItems;
 import me.ezplugin.GUI.GUIS.ForgeGUI;
@@ -112,22 +113,8 @@ public class Commands implements CommandExecutor {
                             }
                         } else if(args[0].equalsIgnoreCase("test")) {
                             if(player.hasPermission("EzMiner.*")) {
-                                ItemStack MainHand = player.getInventory().getItemInMainHand();
-                                ItemMeta mainHandItemMeta = MainHand.getItemMeta();
-                                PersistentDataContainer itemdata = mainHandItemMeta.getPersistentDataContainer();
-                                int Fortune = itemdata.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
-                                int Calculations = Fortune + Integer.parseInt(args[1]);
-
-                                itemdata.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, Calculations);
-
-                                List<String> lore = mainHandItemMeta.getLore();
-
-                                int getIndex = lore.indexOf("§eFortune " + Fortune + "☘");
-                                lore.set(getIndex, "§eFortune " + Calculations + "☘");
-
-                                mainHandItemMeta.setLore(lore);
-                                MainHand.setItemMeta(mainHandItemMeta);
-                                player.updateInventory();
+                                player.getInventory().addItem(MaterialItems.FortuneUpgrade.getItemStack());
+                                ForgeGUI.forgeGUI(player).show(player);
                             }
                         } else if(args[0].equalsIgnoreCase("Starter")) {
                             player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());

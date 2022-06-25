@@ -19,9 +19,8 @@ public class BlockUtils {
      * @param block The block that was broken.
      * @param player The player who broke the block
      * @param ores The Ores enum that you want to use.
-     * @param ExpAmount The amount of experience the player will receive for mining the block.
      */
-    public static void BlockSetup(BlockBreakEvent block, Player player, Resources ores, int ExpAmount) {
+    public static void BlockSetup(BlockBreakEvent block, Player player, Resources ores) {
 
         Block getBlock = block.getBlock();
         if(getBlock.getType().equals(ores.getBlock())) {
@@ -36,13 +35,13 @@ public class BlockUtils {
                                 }
 
                                 StatUtils.getResources(player, ores);
-                                Utils.HandleFortune(player, ores);
+                                Utils.handleFortune(player, ores);
                                 block.setDropItems(false);
                                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
 
-                                Utils.HandleXP(player, ExpAmount);
+                                Utils.handleXP(player, ores);
 
-                                Utils.HandleFragment(player, ores.getTier());
+                                Utils.handleFragment(player, ores.getTier());
 
 
                             } else {

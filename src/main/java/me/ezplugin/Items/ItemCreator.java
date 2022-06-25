@@ -304,6 +304,18 @@ public class ItemCreator implements Listener {
         return this;
     }
 
+    public ItemCreator addFortuneUpgrade(int Amount) {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "addFortune"), PersistentDataType.INTEGER, Amount);
+        item.setItemMeta(meta);
+
+        addLore("§7Add §6" + Amount + "§e☘" + " Fortune");
+
+        return this;
+    }
+
 
     public String getNameAsNBT() {
         ItemStack item = itemStack;

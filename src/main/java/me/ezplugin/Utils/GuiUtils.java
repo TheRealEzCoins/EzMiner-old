@@ -33,14 +33,15 @@ public class GuiUtils  {
     public static ItemStack getStatsAsSkull(Player player ) {
         int getLevel = StatUtils.getHashLevel(player);
         int getXP = StatUtils.getHashXP(player);
-        int xpLeft = (getLevel * 500 - getXP);
+        final long xpLeft = 25 * Math.round((500 + getLevel * Math.log(Math.pow(25, getLevel))) / 25);
+        final double v = xpLeft - getXP;
         int Fragments = StatUtils.getHashFragments(player);
         return customItemUsingStack(
                 Utils.getPlayerSkull(player),
                 "§9" + player.getName() + "'s stats." ,
                 "§7Current Level: §9" + getLevel,
-                "§7Current xp: §9" + getXP + " §7/ §9" + (getLevel * 500),
-                "§7Xp to next level: §9" + xpLeft,
+                "§7Current xp: §9" + getXP + " §7/ §9" + xpLeft,
+                "§7Xp to next level: §9" + v,
                 "§7Fragments: §9" + Fragments);
     }
 
@@ -134,7 +135,7 @@ public class GuiUtils  {
         );
     }
 
-    public static ItemStack createItem_2(ForgeItems forgeItems, Resources Resource_1, int Amount_1, ShopItems Resource_2, int Amount_2) {
+    public static ItemStack createItem_2(ForgeItems forgeItems, Resources Resource_1, int Amount_1, Resources Resource_2, int Amount_2) {
 
         return customItemUsingStack(
                 forgeItems.getOuput().getItemStack(),
@@ -160,21 +161,21 @@ public class GuiUtils  {
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
-    public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount_1, ShopItems Resource_2, int Amount_2) {
+    public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount_1, Resources Resources_2, int Amount_2) {
         if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
                     inventory.firstEmpty(),
-                    createItemMaterial_2(forgeItems, Resource_1, Amount_1, Resource_2, Amount_2));
+                    createItem_2(forgeItems, Resource_1, Amount_1, Resources_2, Amount_2));
         } else {
             inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
         }
     }
 
-    public static void SetupItemMaterial_2(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount_1, ShopItems Material, int Amount_2) {
+    public static void SetupItemMaterial_2(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount_1, ShopItems Resource_2, int Amount_2) {
         if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
                     inventory.firstEmpty(),
-                    createItem_2(forgeItems, Resource_1, Amount_1, Material, Amount_2));
+                    createItemMaterial_2(forgeItems, Resource_1, Amount_1, Resource_2, Amount_2));
         } else {
             inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
         }

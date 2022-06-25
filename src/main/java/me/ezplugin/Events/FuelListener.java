@@ -23,6 +23,7 @@ public class FuelListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         if (event.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
             ItemStack currentItem = event.getCurrentItem();
+            ItemStack cursorItem = event.getCursor();
             ItemMeta currentItemItemMeta = currentItem.getItemMeta();
             PersistentDataContainer currentItemData = event.getCurrentItem().getItemMeta().getPersistentDataContainer();
             PersistentDataContainer currentCursorData = event.getCursor().getItemMeta().getPersistentDataContainer();
@@ -45,11 +46,33 @@ public class FuelListener implements Listener {
                     player.setItemOnCursor(new ItemStack(Material.AIR));
                     player.updateInventory();
                     player.sendMessage("§aRefueled!");
+                    event.setCancelled(true);
                     player.playSound(player.getLocation(), Sound.ITEM_BUCKET_FILL, 1f, -1f);
                 } else {
+                    event.setCancelled(true);
                     player.sendMessage("§cThis item has already reached max fuel!");
                     Utils.FailedSound(player);
                 }
+            } else if(currentItemData.has(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER) && currentCursorData.has(new NamespacedKey(EzMiner.getPlugin(), "addFortune"), PersistentDataType.INTEGER)) {
+                int getAddedFortune = currentCursorData.get(new NamespacedKey(EzMiner.getPlugin(), "addFortune"), PersistentDataType.INTEGER);
+                int getFortune = currentItemData.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
+                ItemMeta currentItemMeta = event.getCurrentItem().getItemMeta();
+                currentItemMeta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, getFortune + getAddedFortune);
+
+                List<String> lore = currentItemMeta.getLore();
+
+                int getIndex = lore.indexOf("§eFortune " + getFortune + "☘");
+                int totalfortune = getFortune + getAddedFortune;
+                lore.set(getIndex, "§eFortune " + totalfortune + "☘");
+                currentItemMeta.setLore(lore);
+                currentItem.setItemMeta(currentItemMeta);
+
+                assert cursorItem != null;
+                cursorItem.setAmount(cursorItem.getAmount() - 1);
+
+                event.setCancelled(true);
+                player.updateInventory();
+                player.sendMessage("§aAdded fortune!!");
             }
         }
     }

@@ -21,7 +21,6 @@ public class ListenerManager {
         addListener(new UpgradeGUIListener());
         addListener(new EnchantEvent());
         addListener(new ShopGUIListener());
-        addListener(new CloseInventory());
         addListener(new MaterialGUIListener());
     }
 

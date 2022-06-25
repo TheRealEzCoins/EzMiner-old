@@ -8,6 +8,8 @@ public enum ShopItems {
 
     Tier_1_Handle(Type.Material, MaterialItems.TIER_1_HANDLE, 500, 1),
     Tier_2_Handle(Type.Material, MaterialItems.TIER_2_HANDLE, 1750, 30),
+    Tier_3_Handle(Type.Material, MaterialItems.TIER_3_HANDLE, 2000, 50),
+    Tier_4_Handle(Type.Material, MaterialItems.TIER_4_HANDLE, 3500, 75),
     FUEL(Type.Material, MaterialItems.OIL_BARREL, 250, 30);
 
 

@@ -24,7 +24,7 @@ public class RefiningGUI extends GuiUtils {
             RefiningGUI.setItem(10, GuiUtils.Crafting(ForgeItems.Refined_Gem, player));
             player.updateInventory();
         } else {
-            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Refined_Gem, Resources.Gemstone, 128);
+            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Refined_Gem, Resources.Gemstone, 16);
             player.updateInventory();
         }
 
@@ -32,7 +32,7 @@ public class RefiningGUI extends GuiUtils {
             RefiningGUI.setItem(11, GuiUtils.Crafting(ForgeItems.Polished_Gem, player));
             player.updateInventory();
         } else {
-            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Polished_Gem, Resources.Refined_Gemstone, 128);
+            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Polished_Gem, Resources.Refined_Gemstone, 2);
             player.updateInventory();
         }
 
@@ -40,7 +40,7 @@ public class RefiningGUI extends GuiUtils {
             RefiningGUI.setItem(11, GuiUtils.Crafting(ForgeItems.Perfect_Gem, player));
             player.updateInventory();
         } else {
-            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Resources.Polished_Gemstone, 128);
+            GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Resources.Polished_Gemstone, 2);
             player.updateInventory();
         }
 
