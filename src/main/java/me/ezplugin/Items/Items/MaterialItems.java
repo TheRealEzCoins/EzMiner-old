@@ -38,21 +38,21 @@ public class MaterialItems {
         TIER_1_HANDLE = new ItemCreator(Material.STICK)
                 .setName("§6T1 Pickaxe Handle")
                 .addLore("§7Tier 1 Handle")
-                .setRarity(Rarity.UNCOMMON, Type.Material);
+                .setRarity(Rarity.UNCOMMON, Type.MATERIAL);
 
         TIER_2_HANDLE = new ItemCreator(Material.STICK)
                 .setName("§cT2 Pickaxe Handle")
                 .addLore("§7Tier 2 Handle")
-                .setRarity(Rarity.RARE, Type.Material);
+                .setRarity(Rarity.RARE, Type.MATERIAL);
         TIER_3_HANDLE = new ItemCreator(Material.STICK)
                 .setName("§bT3 Pickaxe Handle")
                 .addLore("§7Tier 3 Handle")
-                .setRarity(Rarity.EPIC, Type.Material);
+                .setRarity(Rarity.EPIC, Type.MATERIAL);
 
         TIER_4_HANDLE = new ItemCreator(Material.STICK)
                 .setName("§4§lT4 Pickaxe Handle")
                 .addLore("§7Tier 4 Handle")
-                .setRarity(Rarity.LEGENDARY, Type.Material);
+                .setRarity(Rarity.LEGENDARY, Type.MATERIAL);
 
 
 

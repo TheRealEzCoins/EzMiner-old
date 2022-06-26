@@ -70,6 +70,7 @@ public final class EzMiner extends JavaPlugin implements Listener {
         GemItems.init();
         MaterialItems.init();
         PickaxeItems.init();
+        ArmorItems.init();
 
 
 

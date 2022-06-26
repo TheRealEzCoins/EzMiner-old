@@ -280,13 +280,13 @@ public class GuiUtils  {
 
     public static void ResourceListener(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
-        if(e.getSlot() == 3) {
+        if(e.getRawSlot() == 3) {
             player.openInventory(ResourcesGUI.ResourcesGUI(player));
             player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, -5f);
-        } else if (e.getSlot() == 4) {
+        } else if (e.getRawSlot() == 4) {
             player.openInventory(GemsGUI.GemGUI(player));
             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_LEATHER, 1f, -5f);
-        } else if (e.getSlot() == 5) {
+        } else if (e.getRawSlot() == 5) {
             player.openInventory(MaterialGUI.MaterialGUI(player));
         }
     }

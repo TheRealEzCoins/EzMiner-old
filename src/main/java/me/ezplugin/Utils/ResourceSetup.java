@@ -124,7 +124,7 @@ public class ResourceSetup {
 
     public static void MaterialCreation(Player player , Inventory inventory) {
         for(ShopItems items : ShopItems.values()) {
-            if (items.getType().equals(Type.Material)) {
+            if (items.getType().equals(Type.MATERIAL)) {
                 if (StatUtils.getHashLevel(player) >= items.getLevel()) {
                     inventory.setItem(inventory.firstEmpty(), MaterialItem(items, player));
                 } else {

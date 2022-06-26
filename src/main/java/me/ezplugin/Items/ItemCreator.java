@@ -1,11 +1,14 @@
 package me.ezplugin.Items;
 
 import com.jeff_media.morepersistentdatatypes.DataType;
+import me.ezplugin.Enums.ArmorSets;
 import me.ezplugin.Enums.Rarity;
 import me.ezplugin.Enums.Type;
 import me.ezplugin.EzMiner;
+import me.ezplugin.Items.Items.ArmorItems;
 import me.ezplugin.Utils.Utils;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -13,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -252,9 +256,30 @@ public class ItemCreator implements Listener {
         ItemStack item = itemStack;
         ItemMeta meta = item.getItemMeta();
 
+        addLore("§8§oSoulBound");
+
         meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Pickaxe"), DataType.BOOLEAN, Boolean.TRUE);
         meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, 0);
         itemStack.setItemMeta(meta);
+        return this;
+    }
+
+
+    public ItemCreator setCustomArmor(ArmorSets Armor, int FortuneAmount) {
+        ItemStack item = itemStack;
+        ItemMeta meta = item.getItemMeta();
+
+        meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Armor"), PersistentDataType.STRING, Armor.name());
+        meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, 0);
+        itemStack.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemCreator dyeArmor(Color color) {
+        ItemStack item = itemStack;
+        LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+        meta.setColor(color);
+        item.setItemMeta(meta);
         return this;
     }
 
@@ -274,7 +299,7 @@ public class ItemCreator implements Listener {
         ItemStack item = itemStack;
         ItemMeta meta = item.getItemMeta();
         if(meta != null) {
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             item.setItemMeta(meta);
         }
         return this;

@@ -6,7 +6,8 @@ public enum Type {
     ORE(),
     UPGRADE(),
     FUEL(),
-    Material(),
+    MATERIAL(),
+    ARMOR(),
     TOOL();
 
 

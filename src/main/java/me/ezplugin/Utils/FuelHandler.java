@@ -41,7 +41,7 @@ public class FuelHandler {
         } else if (CurrentFuel <= 0) {
             block.setCancelled(true);
             Utils.FailedSound(player);
-            player.sendMessage("&cYour " + MainHand.getItemMeta().getDisplayName() + "has ran out of fuel.");
+            player.sendMessage("§cYour " + MainHand.getItemMeta().getDisplayName() + "has ran out of fuel.");
         }
     }
 

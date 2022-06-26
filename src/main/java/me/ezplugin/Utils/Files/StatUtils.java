@@ -24,7 +24,7 @@ public class StatUtils {
 
     public static HashMap<UUID, Integer> EXP = new HashMap<>();
     public static HashMap<UUID, Integer> Level = new HashMap<>();
-    public static HashMap<UUID, Integer> PlayerClickedSlot = new HashMap<>();
+    public static HashMap<UUID, Integer> MiningFortune = new HashMap<>();
     public static HashMap<UUID, Integer> Fragments = new HashMap<>();
 
 
@@ -48,6 +48,12 @@ public class StatUtils {
         FileConfiguration config = CheckIfCorrect(player);
 
         return (int) config.get("Stats." + "Fragments");
+    }
+
+    public static int getConfigMiningFortune(Player player) {
+        FileConfiguration config = CheckIfCorrect(player);
+
+        return (int) config.get("Stats." + "Mining_Fortune");
     }
 
     public static void setConfigXP(Player player, int Amount) {
@@ -85,6 +91,17 @@ public class StatUtils {
         }
     }
 
+    public static void setConfigMiningFortune(Player player, int Amount) {
+        FileConfiguration config = CheckIfCorrect(player);
+        config.set("Stats." + "Mining_Fortune", Amount);
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static int getHashXP(Player player) {
         UUID uuid = player.getUniqueId();
         return EXP.get(uuid);
@@ -110,6 +127,16 @@ public class StatUtils {
         Fragments.put(uuid, Amount);
     }
 
+    public static void addHashFragments(Player player, int Amount) {
+        UUID uuid = player.getUniqueId();
+        Fragments.put(uuid, (getHashFragments(player) + Amount));
+    }
+
+    public static void setHashFortune(Player player, int Amount) {
+        UUID uuid = player.getUniqueId();
+        MiningFortune.put(uuid, Amount);
+    }
+
     public static int getHashFragments(Player player) {
         UUID uuid = player.getUniqueId();
         return Fragments.get(uuid);
@@ -118,6 +145,11 @@ public class StatUtils {
     public static void removeFragments(Player player, int Amount) {
         UUID uuid = player.getUniqueId();
         Fragments.put(uuid, getHashFragments(player) - Amount);
+    }
+
+    public static int getHashFortune(Player player) {
+        UUID uuid = player.getUniqueId();
+        return MiningFortune.get(uuid);
     }
 
     public static int getResources(Player player, Resources ores) {
@@ -138,6 +170,22 @@ public class StatUtils {
             config.set("Ores." + ores, Amount);
         } else if(ores.getType().equals(Type.GEM)) {
             config.set("Gems." + ores, Amount);
+        }
+        File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addResources(Player player, Resources ores, int Amount) {
+        FileConfiguration config = CheckIfCorrect(player);
+
+        if(ores.getType().equals(Type.ORE)) {
+            config.set("Ores." + ores, Amount + getResources(player, ores));
+        } else if(ores.getType().equals(Type.GEM)) {
+            config.set("Gems." + ores, Amount + getResources(player, ores));
         }
         File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
         try {
@@ -170,7 +218,7 @@ public class StatUtils {
     public static void setMaterials(Player player, ShopItems items, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
 
-        if(items.getType().equals(Type.Material)) {
+        if(items.getType().equals(Type.MATERIAL)) {
             config.set("Materials." + items, Amount);
         }
         File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
@@ -184,7 +232,7 @@ public class StatUtils {
     public static void removeMaterials(Player player, ShopItems items, int Amount) {
         FileConfiguration config = CheckIfCorrect(player);
 
-        if(items.getType().equals(Type.Material)) {
+        if(items.getType().equals(Type.MATERIAL)) {
             config.set("Materials." + items, getMaterials(player, items) - Amount);
         }
         File file = new File(plugin.getDataFolder() + "/PlayerData/" + player.getUniqueId() + ".yml");
@@ -198,7 +246,7 @@ public class StatUtils {
     public static int getMaterials(Player player, ShopItems items) {
         FileConfiguration config = CheckIfCorrect(player);
 
-        if(items.getType().equals(Type.Material)) {
+        if(items.getType().equals(Type.MATERIAL)) {
             return (int) config.get("Materials." + items);
         }
         return 0;

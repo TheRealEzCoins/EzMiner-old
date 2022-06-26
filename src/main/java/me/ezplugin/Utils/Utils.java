@@ -9,6 +9,7 @@ import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -112,6 +113,7 @@ public class Utils {
         ItemStack MainHand = player.getInventory().getItemInMainHand();
         PersistentDataContainer data = MainHand.getItemMeta().getPersistentDataContainer();
         int getAmount = StatUtils.getResources(player, ores);
+
         if (data.has(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER)) {
             int getFortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
             int newAmount = getFortune / 100;
@@ -120,6 +122,7 @@ public class Utils {
             StatUtils.setResources(player, ores, getAmount + 1);
         }
     }
+
 
     public static void handleXP(Player player, Resources ores) {
 
@@ -142,6 +145,7 @@ public class Utils {
         int currentFragments = StatUtils.getHashFragments(player);
         StatUtils.setHashFragments(player, currentFragments + Amount);
     }
+
 
 
 

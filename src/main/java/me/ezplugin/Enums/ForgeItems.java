@@ -24,7 +24,7 @@ public enum ForgeItems {
     Perfect_Gem(Type.ORE, GemItems.Perfect_Gemstone, 20, 600),
 
     /** Upgrade crafting (Forge) */
-    FortuneUpgrade(Type.UPGRADE, MaterialItems.FortuneUpgrade, 25, 172800);
+    FortuneUpgrade(Type.UPGRADE, MaterialItems.FortuneUpgrade, 25, 7200);
 
     private final ItemCreator output;
     private final Type type;

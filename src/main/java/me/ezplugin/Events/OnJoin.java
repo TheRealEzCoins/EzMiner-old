@@ -3,7 +3,6 @@ package me.ezplugin.Events;
 import me.ezplugin.Enums.Resources;
 import me.ezplugin.Enums.ShopItems;
 import me.ezplugin.Enums.Type;
-import me.ezplugin.Items.Items.OreItems;
 import me.ezplugin.Items.Items.PickaxeItems;
 import me.ezplugin.Utils.Files.PlayerData;
 import me.ezplugin.Utils.Files.StatUtils;
@@ -60,7 +59,7 @@ public class OnJoin implements Listener {
         }
 
         for(ShopItems items : ShopItems.values()) {
-            if(items.getType().equals(Type.Material)) {
+            if(items.getType().equals(Type.MATERIAL)) {
                 if (!PlayerData.HasData("Materials." + items)) {
                     PlayerData.fileData.addDefault("Materials." + items, 0);
                 }

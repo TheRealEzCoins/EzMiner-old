@@ -20,7 +20,7 @@ public class PickaxeGUI extends GuiUtils {
         GuiUtils.fillBorder(PickaxeGUI);
 
 
-        GuiUtils.setupItemWithTime(player, PickaxeGUI, ForgeItems.Nacrine_Pickaxe, Resources.Nacrine, 350, ShopItems.Tier_1_Handle, 1);
+        GuiUtils.setupItemWithTime(player, PickaxeGUI, ForgeItems.Nacrine_Pickaxe, Resources.Nacrine, 400, ShopItems.Tier_1_Handle, 1);
         GuiUtils.setupItemWithTime(player, PickaxeGUI, ForgeItems.Uprum_Pickaxe, Resources.Uprum, 250, ShopItems.Tier_1_Handle, 1);
         GuiUtils.setupItemWithTime(player, PickaxeGUI, ForgeItems.Zaplium_Pickaxe, Resources.Zaplium, 400, ShopItems.Tier_2_Handle, 1);
         GuiUtils.setupItemWithTime(player, PickaxeGUI, ForgeItems.Slaginite_Pickaxe, Resources.Slaginite, 500, ShopItems.Tier_3_Handle, 1);

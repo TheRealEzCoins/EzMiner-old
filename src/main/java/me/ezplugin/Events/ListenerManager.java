@@ -21,7 +21,9 @@ public class ListenerManager {
         addListener(new UpgradeGUIListener());
         addListener(new EnchantEvent());
         addListener(new ShopGUIListener());
+        addListener(new DeathListener());
         addListener(new MaterialGUIListener());
+        addListener(new ArmorListeners());
     }
 
     private void addListener(Listener listener) {

@@ -41,7 +41,7 @@ public class PickaxeItems {
                 .setUnbreakable(true);
         // -------------------------------------------- //
         Uprum_Pickaxe = new ItemCreator(Material.STONE_PICKAXE)
-                .setName("§4Uprum Pickaxe")
+                .setName("§4Uprum Drill")
                 .setPickaxe()
                 .setTier(2)
                 .addEnchantment(Enchantment.DIG_SPEED, 4)
