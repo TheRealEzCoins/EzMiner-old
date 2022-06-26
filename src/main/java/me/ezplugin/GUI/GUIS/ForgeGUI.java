@@ -54,7 +54,7 @@ public class ForgeGUI {
         return FORGEGUI;
     }
 
-    public static Gui forgeGUI(Player player) {
+    /*public static Gui forgeGUI(Player player) {
 
         ItemStack background = ItemUtils.customItemName(Material.BLACK_STAINED_GLASS_PANE, "");
 
@@ -125,5 +125,5 @@ public class ForgeGUI {
 
 
         return menu;
-    }
+    } */
 }

@@ -34,6 +34,7 @@ public class MaterialItems {
                 .addFortuneUpgrade(50)
                 .setRarity(Rarity.RARE, Type.UPGRADE);
 
+
         TIER_1_HANDLE = new ItemCreator(Material.STICK)
                 .setName("§6T1 Pickaxe Handle")
                 .addLore("§7Tier 1 Handle")

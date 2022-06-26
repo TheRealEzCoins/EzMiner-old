@@ -24,7 +24,7 @@ public class PickaxeGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             } else if (e.getSlot() == 10) {
-                ForgeUtils.DoubleCraft(player, ForgeItems.Nacrine_Pickaxe, Resources.Nacrine, 500, ShopItems.Tier_1_Handle, 2);
+                ForgeUtils.DoubleCraft(player, ForgeItems.Nacrine_Pickaxe, Resources.Nacrine, 400, ShopItems.Tier_1_Handle, 1);
             }else if (e.getSlot() == 11) {
                 ForgeUtils.DoubleCraft(player, ForgeItems.Uprum_Pickaxe, Resources.Uprum, 250, ShopItems.Tier_1_Handle, 1);
             } else if (e.getSlot() == 12) {

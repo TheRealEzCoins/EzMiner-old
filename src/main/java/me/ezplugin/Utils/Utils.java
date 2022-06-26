@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Utils {
 
@@ -23,6 +24,10 @@ public class Utils {
 
 
     static FileConfiguration config = EzMiner.plugin.getConfig();
+
+    public static Float randomChance() {
+        return ThreadLocalRandom.current().nextFloat();
+    }
 
 
     public static String color(String str) {

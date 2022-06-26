@@ -119,6 +119,17 @@ public class GuiUtils  {
     }
 
 
+    public static void setupItemWithTime(Player player, Inventory inventory, ForgeItems forgeItems, Resources resources, int Amount_1, ShopItems items, int Amount2) throws ParseException {
+        if(StatUtils.hasTimer(player, forgeItems)) {
+            inventory.setItem(inventory.firstEmpty(), GuiUtils.Crafting(forgeItems, player));
+            player.updateInventory();
+        } else {
+            GuiUtils.SetupItemMaterial_2(player, inventory, forgeItems, resources, Amount_1, items, Amount2);
+            player.updateInventory();
+        }
+    }
+
+
 
     public static ItemStack Crafting(ForgeItems forgeItems, Player player) throws ParseException {
         Date forgeDate = Utils.formatter.parse(StatUtils.getTimer(player, forgeItems));

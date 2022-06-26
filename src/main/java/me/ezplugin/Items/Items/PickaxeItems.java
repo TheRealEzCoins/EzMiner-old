@@ -44,9 +44,9 @@ public class PickaxeItems {
                 .setName("§4Uprum Pickaxe")
                 .setPickaxe()
                 .setTier(2)
-                .addEnchantment(Enchantment.DIG_SPEED, 10)
-                .setFortune(0)
-                .setFuel(100)
+                .addEnchantment(Enchantment.DIG_SPEED, 4)
+                .setFortune(50)
+                .setFuel(1000)
                 .HideItemFlags()
                 .setUnbreakable(true);
         // -------------------------------------------- //

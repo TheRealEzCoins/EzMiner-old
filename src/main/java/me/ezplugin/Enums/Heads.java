@@ -9,6 +9,7 @@ public enum Heads {
     Kreisium("72ebea17c3235637a744887380609e38fae748a269c6758dd096986f2ab9f814"),
     Volcanium("8dcff1acc12f16d44aee1f7e84414cb2e8ea7eb4642e7d292d76f1c17b4b434a"),
     Flotine("d2e4ffc71c9fd445da6f25f78034106897a9aaaced539cf1cfbee4dcb98ac3f9"),
+    Spawner_fragments("b8444224af2cd4a5d3909db772c7d0c95b1216c3ac019f4a0e7cdbb8f07f418f"),
 
 
 

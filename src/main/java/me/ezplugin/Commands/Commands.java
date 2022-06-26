@@ -9,6 +9,7 @@ import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.Items.Items.PickaxeItems;
 import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.*;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -113,8 +114,7 @@ public class Commands implements CommandExecutor {
                             }
                         } else if(args[0].equalsIgnoreCase("test")) {
                             if(player.hasPermission("EzMiner.*")) {
-                                player.getInventory().addItem(MaterialItems.FortuneUpgrade.getItemStack());
-                                ForgeGUI.forgeGUI(player).show(player);
+                                
                             }
                         } else if(args[0].equalsIgnoreCase("Starter")) {
                             player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());

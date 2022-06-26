@@ -10,6 +10,7 @@ public enum Resources {
     Uprum(Type.ORE, OreItems.Uprum, Material.COPPER_ORE, 1, 10),
     Zaplium(Type.ORE, OreItems.Zaplium, Material.GOLD_ORE, 2, 25),
     Slaginite(Type.ORE, OreItems.Slaginite, Material.LAPIS_ORE, 3, 50),
+    Spawner_Fragments(Type.ORE, OreItems.Spawner_Fragments, Material.SPAWNER, 3, 50),
     Gryrium(Type.ORE, OreItems.Gryrium, Material.DEEPSLATE_IRON_ORE, 3, 60),
     Kreisium(Type.ORE, OreItems.Kreisium, Material.DEEPSLATE_REDSTONE_ORE, 4, 75),
     Volcanium(Type.ORE, OreItems.Volcanium, Material.DEEPSLATE_GOLD_ORE, 4, 90),

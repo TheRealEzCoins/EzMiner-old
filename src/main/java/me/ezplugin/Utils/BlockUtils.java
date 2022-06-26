@@ -21,7 +21,6 @@ public class BlockUtils {
      * @param ores The Ores enum that you want to use.
      */
     public static void BlockSetup(BlockBreakEvent block, Player player, Resources ores) {
-
         Block getBlock = block.getBlock();
         if(getBlock.getType().equals(ores.getBlock())) {
             if (Utils.isEmpty(player)) {
@@ -30,9 +29,6 @@ public class BlockUtils {
                         if (Utils.getMainHandData(player).has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER)) {
                             if (Utils.getTier(player) >= ores.getTier()) {
 
-                                if (FuelHandler.getFuel(player)) {
-                                    FuelHandler.FuelConsume(player, block);
-                                }
 
                                 StatUtils.getResources(player, ores);
                                 Utils.handleFortune(player, ores);

@@ -2,6 +2,7 @@ package me.ezplugin.Events;
 
 import me.ezplugin.Enums.Resources;
 import me.ezplugin.Utils.BlockUtils;
+import me.ezplugin.Utils.FuelHandler;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -14,6 +15,10 @@ public class BreakListener extends BlockUtils implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent block) {
         Player player = block.getPlayer();
+
+        if (FuelHandler.getFuel(player)) {
+            FuelHandler.FuelConsume(player, block);
+        }
             if (block.getBlock().getType().equals(Material.BEDROCK) && (!(player.getGameMode().equals(GameMode.CREATIVE)))) {
                 block.setCancelled(true);
             } else {

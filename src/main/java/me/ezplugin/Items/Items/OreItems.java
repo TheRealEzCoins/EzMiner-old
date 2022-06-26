@@ -18,6 +18,7 @@ public class OreItems {
     public static ItemCreator Zaplium;
     public static ItemCreator Uprum;
     public static ItemCreator Slaginite;
+    public static ItemCreator Spawner_Fragments;
     public static ItemCreator Gryrium;
     public static ItemCreator Kreisium;
     public static ItemCreator Volcanium;
@@ -50,6 +51,11 @@ public class OreItems {
                 .setRarity(Rarity.RARE, Type.ORE)
                 .setUnplacable(true)
                 .setOre();
+        // -------------------------------------------- //
+        Spawner_Fragments = new ItemCreator(SkullCreator.itemFromUrl(Heads.Spawner_fragments.getURL()))
+                .setName("§cSpa§c§kwn&cer &c&kfra&cgments")
+                .addLore("")
+                .setRarity(Rarity.LEGENDARY, Type.ORE);
         // -------------------------------------------- //
         Gryrium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Gryrium.getURL()))
                 .setName("§7Gryrium Ore")

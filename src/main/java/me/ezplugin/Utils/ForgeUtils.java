@@ -35,7 +35,7 @@ public class ForgeUtils {
                 player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
                 player.sendMessage("§aYour item finished crafting!");
             }
-        }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime()));
+        }.runTaskLater(EzMiner.getPlugin(), (forgeItems.getTime() * 20L));
     }
 
 
