@@ -23,7 +23,7 @@ public class ShopGUI extends GuiUtils {
 
         ShopGUI.setItem(50,
                 ItemUtils.customItemUsingStack(SkullCreator.itemFromUrl(Heads.Lootbox.getURL()),
-                        "§cGamble",
+                        "§cGamble §8(250 fragments / roll)",
                         "",
                         "§bOdds:",
                         "§c1% §7- §a1,000 fragments",

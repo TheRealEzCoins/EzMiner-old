@@ -46,7 +46,10 @@ public class FuelHandler {
     }
 
     public static boolean getFuel(Player player) {
-        PersistentDataContainer data = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
-        return data.has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
+        if(Utils.isEmpty(player)) {
+            PersistentDataContainer data = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+            return data.has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
+        }
+        return false;
     }
 }

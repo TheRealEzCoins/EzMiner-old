@@ -128,10 +128,10 @@ public class Utils {
 
         double CurrentLVL = StatUtils.getHashLevel(player);
         int CurrentXP = StatUtils.getHashXP(player);
-        final double v = 25 * Math.round((500 + CurrentLVL * Math.log(Math.pow(25, CurrentLVL))) / 25);
+        final int v = (int) (25 * Math.round((500 + CurrentLVL * Math.log(Math.pow(25, CurrentLVL))) / 25));
         if (CurrentXP >= v) {
             StatUtils.setHashLevel(player, (int) (CurrentLVL + 1));
-            StatUtils.setHashXP(player, (int) (CurrentXP - v));
+            StatUtils.setHashXP(player, (CurrentXP - v));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
             player.sendMessage("§a§lLevel up!\n§6You are now level: " + StatUtils.getHashLevel(player));
         } else {
