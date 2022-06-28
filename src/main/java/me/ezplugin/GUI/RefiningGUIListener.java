@@ -23,11 +23,11 @@ public class RefiningGUIListener implements Listener {
             e.setCancelled(true);
             if (e.getCurrentItem() == null) {
             } else if (e.getRawSlot() == 10) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Refined_Gem, Resources.Gemstone, 128);
+                ForgeUtils.SingleCraft(player, ForgeItems.Refined_Gem, Resources.Gemstone, 16);
             } else if(e.getRawSlot() == 11) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Polished_Gem, Resources.Refined_Gemstone, 128);
+                ForgeUtils.SingleCraft(player, ForgeItems.Polished_Gem, Resources.Refined_Gemstone, 2);
             } else if(e.getRawSlot() == 12) {
-                ForgeUtils.SingleCraft(player, ForgeItems.Perfect_Gem, Resources.Polished_Gemstone, 128);
+                ForgeUtils.SingleCraft(player, ForgeItems.Perfect_Gem, Resources.Polished_Gemstone, 2);
 
 
 

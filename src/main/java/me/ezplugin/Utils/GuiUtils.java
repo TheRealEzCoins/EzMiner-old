@@ -108,6 +108,16 @@ public class GuiUtils  {
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
+    public static void SetupShopItem(Player player, ShopItems shopItems, Inventory inventory) {
+        if (StatUtils.getHashLevel(player) >= shopItems.getLevel()) {
+            inventory.setItem(
+                    inventory.firstEmpty(),
+                    getItemAsShop(shopItems));
+        } else {
+            inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(shopItems.getLevel()));
+        }
+    }
+
     public static void SetupItem(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount) {
         if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
             inventory.setItem(
@@ -172,15 +182,6 @@ public class GuiUtils  {
                 "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
     }
 
-    public static void SetupItem_2(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount_1, Resources Resources_2, int Amount_2) {
-        if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {
-            inventory.setItem(
-                    inventory.firstEmpty(),
-                    createItem_2(forgeItems, Resource_1, Amount_1, Resources_2, Amount_2));
-        } else {
-            inventory.setItem(inventory.firstEmpty(), GuiUtils.unlockableitem(forgeItems.getLevel()));
-        }
-    }
 
     public static void SetupItemMaterial_2(Player player , Inventory inventory, ForgeItems forgeItems, Resources Resource_1, int Amount_1, ShopItems Resource_2, int Amount_2) {
         if (StatUtils.getHashLevel(player) >= forgeItems.getLevel()) {

@@ -41,7 +41,7 @@ public class FuelHandler {
         } else if (CurrentFuel <= 0) {
             block.setCancelled(true);
             Utils.FailedSound(player);
-            player.sendMessage("§cYour " + MainHand.getItemMeta().getDisplayName() + "has ran out of fuel.");
+            player.sendMessage("§cYour " + MainHand.getItemMeta().getDisplayName() + " §chas ran out of fuel.");
         }
     }
 
@@ -51,5 +51,13 @@ public class FuelHandler {
             return data.has(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
         }
         return false;
+    }
+
+    public static int getFuelAmount(Player player) {
+        if(Utils.isEmpty(player)) {
+            PersistentDataContainer data = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer();
+            return data.get(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER);
+        }
+        return 0;
     }
 }

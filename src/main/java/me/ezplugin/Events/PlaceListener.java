@@ -2,6 +2,7 @@ package me.ezplugin.Events;
 
 import me.ezplugin.Enums.Resources;
 import me.ezplugin.EzMiner;
+import me.ezplugin.Utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -16,21 +17,8 @@ public class PlaceListener implements Listener {
     @EventHandler
     public static void onItemPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        if(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Unplacable"), PersistentDataType.STRING)) {
-            event.setCancelled(true);
-        } else {
-            return;
-        }
-    }
-
-    @EventHandler
-    public static void onBlockPlace(BlockPlaceEvent event) {
-        Block block = event.getBlock();
-        Player player = event.getPlayer();
-        World world = player.getWorld();
-
-        for(Resources oreBlock : Resources.values()) {
-            if (block.getType().equals(oreBlock.getBlock()) && world.equals(Bukkit.getWorld("MineWorld"))) {
+        if(Utils.isEmpty(player)) {
+            if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Unplacable"), PersistentDataType.STRING)) {
                 event.setCancelled(true);
             }
         }

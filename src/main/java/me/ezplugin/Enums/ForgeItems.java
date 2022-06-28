@@ -11,6 +11,7 @@ public enum ForgeItems {
     Nacrine_Pickaxe(Type.TOOL, PickaxeItems.Nacrine_Pickaxe, 1, 7200),
     Uprum_Pickaxe(Type.TOOL, PickaxeItems.Uprum_Pickaxe, 10, 3600),
     Zaplium_Pickaxe(Type.TOOL, PickaxeItems.Zaplium_Pickaxe, 25, 7200),
+    Lebriutium_Pickaxe(Type.TOOL, PickaxeItems.Lebriutium_Pickaxe, 35, 7200),
     Slaginite_Pickaxe(Type.TOOL, PickaxeItems.Slaginite_Pickaxe, 50, 7200),
     Gryrium_Pickaxe(Type.TOOL, PickaxeItems.Gryrium_Pickaxe, 60, 14400),
     Kreisium_Pickaxe(Type.TOOL, PickaxeItems.Kreisium_Pickaxe, 75, 14400),
@@ -19,12 +20,12 @@ public enum ForgeItems {
 
 
     /** Gemstone crafting (Forge) */
-    Refined_Gem(Type.ORE, GemItems.Refined_Gemstone, 10, 600),
-    Polished_Gem(Type.ORE, GemItems.Polished_Gemstone, 15, 600),
-    Perfect_Gem(Type.ORE, GemItems.Perfect_Gemstone, 20, 600),
+    Refined_Gem(Type.ORE, GemItems.Refined_Gemstone, 10, 60),
+    Polished_Gem(Type.ORE, GemItems.Polished_Gemstone, 15, 60),
+    Perfect_Gem(Type.ORE, GemItems.Perfect_Gemstone, 20, 60),
 
     /** Upgrade crafting (Forge) */
-    FortuneUpgrade(Type.UPGRADE, MaterialItems.FortuneUpgrade, 25, 7200);
+    FortuneUpgrade(Type.UPGRADE, MaterialItems.FortuneUpgrade, 25, 600);
 
     private final ItemCreator output;
     private final Type type;

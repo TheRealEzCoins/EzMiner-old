@@ -58,11 +58,11 @@ public class ShopGUIListener implements Listener {
                         if(random <= 0.25) {
                             int CurrentLevel = StatUtils.getHashLevel(player);
                             if(CurrentLevel < 10) {
-                                player.getInventory().addItem(OreItems.Nacrine.getItemStack().add(25));
+                                StatUtils.addResources(player, Resources.Nacrine, 25);
                                 player.sendMessage("§aYou found 25x §8Nacrine");
                                 return;
                             } else if(10  < CurrentLevel && CurrentLevel < 25) {
-                                StatUtils.addResources(player, Resources.Nacrine, 25);
+                                StatUtils.addResources(player, Resources.Uprum, 25);
                                 player.sendMessage("§aYou found 25x §cUprum");
                                 return;
                             }  else if(24  < CurrentLevel && CurrentLevel < 50) {
@@ -90,12 +90,17 @@ public class ShopGUIListener implements Listener {
                                 player.sendMessage("§aYou found 25x §aFlotine");
                                 return;
                             }
+                        } else if(random <= 0.35) {
+                            StatUtils.setHashXP(player, StatUtils.getHashXP(player) + 250);
+                            Utils.checkXP(player);
+                            player.sendMessage("§aYou received 250 xp!");
+
                         } else if(random <= 0.50) {
-                            StatUtils.addHashFragments(player, 100);
-                            player.sendMessage("§aYou found 100 fragments.");
+                            StatUtils.addHashFragments(player, 150);
+                            player.sendMessage("§aYou found 150 fragments.");
                         } else {
-                            StatUtils.addHashFragments(player, 50);
-                            player.sendMessage("§aYou found 50 fragments!");
+                            StatUtils.addHashFragments(player, 100);
+                            player.sendMessage("§aYou found 100 fragments!");
                         }
                     }
 

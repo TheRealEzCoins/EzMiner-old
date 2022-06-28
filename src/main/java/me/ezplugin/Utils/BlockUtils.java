@@ -29,7 +29,6 @@ public class BlockUtils {
                         if (Utils.getMainHandData(player).has(new NamespacedKey(EzMiner.getPlugin(), "Tier"), PersistentDataType.INTEGER)) {
                             if (Utils.getTier(player) >= ores.getTier()) {
 
-
                                 StatUtils.getResources(player, ores);
                                 Utils.handleFortune(player, ores);
                                 block.setDropItems(false);

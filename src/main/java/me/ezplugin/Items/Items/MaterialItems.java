@@ -21,7 +21,7 @@ public class MaterialItems {
     public static ItemCreator TIER_4_HANDLE;
 
     private static void ItemSetup() {
-        OIL_BARREL = new ItemCreator(Material.LAVA_BUCKET)
+        OIL_BARREL = new ItemCreator(SkullCreator.itemFromUrl(Heads.Fuel_Bucket.getURL()))
                 .setName("§8Fuel Bucket")
                 .setUnplacable(true)
                 .HideItemFlags()

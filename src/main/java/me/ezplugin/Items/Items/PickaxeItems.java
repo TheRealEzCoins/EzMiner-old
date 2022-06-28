@@ -14,6 +14,7 @@ public class PickaxeItems {
     public static ItemCreator Nacrine_Pickaxe;
     public static ItemCreator Uprum_Pickaxe;
     public static ItemCreator Zaplium_Pickaxe;
+    public static ItemCreator Lebriutium_Pickaxe;
     public static ItemCreator Slaginite_Pickaxe;
     public static ItemCreator Gryrium_Pickaxe;
     public static ItemCreator Kreisium_Pickaxe;
@@ -55,6 +56,16 @@ public class PickaxeItems {
                 .setPickaxe()
                 .setTier(3)
                 .setFortune(125)
+                .addEnchantment(Enchantment.DIG_SPEED, 3)
+                .HideItemFlags()
+                .setUnbreakable(true);
+        // -------------------------------------------- //
+        Lebriutium_Pickaxe = new ItemCreator(Material.IRON_PICKAXE)
+                .setName("§7Lebriutium Pickaxe")
+                .setPickaxe()
+                .setTier(3)
+                .setFortune(125)
+                .setFuel(1000)
                 .addEnchantment(Enchantment.DIG_SPEED, 3)
                 .HideItemFlags()
                 .setUnbreakable(true);

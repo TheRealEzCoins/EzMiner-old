@@ -37,7 +37,7 @@ public class RefiningGUI extends GuiUtils {
         }
 
         if(StatUtils.hasTimer(player, ForgeItems.Perfect_Gem)) {
-            RefiningGUI.setItem(11, GuiUtils.Crafting(ForgeItems.Perfect_Gem, player));
+            RefiningGUI.setItem(12, GuiUtils.Crafting(ForgeItems.Perfect_Gem, player));
             player.updateInventory();
         } else {
             GuiUtils.SetupItem(player, RefiningGUI, ForgeItems.Perfect_Gem, Resources.Polished_Gemstone, 2);

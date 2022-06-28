@@ -24,6 +24,7 @@ public class ListenerManager {
         addListener(new DeathListener());
         addListener(new MaterialGUIListener());
         addListener(new ArmorListeners());
+        addListener(new onEnableXray());
     }
 
     private void addListener(Listener listener) {

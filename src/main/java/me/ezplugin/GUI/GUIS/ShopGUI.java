@@ -18,7 +18,7 @@ public class ShopGUI extends GuiUtils {
         GuiUtils.fillBorder(ShopGUI);
 
         for(ShopItems items : ShopItems.values()) {
-            ShopGUI.setItem(ShopGUI.firstEmpty(), GuiUtils.getItemAsShop(items));
+            GuiUtils.SetupShopItem(player, items, ShopGUI);
         }
 
         ShopGUI.setItem(50,
@@ -30,9 +30,10 @@ public class ShopGUI extends GuiUtils {
                         "§c5% §7- §a1x Fortune upgrade",
                         "§c10% §7- §a500 fragments",
                         "§c25% §7- §a25x of your current §cHIGHEST §aore",
-                        "§c50% §7- §a100 fragments",
+                        "§c35% §7- §a250 xp!",
+                        "§c50% §7- §a150 fragments",
                         "",
-                        "§c§oIf you get very unlucky: 50 fragments",
+                        "§c§oIf you get very unlucky: 100 fragments",
                         "§7§oI'm not responsible for any of this."));
 
         ShopGUI.setItem(

@@ -7,6 +7,7 @@ import me.ezplugin.GUI.GUIS.ForgeGUI;
 import me.ezplugin.Items.Items.PickaxeItems;
 import me.ezplugin.Utils.Files.StatUtils;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -104,11 +105,9 @@ public class Commands implements CommandExecutor {
                             }
                         } else if(args[0].equalsIgnoreCase("test")) {
                             if(player.hasPermission("EzMiner.*")) {
-                                player.getInventory().addItem(PickaxeItems.Uprum_Pickaxe.getItemStack());
-                                player.getInventory().addItem(ArmorItems.Uprum_Helmet.getItemStack());
-                                player.getInventory().addItem(ArmorItems.Uprum_Chestplate.getItemStack());
-                                player.getInventory().addItem(ArmorItems.Uprum_Leggings.getItemStack());
-                                player.getInventory().addItem(ArmorItems.Uprum_Boots.getItemStack());
+                                Block block = player.getTargetBlock(1);
+                                assert block != null;
+                                player.sendBlockChange(player.getLocation(), block.getBlockData());
                             }
                         } else if(args[0].equalsIgnoreCase("Starter")) {
                             player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());

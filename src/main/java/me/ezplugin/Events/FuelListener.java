@@ -43,7 +43,8 @@ public class FuelListener implements Listener {
 
                     currentItemItemMeta.setLore(lore);
                     currentItem.setItemMeta(currentItemItemMeta);
-                    player.setItemOnCursor(new ItemStack(Material.AIR));
+                    assert cursorItem != null;
+                    cursorItem.setAmount(cursorItem.getAmount() - 1);
                     player.updateInventory();
                     player.sendMessage("§aRefueled!");
                     event.setCancelled(true);

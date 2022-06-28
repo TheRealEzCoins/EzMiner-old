@@ -16,15 +16,29 @@ public class BreakListener extends BlockUtils implements Listener {
     public void onBlockBreak(BlockBreakEvent block) {
         Player player = block.getPlayer();
 
-        if (FuelHandler.getFuel(player)) {
-            FuelHandler.FuelConsume(player, block);
-        }
             if (block.getBlock().getType().equals(Material.BEDROCK) && (!(player.getGameMode().equals(GameMode.CREATIVE)))) {
                 block.setCancelled(true);
             } else {
-                for (Resources ores : Resources.values()) {
-                    BlockUtils.BlockSetup(block, player, ores);
+                if(FuelHandler.getFuel(player)) {
+                    if(FuelHandler.getFuelAmount(player) != 0) {
+                        FuelHandler.FuelConsume(player, block);
+                        for (Resources ores : Resources.values()) {
+                            BlockUtils.BlockSetup(block, player, ores);
+                        }
+                    } else {
+                        FuelHandler.FuelConsume(player, block);
+                    }
+                } else {
+                    for (Resources ores : Resources.values()) {
+                        BlockUtils.BlockSetup(block, player, ores);
+                    }
                 }
+            }
+
+            long timeElapsed = System.currentTimeMillis() - onEnableXray.Cooldown.get(player.getUniqueId());
+            if(!(timeElapsed >= 9000)) {
+                block.setCancelled(true);
+                player.sendMessage("§cYou can't mine while xray is enabled!");
             }
     }
 }

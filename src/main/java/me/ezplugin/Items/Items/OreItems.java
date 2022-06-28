@@ -16,6 +16,7 @@ public class OreItems {
     }
 
     public static ItemCreator Zaplium;
+    public static ItemCreator Lebriutium;
     public static ItemCreator Uprum;
     public static ItemCreator Slaginite;
     public static ItemCreator Spawner_Fragments;
@@ -42,6 +43,12 @@ public class OreItems {
         // -------------------------------------------- //
         Zaplium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Zaplium.getURL()))
                 .setName("§eZaplium Ore")
+                .setRarity(Rarity.UNCOMMON, Type.ORE)
+                .setUnplacable(true)
+                .setOre();
+        // -------------------------------------------- //
+        Lebriutium = new ItemCreator(SkullCreator.itemFromUrl(Heads.Lebriutium.getURL()))
+                .setName("§7Lebriutium Ore")
                 .setRarity(Rarity.UNCOMMON, Type.ORE)
                 .setUnplacable(true)
                 .setOre();
