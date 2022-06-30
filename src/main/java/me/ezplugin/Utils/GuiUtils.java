@@ -171,15 +171,29 @@ public class GuiUtils  {
 
     public static ItemStack createItemMaterial_2(ForgeItems forgeItems, Resources Resource_1, int Amount_1, ShopItems Resource_2, int Amount_2) {
 
-        return customItemUsingStack(
-                forgeItems.getOuput().getItemStack(),
-                forgeItems.getOuput().getName(),
-                "",
-                "§eItems required",
-                ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Amount_1,
-                ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Amount_2,
-                "",
-                "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
+        if(forgeItems.getOuput().setPickaxe().HasTier()) {
+            return customItemUsingStack(
+                    forgeItems.getOuput().getItemStack(),
+                    forgeItems.getOuput().getName(),
+                    "§fTier: §c" + forgeItems.getOuput().getTier(),
+                    "",
+                    "§eItems required",
+                    ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Amount_1,
+                    ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Amount_2,
+                    "",
+                    "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
+        } else {
+
+            return customItemUsingStack(
+                    forgeItems.getOuput().getItemStack(),
+                    forgeItems.getOuput().getName(),
+                    "",
+                    "§eItems required",
+                    ChatColor.GRAY + Resource_1.getItem().getName() + " §7x" + Amount_1,
+                    ChatColor.GRAY + Resource_2.getItem().getName() + " §7x" + Amount_2,
+                    "",
+                    "§8Duration: §b" + Utils.TimeSetup(forgeItems.getTime()));
+        }
     }
 
 

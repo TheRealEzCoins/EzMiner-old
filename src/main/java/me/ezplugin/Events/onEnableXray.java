@@ -25,26 +25,29 @@ public class onEnableXray implements Listener {
     public void onActivate(PlayerInteractEvent e) {
         Player player = e.getPlayer();
 
-        if(!Cooldown.containsKey(player.getUniqueId())) {
-            Cooldown.put(player.getUniqueId(), System.currentTimeMillis());
-            long timeElapsed = System.currentTimeMillis() - Cooldown.get(player.getUniqueId());
 
             if (Utils.isEmpty(player)) {
                 if (player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(EzMiner.getPlugin(), "Pickaxe"))) {
                     if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                        e.setCancelled(true);
-                        replaceBlocks.getBlocks(e.getPlayer(), 10);
-                        e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 10.0F, 0.0F);
-                    } else if (timeElapsed >= 10000) {
-                        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                            Cooldown.remove(player.getUniqueId());
+                        if (!Cooldown.containsKey(player.getUniqueId())) {
+                            Cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                            e.setCancelled(true);
                             replaceBlocks.getBlocks(e.getPlayer(), 10);
                             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 10.0F, 0.0F);
+
+                        } else if (Cooldown.get(player.getUniqueId()) != null) {
+                            long timeElapsed = System.currentTimeMillis() - Cooldown.get(player.getUniqueId());
+                            if(timeElapsed >= 10000) {
+                                if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                                    Cooldown.remove(player.getUniqueId());
+                                    replaceBlocks.getBlocks(e.getPlayer(), 10);
+                                    e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 10.0F, 0.0F);
+                                }
+                            }
+                            }
+                        } else {
+                            return;
                         }
-                    }
-                } else {
-                    return;
-                }
             }
         }
     }

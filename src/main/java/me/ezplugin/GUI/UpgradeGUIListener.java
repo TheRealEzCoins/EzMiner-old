@@ -21,7 +21,7 @@ public class UpgradeGUIListener implements Listener {
             e.setCancelled(true);
             if(e.getCurrentItem() == null) {
             } else if (e.getRawSlot() == 10 /* FortuneUpgrade */) {
-                ForgeUtils.SingleCraft(player, ForgeItems.FortuneUpgrade, Resources.Perfect_Gemstone, 4);
+                ForgeUtils.SingleCraft(player, ForgeItems.FortuneUpgrade, Resources.Perfect_Gemstone, 2);
 
             }
             else {

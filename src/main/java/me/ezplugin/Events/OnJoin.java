@@ -20,6 +20,7 @@ public class OnJoin implements Listener {
         Player player = join.getPlayer();
         String StringUUID = String.valueOf(player.getUniqueId());
         UUID playerUUID = player.getUniqueId();
+        onEnableXray.Cooldown.remove(playerUUID);
 
         PlayerData.setupFile(player);
         if(!PlayerData.HasData("UUID")) {

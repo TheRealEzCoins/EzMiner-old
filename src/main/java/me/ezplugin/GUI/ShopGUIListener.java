@@ -51,7 +51,7 @@ public class ShopGUIListener implements Listener {
 
                         if(random <= 0.10) {
                             player.sendMessage("§aYou won 500 fragments!");
-                            StatUtils.addHashFragments(player, 250);
+                            StatUtils.addHashFragments(player, 500);
                             return;
                         }
 

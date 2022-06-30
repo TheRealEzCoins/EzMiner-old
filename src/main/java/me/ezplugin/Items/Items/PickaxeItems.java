@@ -61,7 +61,7 @@ public class PickaxeItems {
                 .setUnbreakable(true);
         // -------------------------------------------- //
         Lebriutium_Pickaxe = new ItemCreator(Material.IRON_PICKAXE)
-                .setName("§7Lebriutium Pickaxe")
+                .setName("§7Lebriutium Drill")
                 .setPickaxe()
                 .setTier(3)
                 .setFortune(125)
@@ -107,7 +107,7 @@ public class PickaxeItems {
                 .setUnbreakable(true);
         // -------------------------------------------- //
         Flotine_Pickaxe = new ItemCreator(Material.GOLDEN_PICKAXE)
-                .setName("§7Gryrium Pickaxe")
+                .setName("§aFlotine Pickaxe")
                 .setPickaxe()
                 .setTier(6)
                 .setFortune(250)

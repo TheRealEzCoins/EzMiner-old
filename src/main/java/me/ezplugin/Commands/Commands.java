@@ -12,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 
 public class Commands implements CommandExecutor {
@@ -84,14 +85,14 @@ public class Commands implements CommandExecutor {
                             }
 
                         } else if(args[0].equalsIgnoreCase("Help")) {
-                            player.sendMessage("§6§l--------------------------------------------------");
+                            player.sendMessage("§6§l----------------------------------------------");
                             player.sendMessage("          §b§lEzMiner ~ By EzCoins         ");
                             player.sendMessage(" ");
                             player.sendMessage("§e§l/EzMiner Forge : §fOpens the forge menu.");
                             player.sendMessage(" ");
                             player.sendMessage("§e§l/EzMiner Stats : §fCheck your current stats.");
                             player.sendMessage(" ");
-                            player.sendMessage("§6§l-------------------------------------------------");
+                            player.sendMessage("§6§l----------------------------------------------");
                             if(player.hasPermission("EzMiner.*")) {
                                 player.sendMessage("              §c§lAdmin Commands           ");
                                 player.sendMessage(" ");
@@ -101,13 +102,12 @@ public class Commands implements CommandExecutor {
                                 player.sendMessage(" ");
                                 player.sendMessage("§c§l/EzMiner ResetAll : §fResets everything.");
                                 player.sendMessage(" ");
-                                player.sendMessage("§6§l-------------------------------------------------");
+                                player.sendMessage("§6§l----------------------------------------------");
                             }
                         } else if(args[0].equalsIgnoreCase("test")) {
                             if(player.hasPermission("EzMiner.*")) {
-                                Block block = player.getTargetBlock(1);
-                                assert block != null;
-                                player.sendBlockChange(player.getLocation(), block.getBlockData());
+                                for(ItemStack items : player.getInventory().getContents()) {
+                                }
                             }
                         } else if(args[0].equalsIgnoreCase("Starter")) {
                             player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());

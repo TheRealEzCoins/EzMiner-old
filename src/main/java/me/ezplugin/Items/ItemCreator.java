@@ -151,6 +151,20 @@ public class ItemCreator implements Listener {
         return this;
     }
 
+    public ItemCreator replaceFuel(int FuelAmount) {
+        ItemMeta meta = itemStack.getItemMeta();
+        List<String> lore = meta.getLore();
+
+        int getIndex = lore.indexOf("§fFuel: " + "§b" + 1000);
+        lore.set(getIndex, "§fFuel: " + "§b" + FuelAmount);
+
+        meta.getPersistentDataContainer().set(new NamespacedKey(EzMiner.getPlugin(), "Fuel"), PersistentDataType.INTEGER, FuelAmount);
+
+        meta.setLore(lore);
+        itemStack.setItemMeta(meta);
+        return this;
+    }
+
 
     public ItemCreator setAsFuel(int FuelAmount) {
         ItemMeta meta = itemStack.getItemMeta();
@@ -320,8 +334,8 @@ public class ItemCreator implements Listener {
         PersistentDataContainer data = meta.getPersistentDataContainer();
         int Fortune = data.get(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER);
         int Tier = getTier() * 25;
-        int newFortune = Fortune + Tier;
-        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, (Fortune + newFortune + Amount));
+        int newFortune = Fortune + Tier + Amount;
+        data.set(new NamespacedKey(EzMiner.getPlugin(), "Fortune"), PersistentDataType.INTEGER, newFortune);
         item.setItemMeta(meta);
 
         addLore("§eFortune " + newFortune + "☘");

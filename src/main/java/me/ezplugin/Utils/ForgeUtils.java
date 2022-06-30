@@ -53,13 +53,17 @@ public class ForgeUtils {
 
 
         if (Utils.getTime().after(forgeDate)) {
-            player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
-            Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
-            Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
-            StatUtils.setTimer(player, forgeItems, null);
-            player.getInventory().addItem(forgeItems.getOuput().getItemStack());
+            if(player.getInventory().firstEmpty() != -1) {
+                player.sendMessage("§a§lWhile you were gone, an item finished crafting!");
+                Utils.SoundSetup(player, Sound.ENTITY_ITEM_PICKUP, 1, -10);
+                Utils.SoundSetup(player, Sound.ENTITY_PLAYER_LEVELUP, 1, -10);
+                StatUtils.setTimer(player, forgeItems, null);
+                player.getInventory().addItem(forgeItems.getOuput().getItemStack());
+            } else {
+                player.sendMessage("§cYour inventory is full!");
             }
         }
+    }
 
     public static boolean checkTime(ForgeItems forgeItems, Player player) {
         if (StatUtils.hasTimer(player, forgeItems)) {
