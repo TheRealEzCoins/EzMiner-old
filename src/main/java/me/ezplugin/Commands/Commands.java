@@ -32,8 +32,8 @@ public class Commands implements CommandExecutor {
                             player.openInventory(ForgeGUI.FORGEGUI(player));
                         } else if(args[0].equalsIgnoreCase("Pickaxe")) {
                             if (player.hasPermission("EzMiner.Pickaxe")) {
-                                player.getInventory().addItem(PickaxeItems.Nacrine_Pickaxe.getItemStack());
-                                player.getInventory().addItem(MaterialItems.OIL_BARREL.getItemStack());
+                                player.getInventory().addItem(PickaxeItems.Gryrium_Pickaxe.getItemStack());
+                                player.getInventory().addItem(MaterialItems.FortuneUpgrade.getItemStack());
                             }
                         } else if(args[0].equalsIgnoreCase("Stats")) {
                             if (args.length < 2) {

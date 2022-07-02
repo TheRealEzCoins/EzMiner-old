@@ -2,6 +2,7 @@ package me.ezplugin.Events;
 
 import me.ezplugin.EzMiner;
 import me.ezplugin.GUI.*;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public class ListenerManager {
@@ -26,6 +27,7 @@ public class ListenerManager {
         addListener(new ArmorListeners());
         addListener(new FortuneListener());
         addListener(new onEnableXray());
+        addListener(new PlayerListener());
     }
 
     private void addListener(Listener listener) {

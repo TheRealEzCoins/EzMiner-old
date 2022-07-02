@@ -35,15 +35,6 @@ public class BreakListener extends BlockUtils implements Listener {
                 }
             }
 
-            if(onEnableXray.Cooldown.containsKey(player.getUniqueId())) {
-                if(onEnableXray.Cooldown.get(player.getUniqueId()) != null) {
-                    long timeElapsed = System.currentTimeMillis() - onEnableXray.Cooldown.get(player.getUniqueId());
-                    if (!(timeElapsed >= 9000)) {
-                        block.setCancelled(true);
-                        player.sendMessage("§cYou can't mine while xray is enabled!");
-                    }
-                }
-            }
     }
 }
 
