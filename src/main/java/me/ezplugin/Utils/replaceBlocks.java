@@ -21,6 +21,12 @@ import java.util.UUID;
 public class replaceBlocks {
 
 
+    /**
+     * It spawns a shulker at every block of the specified material within the specified radius
+     *
+     * @param p The player who is using the ability
+     * @param radius The radius of the blocks you want to get.
+     */
     public static void getBlocks(final Player p, final int radius) {
         final Location loc = p.getLocation();
         Material block = Utils.returnBlock(p);

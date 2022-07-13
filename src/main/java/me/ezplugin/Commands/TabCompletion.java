@@ -32,6 +32,22 @@ public class TabCompletion implements TabCompleter {
                     result.add(a);
             }
             return result;
+        } else {
+            if(args[0].equalsIgnoreCase("set")) {
+                arg.clear();
+
+                if(args.length < 3) {
+                    arg.add("<Player> <Level> <Exp>");
+
+                    for (String a : arg) {
+                        if(a.toLowerCase().startsWith(args[1].toLowerCase()))
+                            result.add(a);
+                    }
+                    arg.clear();
+                    return result;
+                }
+
+            }
         }
         return null;
     }

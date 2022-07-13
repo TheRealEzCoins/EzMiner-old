@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.beans.Customizer;
 import java.text.ParseException;
 
 import static me.ezplugin.Utils.ItemUtils.customItemName;
@@ -36,6 +37,9 @@ public class ForgeGUI {
         FORGEGUI.setItem(20, customItemName(Material.DIAMOND, "§aRefining", "", "§eYou can refine ore here."));
         FORGEGUI.setItem(22, customItemName(Material.ENCHANTED_BOOK, "§aUpgrades", "", "§eYou can forge upgrades here."));
         FORGEGUI.setItem(24, customItemName(Material.DIAMOND_PICKAXE, "§aPickaxes", "" ,"§eYou can make pickaxes here."));
+        FORGEGUI.setItem(49, customItemUsingStack(SkullCreator.itemFromUrl(Heads.Generator.getURL()), "§6Sir Mine 'O Lot",
+                "§bSir Mine 'O Lot ",
+                "§brequires your assistance!"));
 
 
         FORGEGUI.setItem(39,

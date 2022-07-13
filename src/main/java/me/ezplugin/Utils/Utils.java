@@ -129,15 +129,14 @@ public class Utils {
         double CurrentLVL = StatUtils.getHashLevel(player);
         int CurrentXP = StatUtils.getHashXP(player);
         final int v = (int) (25 * Math.round((500 + CurrentLVL * Math.log(Math.pow(25, CurrentLVL))) / 25));
+        int newXP = StatUtils.getHashXP(player) + (ores.getTier() * 25);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + newXP + " §9/ " + ChatColor.LIGHT_PURPLE + v + ""));
+        StatUtils.setHashXP(player, newXP);
         if (CurrentXP >= v) {
             StatUtils.setHashLevel(player, (int) (CurrentLVL + 1));
             StatUtils.setHashXP(player, (CurrentXP - v));
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
             player.sendMessage("§a§lLevel up!\n§6You are now level: " + StatUtils.getHashLevel(player));
-        } else {
-            int newXP = StatUtils.getHashXP(player) + (ores.getTier() * 25);
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("" + ChatColor.LIGHT_PURPLE + newXP + " §9/ " + ChatColor.LIGHT_PURPLE + v + ""));
-            StatUtils.setHashXP(player, newXP);
         }
     }
 
@@ -160,24 +159,10 @@ public class Utils {
 
     public static Material returnBlock(Player player) {
         int level = StatUtils.getHashLevel(player);
-        if(level < 10) {
-            return Resources.Nacrine.getBlock();
-        } else if(level < 25) {
-            return Resources.Uprum.getBlock();
-        } else if(level < 35) {
-            return Resources.Zaplium.getBlock();
-        } else if(level < 50) {
-            return Resources.Lebriutium.getBlock();
-        } else if(level < 60) {
-            return Resources.Slaginite.getBlock();
-        } else if(level < 75) {
-            return Resources.Gryrium.getBlock();
-        } else if(level < 90) {
-            return Resources.Kreisium.getBlock();
-        } else if(level < 100) {
-            return Resources.Volcanium.getBlock();
-        } else if(level > 100) {
-            return Resources.Flotine.getBlock();
+        for(Resources resources : Resources.values()) {
+            if(level < resources.getLevel()) {
+                return resources.getBlock();
+            }
         }
         return null;
     }

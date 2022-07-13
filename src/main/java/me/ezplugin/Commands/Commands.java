@@ -1,6 +1,7 @@
 package me.ezplugin.Commands;
 
 import me.ezplugin.Enums.Resources;
+import me.ezplugin.GUI.GUIS.CheatGUI;
 import me.ezplugin.Items.Items.ArmorItems;
 import me.ezplugin.Items.Items.MaterialItems;
 import me.ezplugin.GUI.GUIS.ForgeGUI;
@@ -30,10 +31,9 @@ public class Commands implements CommandExecutor {
                     } else {
                         if(args[0].equalsIgnoreCase("Forge")) {
                             player.openInventory(ForgeGUI.FORGEGUI(player));
-                        } else if(args[0].equalsIgnoreCase("Pickaxe")) {
-                            if (player.hasPermission("EzMiner.Pickaxe")) {
-                                player.getInventory().addItem(PickaxeItems.Gryrium_Pickaxe.getItemStack());
-                                player.getInventory().addItem(MaterialItems.FortuneUpgrade.getItemStack());
+                        } else if(args[0].equalsIgnoreCase("cheat")) {
+                            if (player.hasPermission("EzMiner.*")) {
+                                player.openInventory(CheatGUI.CheatGUI());
                             }
                         } else if(args[0].equalsIgnoreCase("Stats")) {
                             if (args.length < 2) {
@@ -106,8 +106,6 @@ public class Commands implements CommandExecutor {
                             }
                         } else if(args[0].equalsIgnoreCase("test")) {
                             if(player.hasPermission("EzMiner.*")) {
-                                for(ItemStack items : player.getInventory().getContents()) {
-                                }
                             }
                         } else if(args[0].equalsIgnoreCase("Starter")) {
                             player.getInventory().addItem(PickaxeItems.Starter_Pickaxe.getItemStack());

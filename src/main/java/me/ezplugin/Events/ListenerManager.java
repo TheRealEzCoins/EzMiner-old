@@ -28,6 +28,8 @@ public class ListenerManager {
         addListener(new FortuneListener());
         addListener(new onEnableXray());
         addListener(new PlayerListener());
+        addListener(new onClick());
+        addListener(new CheatGUIListener());
     }
 
     private void addListener(Listener listener) {
